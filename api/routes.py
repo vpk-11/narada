@@ -3,16 +3,16 @@ api/routes.py
 
 Narada API routes.
 
-Endpoints:
-  POST /api/search      — run the pipeline for a query
-  GET  /api/search      — same, for quick browser/Postman testing
+REST conventions:
+  POST /api/search      — run the pipeline for a query (triggers work, always POST)
   DELETE /api/cache     — clear all cached results
-  GET  /api/providers   — list available and active providers
+  GET  /api/providers   — retrieve active provider config (read-only, GET is correct)
+  GET  /api/health      — liveness check (read-only, GET is correct)
 """
 
 import logging
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from config import get_settings
@@ -34,6 +34,11 @@ class SearchRequest(BaseModel):
     refresh: bool = False  # set True to bypass cache and force a fresh run
 
 
+class SearchResponse(BaseModel):
+    """Wraps PipelineResult — room to add pagination or request metadata later."""
+    result: PipelineResult
+
+
 class CacheClearResponse(BaseModel):
     deleted: int
     message: str
@@ -53,12 +58,14 @@ class ProvidersResponse(BaseModel):
 # Routes
 # --------------------------------------------------------------------------- #
 
-@router.post("/search", response_model=PipelineResult)
-async def search_post(body: SearchRequest) -> PipelineResult:
+@router.post("/search", response_model=SearchResponse)
+async def search(body: SearchRequest) -> SearchResponse:
     """
     Run the Narada pipeline for a query.
+
     Returns a structured table of entities with source-traced attributes.
-    Set refresh=true to bypass cache and force a fresh run.
+    Results are cached — identical queries return instantly on repeat calls.
+    Set refresh=true to bypass cache and force a fresh pipeline run.
     """
     query = body.query.strip()
     if not query:
@@ -67,49 +74,19 @@ async def search_post(body: SearchRequest) -> PipelineResult:
     settings = get_settings()
     llm = get_llm_provider(settings)
     extraction_llm = get_extraction_llm_provider(settings)
-    search = get_search_provider(settings)
+    search_provider = get_search_provider(settings)
 
     try:
-        return await run_pipeline(
+        result = await run_pipeline(
             query=query,
             settings=settings,
             llm=llm,
-            search=search,
+            search=search_provider,
             extraction_llm=extraction_llm,
             use_cache=not body.refresh,
         )
-    except Exception as e:
-        logger.error(f"[Routes] Pipeline failed for '{query}': {e}")
-        raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
+        return SearchResponse(result=result)
 
-
-@router.get("/search", response_model=PipelineResult)
-async def search_get(
-    query: str = Query(..., description="Research query"),
-    refresh: bool = Query(False, description="Bypass cache and force fresh run"),
-) -> PipelineResult:
-    """
-    GET version of /search — convenient for browser and Postman testing.
-    Example: GET /api/search?query=AI+startups+in+healthcare
-    """
-    query = query.strip()
-    if not query:
-        raise HTTPException(status_code=400, detail="query cannot be empty")
-
-    settings = get_settings()
-    llm = get_llm_provider(settings)
-    extraction_llm = get_extraction_llm_provider(settings)
-    search = get_search_provider(settings)
-
-    try:
-        return await run_pipeline(
-            query=query,
-            settings=settings,
-            llm=llm,
-            search=search,
-            extraction_llm=extraction_llm,
-            use_cache=not refresh,
-        )
     except Exception as e:
         logger.error(f"[Routes] Pipeline failed for '{query}': {e}")
         raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}")
@@ -117,7 +94,10 @@ async def search_get(
 
 @router.delete("/cache", response_model=CacheClearResponse)
 async def delete_cache() -> CacheClearResponse:
-    """Clear all cached pipeline results."""
+    """
+    Clear all cached pipeline results.
+    Use when you want fresh results for previously cached queries.
+    """
     deleted = clear_cache()
     return CacheClearResponse(
         deleted=deleted,
@@ -126,19 +106,22 @@ async def delete_cache() -> CacheClearResponse:
 
 
 @router.get("/providers", response_model=ProvidersResponse)
-async def list_providers() -> ProvidersResponse:
-    """Return active provider config and available options."""
+async def get_providers() -> ProvidersResponse:
+    """
+    Return active provider config and available options.
+    Read-only — confirms which models and search provider are in use.
+    """
     settings = get_settings()
     llm = get_llm_provider(settings)
     extraction_llm = get_extraction_llm_provider(settings) or llm
-    search = get_search_provider(settings)
+    search_provider = get_search_provider(settings)
 
     return ProvidersResponse(
         active_llm_provider=llm.provider_name,
         active_llm_model=llm.model_name,
         active_extraction_llm_provider=extraction_llm.provider_name,
         active_extraction_llm_model=extraction_llm.model_name,
-        active_search_provider=search.provider_name,
+        active_search_provider=search_provider.provider_name,
         available_llm_providers=["ollama", "groq", "openai", "anthropic"],
         available_search_providers=["duckduckgo", "brave", "tavily"],
     )
