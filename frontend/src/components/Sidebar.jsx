@@ -3,21 +3,21 @@ import { useSession } from '../hooks/useSession.js'
 const LLM_PROVIDERS = ['groq', 'openai', 'anthropic', 'ollama']
 
 const LLM_MODELS = {
-  groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'qwen-qwq-32b', 'gemma2-9b-it'],
-  openai: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'],
+  groq:      ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'qwen-qwq-32b', 'gemma2-9b-it'],
+  openai:    ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'],
   anthropic: ['claude-opus-4-5', 'claude-sonnet-4-5', 'claude-haiku-4-5'],
-  ollama: [],
+  ollama:    [],
 }
 
 const SEARCH_PROVIDERS = ['tavily', 'duckduckgo']
 
 const STEPS = [
   { key: 'query_analyzer', label: 'Query Analyzer' },
-  { key: 'extractor', label: 'Extractor' },
-  { key: 'validator', label: 'Validator' },
+  { key: 'extractor',      label: 'Extractor' },
+  { key: 'validator',      label: 'Validator' },
 ]
 
-const DEFAULT_CONFIG = {
+export const DEFAULT_CONFIG = {
   groq_api_key: '',
   openai_api_key: '',
   anthropic_api_key: '',
@@ -25,161 +25,148 @@ const DEFAULT_CONFIG = {
   ollama_base_url: 'http://localhost:11434',
   search_provider: 'tavily',
   query_analyzer: { provider: 'groq', model: 'llama-3.3-70b-versatile' },
-  extractor: { provider: 'groq', model: 'llama-3.3-70b-versatile' },
-  validator: { provider: 'groq', model: 'llama-3.3-70b-versatile' },
+  extractor:      { provider: 'groq', model: 'llama-3.3-70b-versatile' },
+  validator:      { provider: 'groq', model: 'llama-3.3-70b-versatile' },
+}
+
+function LogoMark() {
+  return (
+    <svg viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="6" stroke="#fff" strokeWidth="1.5"/>
+      <path d="M6 9h6M9 6v6" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+      <circle cx="9" cy="9" r="1.8" fill="#fff"/>
+    </svg>
+  )
+}
+
+function UserIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <circle cx="8" cy="5.5" r="2.5"/>
+      <path d="M2.5 13.5c0-3.038 2.462-5.5 5.5-5.5s5.5 2.462 5.5 5.5"/>
+    </svg>
+  )
 }
 
 export default function Sidebar() {
   const [config, setConfig] = useSession('narada_config', DEFAULT_CONFIG)
 
-  function setKey(field, value) {
+  function set(field, value) {
     setConfig(c => ({ ...c, [field]: value }))
   }
 
   function setStep(step, field, value) {
-    setConfig(c => ({
-      ...c,
-      [step]: { ...c[step], [field]: value }
-    }))
+    setConfig(c => ({ ...c, [step]: { ...c[step], [field]: value } }))
   }
 
-  function handleProviderChange(step, provider) {
+  function onProviderChange(step, provider) {
     const models = LLM_MODELS[provider]
-    const model = models.length > 0 ? models[0] : ''
-    setConfig(c => ({ ...c, [step]: { provider, model } }))
+    setConfig(c => ({ ...c, [step]: { provider, model: models[0] || '' } }))
   }
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header">
-        <div className="sidebar-logo">Narada</div>
-        <div className="sidebar-tagline">Agentic Research Intelligence</div>
+
+      {/* Logo */}
+      <div className="sidebar-top">
+        <div className="sidebar-logo-row">
+          <div className="logo-mark"><LogoMark /></div>
+          <span className="logo-name">Narada</span>
+        </div>
+        <div className="logo-sub">Research Intelligence</div>
       </div>
 
+      {/* Body */}
       <div className="sidebar-body">
 
-        {/* Security disclosure */}
-        <div className="session-note" style={{ marginBottom: 20 }}>
-          <strong>How your keys are handled:</strong>
-          <ul style={{ marginTop: 6, paddingLeft: 14, lineHeight: 1.8 }}>
-            <li>Stored in <strong>sessionStorage</strong> only</li>
-            <li>Cleared when this tab closes</li>
-            <li>Sent as <strong>request headers</strong>, not body</li>
-            <li>Used per-request and <strong>never stored</strong> server-side</li>
-            <li>Never appear in server logs</li>
-          </ul>
+        {/* Security */}
+        <div className="s-section">
+          <div className="s-label">Security</div>
+          <div className="sec-note">
+            <div className="sec-note-title">
+              <span className="sec-dot" />
+              Key Handling
+            </div>
+            <ul>
+              <li>sessionStorage only</li>
+              <li>Cleared on tab close</li>
+              <li>Sent as request headers</li>
+              <li>Never stored server-side</li>
+              <li>Never appear in logs</li>
+            </ul>
+          </div>
         </div>
 
         {/* Search provider */}
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">Search Provider</div>
+        <div className="s-section">
+          <div className="s-label">Search Provider</div>
           <div className="field">
             <label>Provider</label>
-            <select
-              value={config.search_provider}
-              onChange={e => setKey('search_provider', e.target.value)}
-            >
-              {SEARCH_PROVIDERS.map(p => (
-                <option key={p} value={p}>{p}</option>
-              ))}
+            <select value={config.search_provider} onChange={e => set('search_provider', e.target.value)}>
+              {SEARCH_PROVIDERS.map(p => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
-
           {config.search_provider === 'tavily' && (
             <div className="field">
               <label>Tavily API Key</label>
-              <input
-                type="password"
-                placeholder="tvly-..."
-                value={config.tavily_api_key}
-                onChange={e => setKey('tavily_api_key', e.target.value)}
-              />
+              <input type="password" placeholder="tvly-..." value={config.tavily_api_key}
+                onChange={e => set('tavily_api_key', e.target.value)} />
             </div>
           )}
         </div>
 
-        {/* API Keys */}
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">LLM API Keys</div>
-
+        {/* LLM keys */}
+        <div className="s-section">
+          <div className="s-label">LLM API Keys</div>
           <div className="field">
-            <label>Groq API Key</label>
-            <input
-              type="password"
-              placeholder="gsk_..."
-              value={config.groq_api_key}
-              onChange={e => setKey('groq_api_key', e.target.value)}
-            />
+            <label>Groq</label>
+            <input type="password" placeholder="gsk_..." value={config.groq_api_key}
+              onChange={e => set('groq_api_key', e.target.value)} />
           </div>
-
           <div className="field">
-            <label>OpenAI API Key</label>
-            <input
-              type="password"
-              placeholder="sk-..."
-              value={config.openai_api_key}
-              onChange={e => setKey('openai_api_key', e.target.value)}
-            />
+            <label>OpenAI</label>
+            <input type="password" placeholder="sk-..." value={config.openai_api_key}
+              onChange={e => set('openai_api_key', e.target.value)} />
           </div>
-
           <div className="field">
-            <label>Anthropic API Key</label>
-            <input
-              type="password"
-              placeholder="sk-ant-..."
-              value={config.anthropic_api_key}
-              onChange={e => setKey('anthropic_api_key', e.target.value)}
-            />
+            <label>Anthropic</label>
+            <input type="password" placeholder="sk-ant-..." value={config.anthropic_api_key}
+              onChange={e => set('anthropic_api_key', e.target.value)} />
           </div>
-
           <div className="field">
-            <label>Ollama Base URL</label>
-            <input
-              type="text"
-              value={config.ollama_base_url}
-              onChange={e => setKey('ollama_base_url', e.target.value)}
-            />
+            <label>Ollama URL</label>
+            <input type="text" value={config.ollama_base_url}
+              onChange={e => set('ollama_base_url', e.target.value)} />
           </div>
         </div>
 
-        {/* Per-step config */}
-        <div className="sidebar-section">
-          <div className="sidebar-section-title">Pipeline Step Config</div>
-
+        {/* Pipeline steps */}
+        <div className="s-section">
+          <div className="s-label">Pipeline Steps</div>
           {STEPS.map(({ key, label }) => (
-            <div className="step-config" key={key}>
-              <div className="step-config-label">{label}</div>
-
+            <div className="step-block" key={key}>
+              <div className="step-header">
+                <div className="step-dot" />
+                <span className="step-name">{label}</span>
+              </div>
               <div className="field">
                 <label>Provider</label>
-                <select
-                  value={config[key]?.provider || 'groq'}
-                  onChange={e => handleProviderChange(key, e.target.value)}
-                >
-                  {LLM_PROVIDERS.map(p => (
-                    <option key={p} value={p}>{p}</option>
-                  ))}
+                <select value={config[key]?.provider || 'groq'}
+                  onChange={e => onProviderChange(key, e.target.value)}>
+                  {LLM_PROVIDERS.map(p => <option key={p} value={p}>{p}</option>)}
                 </select>
               </div>
-
               <div className="field">
                 <label>Model</label>
                 {LLM_MODELS[config[key]?.provider]?.length > 0 ? (
-                  <select
-                    value={config[key]?.model || ''}
-                    onChange={e => setStep(key, 'model', e.target.value)}
-                  >
-                    {LLM_MODELS[config[key]?.provider].map(m => (
-                      <option key={m} value={m}>{m}</option>
-                    ))}
+                  <select value={config[key]?.model || ''}
+                    onChange={e => setStep(key, 'model', e.target.value)}>
+                    {LLM_MODELS[config[key]?.provider].map(m => <option key={m} value={m}>{m}</option>)}
                   </select>
                 ) : (
-                  <input
-                    type="text"
-                    placeholder="e.g. qwen3:4b"
+                  <input type="text" placeholder="e.g. qwen3:4b"
                     value={config[key]?.model || ''}
-                    onChange={e => setStep(key, 'model', e.target.value)}
-                  />
+                    onChange={e => setStep(key, 'model', e.target.value)} />
                 )}
               </div>
             </div>
@@ -187,8 +174,16 @@ export default function Sidebar() {
         </div>
 
       </div>
+
+      {/* Footer */}
+      <div className="sidebar-footer">
+        <div className="avatar"><UserIcon /></div>
+        <div>
+          <div className="profile-name">Kaushik</div>
+          <div className="profile-ver">narada v0.1</div>
+        </div>
+      </div>
+
     </aside>
   )
 }
-
-export { DEFAULT_CONFIG }
