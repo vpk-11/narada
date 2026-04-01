@@ -3,6 +3,11 @@ name: Build Frontend
 on:
   push:
     branches: [main]
+    paths:
+      - 'frontend/src/**'
+      - 'frontend/index.html'
+      - 'frontend/package.json'
+      - 'frontend/vite.config.js'
 
 jobs:
   build:
