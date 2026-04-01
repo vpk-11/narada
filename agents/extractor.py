@@ -77,6 +77,8 @@ CRITICAL RULES:
    - Customers or partners of the primary entity
    - Competitors mentioned briefly
    - Research firms, consulting companies, or media outlets
+   - The publisher or author of this page (e.g. if the page is from "TechCrunch", do not extract "TechCrunch")
+   - Blockchain, crypto, or Web3 companies unless the query specifically asks for them
 3. For each primary entity, only include attributes with CLEAR evidence. No guessing.
 4. If you cannot find a value for an attribute, OMIT it entirely. Never write null, None, or N/A.
 5. Attribute values must be factual and concise — one phrase or sentence maximum.
@@ -128,7 +130,6 @@ def _parse_llm_json(raw: str) -> dict:
         if isinstance(parsed, dict):
             return parsed
 
-        logger.error(f"[Extractor] Unexpected JSON root type: {type(parsed)}")
         return {"entities": []}
 
     except json.JSONDecodeError as e:
@@ -224,18 +225,6 @@ async def extract_entities(
     """
     Extract entities from all pages sequentially.
     Sequential because Ollama handles one LLM request at a time locally.
-
-    Args:
-        pages: scraped pages
-        analysis: schema from query analyzer (entity_type + attributes)
-        llm: default LLM provider
-        extraction_llm: optional separate model for extraction.
-                        Pass a different OllamaProvider to use a different
-                        model just for this step.
-
-    Returns:
-        flat list of all entities across all pages (duplicates included —
-        aggregator deduplicates in the next step)
     """
     active_llm = extraction_llm if extraction_llm is not None else llm
 

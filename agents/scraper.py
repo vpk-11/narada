@@ -29,6 +29,17 @@ from core.models import ScrapedPage, SearchResult
 
 logger = logging.getLogger(__name__)
 
+# Domains known to produce low-quality or off-topic results.
+# These aggregate many unrelated companies under misleading category names.
+_BLOCKED_DOMAINS = {
+    "seedtable.com",          # mixes blockchain/crypto with legit startups
+    "crunchbase.com/unicorn-company-list",  # generic multi-sector list
+}
+
+def _is_blocked(url: str) -> bool:
+    """Return True if the URL matches a known low-quality source."""
+    return any(blocked in url for blocked in _BLOCKED_DOMAINS)
+
 # Max characters of page content to pass to the LLM.
 # Most useful content is in the first ~6000 chars.
 # Raising this improves recall but increases LLM latency and cost.
@@ -86,6 +97,10 @@ async def _scrape_one(
     Fetch and parse a single URL.
     Returns None on any failure — caller decides what to do with it.
     """
+    if _is_blocked(result.url):
+        logger.info(f"[Scraper] Skipping blocked domain: {result.url[:70]}")
+        return None
+
     try:
         response = await client.get(
             result.url,
