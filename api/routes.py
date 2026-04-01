@@ -4,10 +4,10 @@ api/routes.py
 Narada API routes.
 
 REST conventions:
-  POST /api/search      — run the pipeline for a query (triggers work, always POST)
+  POST /api/search      — run the pipeline (triggers work, always POST)
   DELETE /api/cache     — clear all cached results
-  GET  /api/providers   — retrieve active provider config (read-only, GET is correct)
-  GET  /api/health      — liveness check (read-only, GET is correct)
+  GET  /api/providers   — retrieve active provider config (read-only)
+  GET  /health          — liveness check (on root app, not router)
 """
 
 import logging
@@ -19,7 +19,12 @@ from config import get_settings
 from core.cache import clear_cache
 from core.models import PipelineResult
 from core.pipeline import run_pipeline
-from providers.factory import get_extraction_llm_provider, get_llm_provider, get_search_provider
+from providers.factory import (
+    get_extraction_llm,
+    get_query_analyzer_llm,
+    get_search_provider,
+    get_validator_llm,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -31,11 +36,10 @@ router = APIRouter()
 
 class SearchRequest(BaseModel):
     query: str
-    refresh: bool = False  # set True to bypass cache and force a fresh run
+    refresh: bool = False
 
 
 class SearchResponse(BaseModel):
-    """Wraps PipelineResult — room to add pagination or request metadata later."""
     result: PipelineResult
 
 
@@ -44,12 +48,17 @@ class CacheClearResponse(BaseModel):
     message: str
 
 
+class ProviderInfo(BaseModel):
+    provider: str
+    model: str
+
+
 class ProvidersResponse(BaseModel):
-    active_llm_provider: str
-    active_llm_model: str
-    active_extraction_llm_provider: str
-    active_extraction_llm_model: str
-    active_search_provider: str
+    default: ProviderInfo
+    query_analyzer: ProviderInfo
+    extractor: ProviderInfo
+    validator: ProviderInfo
+    search: str
     available_llm_providers: list[str]
     available_search_providers: list[str]
 
@@ -62,27 +71,21 @@ class ProvidersResponse(BaseModel):
 async def search(body: SearchRequest) -> SearchResponse:
     """
     Run the Narada pipeline for a query.
-
-    Returns a structured table of entities with source-traced attributes.
     Results are cached — identical queries return instantly on repeat calls.
-    Set refresh=true to bypass cache and force a fresh pipeline run.
+    Set refresh=true to bypass cache and force a fresh run.
     """
     query = body.query.strip()
     if not query:
         raise HTTPException(status_code=400, detail="query cannot be empty")
 
     settings = get_settings()
-    llm = get_llm_provider(settings)
-    extraction_llm = get_extraction_llm_provider(settings)
     search_provider = get_search_provider(settings)
 
     try:
         result = await run_pipeline(
             query=query,
             settings=settings,
-            llm=llm,
             search=search_provider,
-            extraction_llm=extraction_llm,
             use_cache=not body.refresh,
         )
         return SearchResponse(result=result)
@@ -94,10 +97,7 @@ async def search(body: SearchRequest) -> SearchResponse:
 
 @router.delete("/cache", response_model=CacheClearResponse)
 async def delete_cache() -> CacheClearResponse:
-    """
-    Clear all cached pipeline results.
-    Use when you want fresh results for previously cached queries.
-    """
+    """Clear all cached pipeline results."""
     deleted = clear_cache()
     return CacheClearResponse(
         deleted=deleted,
@@ -108,20 +108,24 @@ async def delete_cache() -> CacheClearResponse:
 @router.get("/providers", response_model=ProvidersResponse)
 async def get_providers() -> ProvidersResponse:
     """
-    Return active provider config and available options.
-    Read-only — confirms which models and search provider are in use.
+    Return active provider config per pipeline step.
+    Shows which model is used for each step and what the fallback is.
     """
     settings = get_settings()
-    llm = get_llm_provider(settings)
-    extraction_llm = get_extraction_llm_provider(settings) or llm
-    search_provider = get_search_provider(settings)
+
+    from providers.factory import get_llm_provider
+    default = get_llm_provider(settings)
+    analyzer = get_query_analyzer_llm(settings)
+    extractor = get_extraction_llm(settings)
+    validator = get_validator_llm(settings)
+    search = get_search_provider(settings)
 
     return ProvidersResponse(
-        active_llm_provider=llm.provider_name,
-        active_llm_model=llm.model_name,
-        active_extraction_llm_provider=extraction_llm.provider_name,
-        active_extraction_llm_model=extraction_llm.model_name,
-        active_search_provider=search_provider.provider_name,
+        default=ProviderInfo(provider=default.provider_name, model=default.model_name),
+        query_analyzer=ProviderInfo(provider=analyzer.provider_name, model=analyzer.model_name),
+        extractor=ProviderInfo(provider=extractor.provider_name, model=extractor.model_name),
+        validator=ProviderInfo(provider=validator.provider_name, model=validator.model_name),
+        search=search.provider_name,
         available_llm_providers=["ollama", "groq", "openai", "anthropic"],
         available_search_providers=["duckduckgo", "brave", "tavily"],
     )
