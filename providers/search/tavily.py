@@ -28,11 +28,7 @@ _TIMEOUT_SECONDS = 30
 class TavilyProvider(BaseSearchProvider):
 
     def __init__(self, api_key: str) -> None:
-        if not api_key:
-            raise ValueError(
-                "TAVILY_API_KEY is not set in .env. "
-                "Sign up at tavily.com to get a free API key."
-            )
+        # Don't raise at init — raise at search time with a user-friendly message
         self._api_key = api_key
 
     @property
@@ -55,6 +51,12 @@ class TavilyProvider(BaseSearchProvider):
             "include_answer": False,
             "include_raw_content": False,
         }
+
+        if not self._api_key:
+            raise ValueError(
+                "Tavily API key is missing. "
+                "Add your Tavily API key in the Settings sidebar."
+            )
 
         try:
             async with httpx.AsyncClient(timeout=_TIMEOUT_SECONDS) as client:
