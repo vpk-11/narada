@@ -32,8 +32,8 @@ class Settings(BaseSettings):
     validator_llm_provider: str = ""        # Step 7: post-extraction validation
 
     # ── Ollama ────────────────────────────────────────────────────────────── #
-    ollama_base_url: str
-    ollama_model: str                        # default Ollama model
+    ollama_base_url: str = "http://localhost:11434"
+    ollama_model: str = "llama3.2:3b"               # default Ollama model
     query_analyzer_ollama_model: str = ""   # override for query analysis step
     extraction_ollama_model: str = ""       # override for extraction step
     validator_ollama_model: str = ""        # override for validation step
