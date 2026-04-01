@@ -3,19 +3,16 @@ core/pipeline.py
 
 The Narada pipeline orchestrator.
 
-Wires all agents together in order and returns a PipelineResult.
-This is the single function the API calls — it knows nothing about
-HTTP, FastAPI, or request handling.
-
 Pipeline steps:
-  1. Cache check — return immediately if result exists
-  2. Query analysis — LLM determines entity type, schema, search queries
-  3. Search — run all search queries, deduplicate URLs
+  1. Cache check
+  2. Query analysis — LLM determines entity type, schema, targeted search queries
+  3. Search — run all queries, deduplicate URLs
   4. Scrape — fetch and clean all pages concurrently
-  5. Extract — LLM pulls structured entities from each page sequentially
+  5. Extract — LLM pulls structured entities from each page (primary subjects only)
   6. Aggregate — deduplicate and merge entities across sources
-  7. Cache write — store result for future identical queries
-  8. Return PipelineResult
+  7. Validate — LLM filters out noise entities that don't match the query
+  8. Cache write
+  9. Return PipelineResult
 """
 
 import logging
@@ -25,6 +22,7 @@ from agents.aggregator import aggregate_entities
 from agents.extractor import extract_entities
 from agents.query_analyzer import analyze_query
 from agents.scraper import scrape_pages
+from agents.validator import validate_entities
 from config import Settings
 from core.cache import get_cached, set_cached
 from core.models import PipelineMetadata, PipelineResult, SearchResult
@@ -39,7 +37,7 @@ async def _run_searches(
     n_results: int,
 ) -> list[SearchResult]:
     """
-    Run all search queries sequentially and return deduplicated results.
+    Run all search queries and return deduplicated results.
     Deduplicates by URL so the same page is never scraped twice.
     """
     seen_urls: set[str] = set()
@@ -69,17 +67,11 @@ async def run_pipeline(
 
     Args:
         query: raw user input, e.g. "AI startups in healthcare"
-        settings: app settings (pipeline tuning params)
-        llm: primary LLM provider (query analysis + fallback for extraction)
+        settings: app settings
+        llm: primary LLM provider (query analysis, validation, fallback for extraction)
         search: search provider
-        extraction_llm: optional separate LLM just for extraction step.
-                        Enables multi-model setups (e.g. Ollama for analysis,
-                        Groq for extraction).
-        use_cache: if True, check cache before running and write after.
-                   Set to False to force a fresh run.
-
-    Returns:
-        PipelineResult with entities, attributes, sources, and metadata
+        extraction_llm: optional separate LLM for extraction step
+        use_cache: check cache before running, write after
     """
     start = time.monotonic()
     active_extraction_llm = extraction_llm if extraction_llm is not None else llm
@@ -140,7 +132,15 @@ async def run_pipeline(
     )
 
     # ── Step 6: Aggregate ────────────────────────────────────────────────── #
-    final_entities = aggregate_entities(raw_entities)
+    aggregated_entities = aggregate_entities(raw_entities)
+
+    # ── Step 7: Validate ─────────────────────────────────────────────────── #
+    # Use the primary LLM for validation — it's a lightweight reasoning call
+    final_entities = await validate_entities(
+        entities=aggregated_entities,
+        analysis=analysis,
+        llm=llm,
+    )
 
     duration = round(time.monotonic() - start, 2)
 
@@ -158,7 +158,7 @@ async def run_pipeline(
         ),
     )
 
-    # ── Step 7: Cache write ──────────────────────────────────────────────── #
+    # ── Step 8: Cache write ──────────────────────────────────────────────── #
     if use_cache:
         set_cached(
             query=query,
