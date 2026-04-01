@@ -57,11 +57,55 @@ def get_llm_provider(settings: Settings, provider_override: str = "") -> BaseLLM
 def get_extraction_llm_provider(settings: Settings) -> BaseLLMProvider | None:
     """
     Returns a separate LLM provider for the extraction step, if configured.
-    Returns None if extraction_llm_provider is not set — pipeline uses default.
+    Returns None if extraction_llm_provider is not set.
+
+    Local two-model split example:
+      LLM_PROVIDER=ollama + OLLAMA_MODEL=qwen3:4b         (query analysis)
+      EXTRACTION_LLM_PROVIDER=ollama + EXTRACTION_OLLAMA_MODEL=llama3.2:3b  (extraction)
+
+    Cloud split example:
+      LLM_PROVIDER=ollama + OLLAMA_MODEL=qwen3:4b         (query analysis, local)
+      EXTRACTION_LLM_PROVIDER=groq + GROQ_MODEL=llama-3.3-70b-versatile (extraction, cloud)
     """
     if not settings.extraction_llm_provider:
         return None
-    return get_llm_provider(settings, provider_override=settings.extraction_llm_provider)
+
+    provider = settings.extraction_llm_provider
+
+    if provider == "ollama":
+        from providers.llm.ollama import OllamaProvider
+        # Use extraction_ollama_model if set, fall back to ollama_model
+        model = settings.extraction_ollama_model or settings.ollama_model
+        return OllamaProvider(
+            model=model,
+            base_url=settings.ollama_base_url,
+        )
+
+    if provider == "groq":
+        from providers.llm.groq import GroqProvider
+        return GroqProvider(
+            api_key=settings.groq_api_key,
+            model=settings.groq_model,
+        )
+
+    if provider == "openai":
+        from providers.llm.openai import OpenAIProvider
+        return OpenAIProvider(
+            api_key=settings.openai_api_key,
+            model=settings.openai_model,
+        )
+
+    if provider == "anthropic":
+        from providers.llm.anthropic import AnthropicProvider
+        return AnthropicProvider(
+            api_key=settings.anthropic_api_key,
+            model=settings.anthropic_model,
+        )
+
+    raise ValueError(
+        f"Unknown extraction LLM provider: '{provider}'. "
+        "Valid options: ollama | groq | openai | anthropic"
+    )
 
 
 def get_search_provider(settings: Settings) -> BaseSearchProvider:

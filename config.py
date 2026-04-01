@@ -18,18 +18,23 @@ class Settings(BaseSettings):
 
     # ── Provider selection ────────────────────────────────────────────────── #
     llm_provider: str = "ollama"            # ollama | groq | openai | anthropic
-    search_provider: str = "duckduckgo"     # duckduckgo | brave | tavily
+    search_provider: str = "tavily"         # duckduckgo | brave | tavily
 
     # ── Multi-model: optional separate provider for extraction step ───────── #
-    # If set, extraction uses this provider. All other steps use llm_provider.
-    # Example: llm_provider=ollama, extraction_llm_provider=groq
-    extraction_llm_provider: str = ""       # leave empty to use llm_provider for all steps
+    # Leave empty to use llm_provider for all steps.
+    # Examples:
+    #   Full Groq:        extraction_llm_provider=groq
+    #   Local split:      llm_provider=ollama, extraction_llm_provider=ollama
+    #                     ollama_model=qwen3:4b, extraction_ollama_model=llama3.2:3b
+    extraction_llm_provider: str = ""
 
     # ── Ollama ────────────────────────────────────────────────────────────── #
     ollama_base_url: str
-    ollama_model: str
+    ollama_model: str                        # used for query analysis
+    extraction_ollama_model: str = ""        # if set, used for extraction step
+                                             # falls back to ollama_model if empty
 
-    # ── Groq (free, fast, recommended for extraction) ─────────────────────── #
+    # ── Groq ──────────────────────────────────────────────────────────────── #
     groq_api_key: str = ""
     groq_model: str = ""
 
@@ -63,15 +68,10 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    """
-    Returns a cached Settings instance.
-    Use this everywhere instead of instantiating Settings() directly.
-    """
     return Settings()
 
 
 def configure_logging(settings: Settings) -> None:
-    """Set up root logger from settings."""
     logging.basicConfig(
         level=getattr(logging, settings.log_level.upper(), logging.INFO),
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
