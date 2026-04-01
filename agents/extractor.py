@@ -34,6 +34,7 @@ _INVALID_VALUES = {
     "none", "n/a", "na", "not available", "not found", "unknown",
     "not mentioned", "no information", "no information provided",
     "not specified", "not stated", "not given", "not provided", "-", "",
+    "no", "yes", "true", "false",  # model answering boolean instead of extracting
 }
 
 _INVALID_SUBSTRINGS = (

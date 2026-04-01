@@ -35,22 +35,24 @@ Extracted entities (some may be wrong):
 
 Your job: return ONLY the names of entities that DIRECTLY match the query.
 
-STRICT RULES — remove an entity if ANY of these are true:
-1. It is from a completely different industry (e.g. fintech, defense, retail, logistics, social media, crypto/blockchain)
+RULES — remove an entity only if you are CONFIDENT it does not belong:
+1. It is clearly from a completely unrelated industry (fintech, defense, retail, logistics, social media, crypto/blockchain) with no healthcare connection
 2. It is a VC firm, investment fund, or financial institution
-3. It is a large established corporation (founded before 2000) unless explicitly relevant
-4. It is a research firm, consulting company, or media outlet
-5. It does not relate to the specific domain in the query (e.g. if query says "healthcare", remove non-healthcare entities)
-6. It is a blockchain, crypto, or Web3 company unless the query explicitly asks for that
-7. It appears to be the name of a website, blog, or publication rather than a company
-8. You are unsure — when in doubt, REMOVE it
+3. It is a research firm, consulting company, or media/news outlet
+4. It is a blockchain or crypto company with no healthcare application
+5. It appears to be the name of a website or blog, not a company
+6. It is a very large legacy corporation (e.g. Google, Microsoft, Amazon) that is not primarily a healthcare AI company
+
+Do NOT remove an entity just because its description is vague or incomplete.
+If a company could plausibly be a healthcare AI company based on available info, KEEP it.
+It is better to keep a borderline entity than to remove a valid one.
 
 Return JSON:
 {{
-  "valid_names": ["Only entities that clearly match the query"]
+  "valid_names": ["Names of entities that match or could match the query"]
 }}
 
-Be strict. It is better to return fewer correct results than many wrong ones.
+Aim to keep 70-80% of entities unless they clearly do not belong.
 JSON only.
 """
 
