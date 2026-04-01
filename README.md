@@ -452,3 +452,186 @@ This project was built for the CIIR Agentic Search Challenge.
 The core research question: can a structured entity extraction pipeline outperform a simple "LLM + web search" approach by combining targeted search query generation, concurrent scraping, structured extraction, cross-source aggregation, and post-extraction validation -- all with full source traceability?
 
 The answer is yes, with the expected tradeoffs between quality and speed documented above.
+
+---
+
+## Deployment on Render (Free)
+
+Render hosts the full app — backend API + React frontend — on a single free server.
+No credit card required. No separate frontend hosting needed.
+
+### What you need before starting
+
+- Your GitHub repo pushed and set to **Public**
+- A [Render account](https://render.com) (sign up with GitHub)
+- A Groq API key (free at [console.groq.com](https://console.groq.com))
+- A Tavily API key (free at [tavily.com](https://tavily.com))
+
+---
+
+### Step 1: Push your repo to GitHub
+
+```bash
+# From inside your narada/ directory
+git add .
+git commit -m "ready for deployment"
+git push origin main
+```
+
+Make sure your repo is **public** on GitHub (Settings → Danger Zone → Change visibility).
+
+---
+
+### Step 2: Build the frontend locally to verify it works
+
+```bash
+cd frontend
+npm install
+npm run build
+cd ..
+```
+
+You should see a `frontend/dist/` folder appear. Commit it if Render can't run npm:
+
+```bash
+git add frontend/dist/
+git commit -m "include frontend build"
+git push origin main
+```
+
+---
+
+### Step 3: Create a new Web Service on Render
+
+1. Go to [dashboard.render.com](https://dashboard.render.com)
+2. Click **New** → **Web Service**
+3. Click **Connect a repository** → select your `narada` repo
+4. Render will detect `render.yaml` automatically
+
+If it doesn't auto-detect, set these manually:
+
+| Field | Value |
+|---|---|
+| Runtime | Python 3 |
+| Build Command | `pip install -r requirements.txt && cd frontend && npm install && npm run build` |
+| Start Command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
+| Plan | **Free** |
+
+---
+
+### Step 4: Set your secret environment variables
+
+In Render dashboard → your service → **Environment** tab, add:
+
+| Key | Value |
+|---|---|
+| `GROQ_API_KEY` | your Groq key (`gsk_...`) |
+| `TAVILY_API_KEY` | your Tavily key (`tvly-...`) |
+
+Everything else is already set in `render.yaml`.
+
+**Do not put these keys in `render.yaml`** — that file is committed to git.
+Secret keys go in the Render dashboard only.
+
+---
+
+### Step 5: Deploy
+
+Click **Deploy**. Render will:
+
+1. Clone your repo
+2. Install Python dependencies from `requirements.txt`
+3. Build the React frontend (`npm install && npm run build`)
+4. Start FastAPI, which serves both the API and the React app
+
+First deploy takes 3-5 minutes. Subsequent deploys are faster.
+
+---
+
+### Step 6: Your live URL
+
+Once deployed, Render gives you a URL like:
+
+```
+https://narada-xxxx.onrender.com
+```
+
+Open it in your browser — you should see the full Narada UI.
+
+Update your README and the submission email with this URL.
+
+---
+
+### Free tier limitations
+
+**Sleep after 15 minutes of inactivity.** The first request after sleep takes ~30 seconds to wake the server. Subsequent requests are instant.
+
+**Fix:** Set up a free uptime monitor to ping your app every 14 minutes:
+
+1. Go to [uptimerobot.com](https://uptimerobot.com) → create free account
+2. Add monitor → HTTP(S) → URL: `https://your-app.onrender.com/health`
+3. Check interval: **5 minutes**
+
+This keeps the server warm and eliminates the cold start delay.
+
+---
+
+### Updating the deployment
+
+Every push to `main` on GitHub triggers an automatic redeploy on Render:
+
+```bash
+git add .
+git commit -m "your changes"
+git push origin main
+```
+
+---
+
+### Environment variables reference for production
+
+Set these in the Render dashboard (Environment tab):
+
+```bash
+# Required secrets (set in dashboard, not render.yaml)
+GROQ_API_KEY=gsk_...
+TAVILY_API_KEY=tvly-...
+
+# Already set in render.yaml (no action needed)
+ENVIRONMENT=production
+FORCE_HTTPS=true
+LLM_PROVIDER=groq
+SEARCH_PROVIDER=tavily
+GROQ_MODEL=llama-3.3-70b-versatile
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.2:3b
+LOG_LEVEL=WARNING
+```
+
+Users supply their own keys via the frontend settings panel.
+The keys you set above are the server-side fallback — used when no key is sent in the request header.
+
+---
+
+## Running Locally (full stack)
+
+```bash
+# Terminal 1 — Backend
+conda activate narada
+uvicorn main:app --reload
+# http://localhost:8000
+
+# Terminal 2 — Frontend
+cd frontend
+npm run dev
+# http://localhost:5173 (proxies /api to localhost:8000)
+```
+
+## Running Locally (single server, production mode)
+
+```bash
+cd frontend && npm run build && cd ..
+conda activate narada
+uvicorn main:app --host 0.0.0.0 --port 8000
+# http://localhost:8000 serves both frontend and API
+```

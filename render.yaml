@@ -1,0 +1,57 @@
+# render.yaml
+# Render deployment configuration.
+# Commit this file to your repo root.
+# Render picks it up automatically when you connect the repo.
+
+services:
+  - type: web
+    name: narada
+    runtime: python
+    region: oregon
+    plan: free
+
+    # Build: install Python deps, then build the React frontend
+    buildCommand: |
+      pip install -r requirements.txt &&
+      cd frontend &&
+      npm install &&
+      npm run build
+
+    # Start the FastAPI server
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+    # Environment variables set here are the server defaults.
+    # Users supply their own API keys via the frontend UI —
+    # these server-side values are only used if no key is passed in the request header.
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: FORCE_HTTPS
+        value: "true"
+      - key: ALLOWED_ORIGIN
+        value: "*"
+      - key: LOG_LEVEL
+        value: WARNING
+
+      # Default LLM provider — leave as ollama so the server has no keys of its own.
+      # Users bring their own keys via the frontend.
+      - key: LLM_PROVIDER
+        value: groq
+      - key: SEARCH_PROVIDER
+        value: tavily
+
+      # Ollama is not available on Render (no local GPU).
+      # Set these as empty strings so config doesn't crash on startup.
+      - key: OLLAMA_BASE_URL
+        value: "http://localhost:11434"
+      - key: OLLAMA_MODEL
+        value: "llama3.2:3b"
+
+      # Optional: set your own keys here so the app works without user-supplied keys.
+      # Leave blank to require users to bring their own.
+      - key: GROQ_API_KEY
+        sync: false        # set in Render dashboard, not here (keeps it out of git)
+      - key: GROQ_MODEL
+        value: "llama-3.3-70b-versatile"
+      - key: TAVILY_API_KEY
+        sync: false        # set in Render dashboard
