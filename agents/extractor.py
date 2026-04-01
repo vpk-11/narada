@@ -7,11 +7,12 @@ For each page, sends content to the LLM and extracts structured entities.
 Every attribute value is tagged with its source URL for full traceability.
 
 Key design decisions:
+- PRIMARY SUBJECT rule: only extract entities that are the main focus
+  of the page, not entities mentioned in passing or as context.
 - SEQUENTIAL processing — Ollama handles one request at a time locally.
 - Robust JSON parser handles both {"entities":[...]} and bare [...] responses.
 - _is_valid_value() filters out "None", "N/A", "unknown" etc before storage.
-- Content capped at _MAX_CONTENT_CHARS — enough for llama3.2 to find attributes.
-- Explicit prompt rules prevent extracting investors, report titles, or concepts.
+- Content capped at _MAX_CONTENT_CHARS to keep prompts within context limits.
 - Post-extraction filter drops entities with zero valid attributes.
 - Accepts optional extraction_llm for multi-model setups.
 """
@@ -29,14 +30,12 @@ logger = logging.getLogger(__name__)
 _MAX_CONTENT_CHARS = 2500
 _MIN_ATTRIBUTES_TO_KEEP = 1
 
-# Exact-match junk values the model writes when it can't find something
 _INVALID_VALUES = {
     "none", "n/a", "na", "not available", "not found", "unknown",
     "not mentioned", "no information", "no information provided",
     "not specified", "not stated", "not given", "not provided", "-", "",
 }
 
-# Substrings that indicate the model is describing absence rather than a value
 _INVALID_SUBSTRINGS = (
     "no founding date",
     "no information",
@@ -46,17 +45,21 @@ _INVALID_SUBSTRINGS = (
     "not found",
     "not specified",
     "no data",
+    "mentioned as",
+    "mentioned in",
+    "referenced as",
 )
 
 _SYSTEM_PROMPT = """You are Narada, a precise data extraction agent.
-Your job is to extract real, named entities from web content and their attributes.
+You extract structured data about entities that are the PRIMARY SUBJECT of a web page.
 You respond with valid JSON only. No prose, no markdown, no explanation.
 """
 
 _PROMPT_TEMPLATE = """Extract structured data from this web page.
 
+Original research query: {query}
 Entity type we want: {entity_type}
-Attributes to extract per entity: {attributes}
+Attributes to extract: {attributes}
 Page URL: {url}
 
 Page content:
@@ -64,21 +67,28 @@ Page content:
 {content}
 ---
 
-IMPORTANT RULES:
-1. Only extract real, named {entity_type} entities — actual proper names of specific {entity_type}s.
-2. Do NOT extract: generic concepts, investor names, report titles, article authors, or category names.
-3. For each entity, only include attributes you found CLEAR evidence for. No guessing.
-4. If you cannot find a value for an attribute, OMIT that attribute entirely. Do not write null, None, or N/A.
-5. Attribute values must be concise — one phrase or sentence maximum.
-6. If you find no valid {entity_type} entities, return {{"entities": []}}.
+CRITICAL RULES:
+1. Only extract {entity_type} entities that ARE THE PRIMARY SUBJECT of this page.
+   - A page about "Top AI Healthcare Startups" has startups as primary subjects.
+   - A page about Abridge that mentions Epic Systems has ONLY Abridge as primary subject.
+2. Do NOT extract entities that are merely:
+   - Mentioned in passing or as context
+   - Investors, funders, or venture capital firms
+   - Customers or partners of the primary entity
+   - Competitors mentioned briefly
+   - Research firms, consulting companies, or media outlets
+3. For each primary entity, only include attributes with CLEAR evidence. No guessing.
+4. If you cannot find a value for an attribute, OMIT it entirely. Never write null, None, or N/A.
+5. Attribute values must be factual and concise — one phrase or sentence maximum.
+6. If no primary {entity_type} entities are found, return {{"entities": []}}.
 
 Return this exact JSON:
 {{
   "entities": [
     {{
-      "name": "Actual {entity_type} Name",
+      "name": "Primary {entity_type} Name",
       "attributes": {{
-        "attribute_name": "value clearly stated in the content"
+        "attribute_name": "factual value from the content"
       }}
     }}
   ]
@@ -90,9 +100,8 @@ JSON only. No other text.
 
 def _is_valid_value(val: str) -> bool:
     """
-    Return False for values the model writes when it cannot find something.
-    Checks exact matches against _INVALID_VALUES and substring matches
-    against _INVALID_SUBSTRINGS — catches phrases like "No founding date provided".
+    Return False for junk values the model writes when it can't find something.
+    Checks exact matches and substrings.
     """
     normalized = val.lower().strip()
     if normalized in _INVALID_VALUES:
@@ -103,11 +112,8 @@ def _is_valid_value(val: str) -> bool:
 def _parse_llm_json(raw: str) -> dict:
     """
     Parse JSON from LLM output.
-    Handles two common response patterns:
-    - Correct:        {"entities": [...]}
-    - Common mistake: [...] — bare array, wrapped automatically
-
-    Also strips Qwen3 <think> blocks and markdown fences.
+    Handles {"entities":[...]} and bare [...] responses.
+    Strips Qwen3 <think> blocks and markdown fences.
     """
     cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
     cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip().rstrip("```").strip()
@@ -138,7 +144,7 @@ def _build_entities(
     """
     Convert parsed LLM JSON into Entity objects.
     Attaches source_url to every CellValue — the traceability guarantee.
-    Filters out None/N/A values and drops entities with no valid attributes.
+    Filters junk values and drops entities with no valid attributes.
     """
     entities: list[Entity] = []
     raw_entities = data.get("entities", [])
@@ -165,7 +171,7 @@ def _build_entities(
         }
 
         if len(attributes) < _MIN_ATTRIBUTES_TO_KEEP:
-            logger.debug(f"[Extractor] Dropping '{name}' — no valid attributes found")
+            logger.debug(f"[Extractor] Dropping '{name}' — no valid attributes")
             continue
 
         entities.append(Entity(name=name, attributes=attributes))
@@ -178,13 +184,11 @@ async def _extract_from_page(
     analysis: QueryAnalysis,
     llm: BaseLLMProvider,
 ) -> list[Entity]:
-    """
-    Extract entities from a single page.
-    Returns empty list on any failure.
-    """
+    """Extract entities from a single page. Returns empty list on failure."""
     content = page.content[:_MAX_CONTENT_CHARS]
 
     prompt = _PROMPT_TEMPLATE.format(
+        query=analysis.original_query if hasattr(analysis, "original_query") else "",
         entity_type=analysis.entity_type,
         attributes=", ".join(analysis.attributes),
         url=page.url,
@@ -219,6 +223,7 @@ async def extract_entities(
 ) -> list[Entity]:
     """
     Extract entities from all pages sequentially.
+    Sequential because Ollama handles one LLM request at a time locally.
 
     Args:
         pages: scraped pages
