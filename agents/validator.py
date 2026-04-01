@@ -3,20 +3,13 @@ agents/validator.py
 
 Post-aggregation validation step.
 
-After extraction and deduplication, we have a list of entities that MIGHT
-match the original query. Some will be noise — investors, legacy companies,
-research firms that got pulled in from listicle pages.
+After extraction and deduplication, runs a single LLM call to filter out
+entities that don't match the original query intent.
 
-This agent runs a single fast LLM call that:
-1. Sees the original query
-2. Sees the full entity list
-3. Returns only the entities that genuinely match the query intent
-
-Why a separate agent vs fixing the extractor:
-- Extraction happens per-page without full list context
-- Validation sees ALL entities at once and can make relative judgments
-- One cheap call vs N expensive calls
-- Keeps extraction and validation concerns separate
+This catches noise that slips through extraction:
+- Generic unicorn/funding lists that include off-topic companies
+- Investors, VCs, research firms
+- Companies from completely different sectors
 """
 
 import json
@@ -28,39 +21,35 @@ from providers.base import BaseLLMProvider
 
 logger = logging.getLogger(__name__)
 
-_SYSTEM_PROMPT = """You are Narada, a precise research quality filter.
-Your job is to filter a list of extracted entities and keep only those
-that genuinely match the original research query.
-You respond with valid JSON only. No prose, no markdown, no explanation.
+_SYSTEM_PROMPT = """You are Narada, a strict research quality filter.
+You receive a list of extracted entities and a research query.
+Your ONLY job is to remove entities that do not belong.
+You respond with valid JSON only. No prose, no markdown.
 """
 
-_PROMPT_TEMPLATE = """You extracted entities from web pages for this research query:
-"{query}"
+_PROMPT_TEMPLATE = """Research query: "{query}"
+We are looking for: {entity_type} entities that match this query.
 
-Entity type being researched: {entity_type}
-
-Here are the extracted entities. Some may be noise — investors, legacy companies,
-research firms, or entities mentioned in passing that don't match the query.
-
-Entities:
+Extracted entities (some may be wrong):
 {entity_list}
 
-Return ONLY the names of entities that genuinely match the research query.
-An entity matches if it IS a {entity_type} that the query is actually asking about.
+Your job: return ONLY the names of entities that DIRECTLY match the query.
 
-An entity does NOT match if it is:
-- A venture capital or investment firm (unless the query is about VCs)
-- A large legacy corporation that predates the "startup" qualifier by decades
-- A research, consulting, or media company (unless the query asks for those)
-- A customer, partner, or investor of another entity on the list
-- Something mentioned only in passing as context
+STRICT RULES — remove an entity if ANY of these are true:
+1. It is from a completely different industry (e.g. fintech, defense, retail, logistics, social media)
+2. It is a VC firm, investment fund, or financial institution
+3. It is a large established corporation (founded before 2000) unless explicitly relevant
+4. It is a research firm, consulting company, or media outlet
+5. It does not relate to the specific domain in the query (e.g. if query says "healthcare", remove non-healthcare entities)
+6. You are unsure — when in doubt, REMOVE it
 
 Return JSON:
 {{
-  "valid_names": ["Entity Name 1", "Entity Name 2"]
+  "valid_names": ["Only entities that clearly match the query"]
 }}
 
-JSON only. No other text.
+Be strict. It is better to return fewer correct results than many wrong ones.
+JSON only.
 """
 
 
@@ -81,7 +70,6 @@ def _parse_valid_names(raw: str) -> list[str]:
 
 
 def _normalize(name: str) -> str:
-    """Normalize name for case-insensitive matching."""
     return name.lower().strip()
 
 
@@ -92,21 +80,17 @@ async def validate_entities(
 ) -> list[Entity]:
     """
     Filter entities to only those that genuinely match the original query.
-
-    Args:
-        entities: aggregated entity list from the aggregator
-        analysis: original query analysis (entity_type + original query)
-        llm: any BaseLLMProvider — use a fast model, this is a lightweight call
-
-    Returns:
-        filtered list of Entity objects that match the query intent
+    Uses strict rules — prefers fewer correct results over many noisy ones.
+    Falls back to unfiltered list if validation itself fails.
     """
     if not entities:
         return entities
 
-    # Build a simple numbered list for the LLM to reason over
     entity_list = "\n".join(
-        f"{i+1}. {e.name} — {e.attributes.get('what_they_do', {}).value if 'what_they_do' in e.attributes else 'no description'}"
+        f"{i+1}. {e.name}"
+        + (f" — {e.attributes['what_they_do'].value}" if "what_they_do" in e.attributes else "")
+        + (f" — {e.attributes['ai_specialization'].value}" if "ai_specialization" in e.attributes else "")
+        + (f" — {e.attributes['healthcare_application_area'].value}" if "healthcare_application_area" in e.attributes else "")
         for i, e in enumerate(entities)
     )
 
@@ -118,7 +102,7 @@ async def validate_entities(
         entity_list=entity_list,
     )
 
-    logger.info(f"[Validator] Validating {len(entities)} entities against query: '{original_query}'")
+    logger.info(f"[Validator] Validating {len(entities)} entities against: '{original_query}'")
 
     try:
         raw = await llm.complete(prompt=prompt, system=_SYSTEM_PROMPT)
@@ -128,16 +112,15 @@ async def validate_entities(
             logger.warning("[Validator] No valid names returned — keeping all entities")
             return entities
 
-        # Match by normalized name — case insensitive
         valid_normalized = {_normalize(n) for n in valid_names}
         filtered = [e for e in entities if _normalize(e.name) in valid_normalized]
 
         logger.info(
-            f"[Validator] {len(entities)} -> {len(filtered)} entities after validation "
-            f"(removed {len(entities) - len(filtered)} noise entities)"
+            f"[Validator] {len(entities)} -> {len(filtered)} entities "
+            f"(removed {len(entities) - len(filtered)})"
         )
         return filtered
 
     except Exception as e:
-        logger.warning(f"[Validator] Validation failed: {e} — returning unfiltered entities")
+        logger.warning(f"[Validator] Failed: {e} — returning unfiltered entities")
         return entities
