@@ -5,43 +5,42 @@ import { useSession } from './hooks/useSession.js'
 
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
-/**
- * Build request headers from the user's session config.
- *
- * Keys go into custom HTTP headers (x-groq-api-key etc), NOT the request body.
- * Headers are excluded from most server access logs by default.
- * Nothing is stored on the server -- keys are used per-request and discarded.
- */
 function buildHeaders(config) {
-  const headers = { 'Content-Type': 'application/json' }
-
-  if (config.groq_api_key)       headers['x-groq-api-key']        = config.groq_api_key
-  if (config.openai_api_key)     headers['x-openai-api-key']       = config.openai_api_key
-  if (config.anthropic_api_key)  headers['x-anthropic-api-key']    = config.anthropic_api_key
-  if (config.tavily_api_key)     headers['x-tavily-api-key']       = config.tavily_api_key
-  if (config.brave_api_key)      headers['x-brave-api-key']        = config.brave_api_key
-  if (config.ollama_base_url)    headers['x-ollama-base-url']      = config.ollama_base_url
-  if (config.search_provider)    headers['x-search-provider']      = config.search_provider
-
-  if (config.query_analyzer?.provider) headers['x-query-analyzer-provider'] = config.query_analyzer.provider
-  if (config.query_analyzer?.model)    headers['x-query-analyzer-model']    = config.query_analyzer.model
-  if (config.extractor?.provider)      headers['x-extractor-provider']      = config.extractor.provider
-  if (config.extractor?.model)         headers['x-extractor-model']         = config.extractor.model
-  if (config.validator?.provider)      headers['x-validator-provider']      = config.validator.provider
-  if (config.validator?.model)         headers['x-validator-model']         = config.validator.model
-
-  return headers
+  const h = { 'Content-Type': 'application/json' }
+  if (config.groq_api_key)       h['x-groq-api-key']            = config.groq_api_key
+  if (config.openai_api_key)     h['x-openai-api-key']           = config.openai_api_key
+  if (config.anthropic_api_key)  h['x-anthropic-api-key']        = config.anthropic_api_key
+  if (config.tavily_api_key)     h['x-tavily-api-key']           = config.tavily_api_key
+  if (config.brave_api_key)      h['x-brave-api-key']            = config.brave_api_key
+  if (config.ollama_base_url)    h['x-ollama-base-url']          = config.ollama_base_url
+  if (config.search_provider)    h['x-search-provider']          = config.search_provider
+  if (config.query_analyzer?.provider) h['x-query-analyzer-provider'] = config.query_analyzer.provider
+  if (config.query_analyzer?.model)    h['x-query-analyzer-model']    = config.query_analyzer.model
+  if (config.extractor?.provider)      h['x-extractor-provider']      = config.extractor.provider
+  if (config.extractor?.model)         h['x-extractor-model']         = config.extractor.model
+  if (config.validator?.provider)      h['x-validator-provider']      = config.validator.provider
+  if (config.validator?.model)         h['x-validator-model']         = config.validator.model
+  return h
 }
+
+const STEPS = [
+  'Analyzing query',
+  'Searching the web',
+  'Scraping pages',
+  'Extracting entities',
+  'Validating results',
+]
 
 export default function App() {
   const [config] = useSession('narada_config', DEFAULT_CONFIG)
-  const [query, setQuery] = useState('')
+  const [query, setQuery]   = useState('')
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
-  const [meta, setMeta] = useState(null)
+  const [stepIdx, setStepIdx] = useState(0)
+  const [result, setResult]   = useState(null)
+  const [error, setError]     = useState(null)
+  const [meta, setMeta]       = useState(null)
 
-  async function handleSearch(refresh = false) {
+  async function run(refresh = false) {
     const q = query.trim()
     if (!q || loading) return
 
@@ -49,6 +48,9 @@ export default function App() {
     setError(null)
     setResult(null)
     setMeta(null)
+    setStepIdx(0)
+
+    const iv = setInterval(() => setStepIdx(i => Math.min(i + 1, STEPS.length - 1)), 3500)
 
     try {
       const res = await fetch(`${API_BASE}/api/search`, {
@@ -56,25 +58,16 @@ export default function App() {
         headers: buildHeaders(config),
         body: JSON.stringify({ query: q, refresh }),
       })
-
       const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.detail || `HTTP ${res.status}`)
-      }
-
+      if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`)
       setResult(data.result)
       setMeta(data.result.metadata)
-
-    } catch (err) {
-      setError(err.message)
+    } catch (e) {
+      setError(e.message)
     } finally {
+      clearInterval(iv)
       setLoading(false)
     }
-  }
-
-  function handleKeyDown(e) {
-    if (e.key === 'Enter') handleSearch(false)
   }
 
   return (
@@ -82,85 +75,93 @@ export default function App() {
       <Sidebar />
 
       <main className="main">
-        <div className="search-area">
-          <h1 className="search-title">What are you researching?</h1>
-          <p className="search-subtitle">
-            Enter a topic. Narada searches the web, extracts structured data,
-            and returns a traceable table. Every cell links to its source.
-          </p>
-
+        {/* Header */}
+        <div className="search-header">
+          <div className="breadcrumb">Narada / Search</div>
+          <h1 className="page-title">What are you researching?</h1>
           <div className="search-row">
-            <input
-              className="search-input"
-              type="text"
-              placeholder='"AI startups in healthcare" or "top pizza places in Brooklyn"'
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={loading}
-            />
-            <button
-              className="btn btn-primary"
-              onClick={() => handleSearch(false)}
-              disabled={loading || !query.trim()}
-            >
-              {loading ? 'Searching...' : 'Search'}
-            </button>
-            {result && (
-              <button
-                className="btn btn-ghost"
-                onClick={() => handleSearch(true)}
+            <div className="search-wrap">
+              <svg className="search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 2.5 2.5"/>
+              </svg>
+              <input
+                className="search-input"
+                type="text"
+                placeholder='"AI startups in healthcare" or "top pizza places in Brooklyn"'
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && run(false)}
                 disabled={loading}
-                title="Bypass cache and run fresh"
-              >
+              />
+            </div>
+            <button className="btn btn-primary" onClick={() => run(false)} disabled={loading || !query.trim()}>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 2.5 2.5"/>
+              </svg>
+              {loading ? 'Searching…' : 'Search'}
+            </button>
+            {result && !loading && (
+              <button className="btn btn-ghost" onClick={() => run(true)}>
                 Refresh
               </button>
             )}
           </div>
         </div>
 
+        {/* Results */}
         <div className="results-area">
+
           {loading && (
-            <div>
-              <div className="loading-bar">
-                <div className="loading-bar-inner" />
-              </div>
-              <div style={{ color: 'var(--text-3)', fontSize: 13, textAlign: 'center' }}>
-                Searching the web, extracting entities, validating results...
+            <div className="loading-wrap">
+              <div className="progress-track"><div className="progress-bar" /></div>
+              <div className="step-list">
+                {STEPS.map((s, i) => (
+                  <div key={s} className={`step-item${i < stepIdx ? ' done' : i === stepIdx ? ' live' : ''}`}>
+                    <div className={`step-pip${i < stepIdx ? ' done' : i === stepIdx ? ' live' : ''}`}>
+                      {i < stepIdx ? '✓' : i + 1}
+                    </div>
+                    {s}
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
           {error && (
-            <div className="error-box">
-              <strong>Pipeline error</strong>
-              {error}
+            <div className="error-wrap">
+              <div className="error-ico">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 11h.01"/>
+                </svg>
+              </div>
+              <div>
+                <div className="error-title">Pipeline error</div>
+                <div className="error-msg">{error}</div>
+              </div>
             </div>
           )}
 
           {result && meta && !loading && (
             <>
-              <div className="status-bar">
-                <span className="pill pill-green">
-                  {result.entities.length} entities
-                </span>
-                <span className="pill pill-amber">
-                  {result.entity_type}
-                </span>
-                <span>{meta.pages_scraped} pages scraped</span>
-                <span>{meta.duration_seconds}s</span>
-                <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 11 }}>
-                  {meta.llm_provider} / {meta.llm_model}
-                </span>
+              <div className="meta-bar">
+                <span className="tag tag-green">{result.entities.length} entities</span>
+                <span className="tag tag-accent">{result.entity_type}</span>
+                <span className="meta-sep">·</span>
+                <span className="tag tag-neutral">{meta.pages_scraped} pages</span>
+                <span className="tag tag-neutral">{meta.duration_seconds}s</span>
+                <span className="meta-push" />
+                <span className="meta-model">{meta.llm_provider} / {meta.llm_model}</span>
               </div>
 
               {result.entities.length === 0 ? (
                 <div className="empty-state">
-                  <span className="icon">∅</span>
-                  <h3>No entities found</h3>
-                  <p>
-                    Try a more specific query or click Refresh to run with different sources.
-                  </p>
+                  <div className="empty-icon">
+                    <svg width="22" height="22" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
+                      <circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 2.5 2.5"/>
+                    </svg>
+                  </div>
+                  <div className="empty-title">No entities found</div>
+                  <div className="empty-desc">Try a more specific query or click Refresh.</div>
                 </div>
               ) : (
                 <ResultsTable result={result} />
@@ -170,20 +171,19 @@ export default function App() {
 
           {!loading && !result && !error && (
             <div className="empty-state">
-              <span className="icon" style={{ opacity: 0.4 }}>
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="1.2">
-                  <circle cx="11" cy="11" r="8"/>
-                  <path d="m21 21-4.35-4.35"/>
+              <div className="empty-icon">
+                <svg width="22" height="22" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
+                  <circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 2.5 2.5"/>
                 </svg>
-              </span>
-              <h3>Enter a query to begin</h3>
-              <p>
-                Configure your API keys in the sidebar, then search any topic.
-                Results are cached — repeated queries return instantly.
-              </p>
+              </div>
+              <div className="empty-title">Ready to search</div>
+              <div className="empty-desc">
+                Configure your API keys in the sidebar, then enter a topic above.
+                Every result cell links to its source.
+              </div>
             </div>
           )}
+
         </div>
       </main>
     </div>
