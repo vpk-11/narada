@@ -7,19 +7,19 @@ const API_BASE = import.meta.env.VITE_API_URL || ''
 
 function buildHeaders(config) {
   const h = { 'Content-Type': 'application/json' }
-  if (config.groq_api_key)       h['x-groq-api-key']            = config.groq_api_key
-  if (config.openai_api_key)     h['x-openai-api-key']           = config.openai_api_key
-  if (config.anthropic_api_key)  h['x-anthropic-api-key']        = config.anthropic_api_key
-  if (config.tavily_api_key)     h['x-tavily-api-key']           = config.tavily_api_key
-  if (config.brave_api_key)      h['x-brave-api-key']            = config.brave_api_key
-  if (config.ollama_base_url)    h['x-ollama-base-url']          = config.ollama_base_url
-  if (config.search_provider)    h['x-search-provider']          = config.search_provider
+  if (config.groq_api_key) h['x-groq-api-key'] = config.groq_api_key
+  if (config.openai_api_key) h['x-openai-api-key'] = config.openai_api_key
+  if (config.anthropic_api_key) h['x-anthropic-api-key'] = config.anthropic_api_key
+  if (config.tavily_api_key) h['x-tavily-api-key'] = config.tavily_api_key
+  if (config.brave_api_key) h['x-brave-api-key'] = config.brave_api_key
+  if (config.ollama_base_url) h['x-ollama-base-url'] = config.ollama_base_url
+  if (config.search_provider) h['x-search-provider'] = config.search_provider
   if (config.query_analyzer?.provider) h['x-query-analyzer-provider'] = config.query_analyzer.provider
-  if (config.query_analyzer?.model)    h['x-query-analyzer-model']    = config.query_analyzer.model
-  if (config.extractor?.provider)      h['x-extractor-provider']      = config.extractor.provider
-  if (config.extractor?.model)         h['x-extractor-model']         = config.extractor.model
-  if (config.validator?.provider)      h['x-validator-provider']      = config.validator.provider
-  if (config.validator?.model)         h['x-validator-model']         = config.validator.model
+  if (config.query_analyzer?.model) h['x-query-analyzer-model'] = config.query_analyzer.model
+  if (config.extractor?.provider) h['x-extractor-provider'] = config.extractor.provider
+  if (config.extractor?.model) h['x-extractor-model'] = config.extractor.model
+  if (config.validator?.provider) h['x-validator-provider'] = config.validator.provider
+  if (config.validator?.model) h['x-validator-model'] = config.validator.model
   return h
 }
 
