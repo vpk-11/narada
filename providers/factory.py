@@ -2,44 +2,52 @@
 providers/factory.py
 
 Builds the correct provider instances from settings.
-The rest of the codebase calls these functions and never imports
-concrete implementations directly.
 
-Adding a new provider: implement the base class, register it here.
+Resolution order for every step-specific provider:
+  1. Step-specific provider env var (e.g. QUERY_ANALYZER_LLM_PROVIDER)
+  2. Falls back to LLM_PROVIDER if not set
+
+For Ollama specifically, each step can also use a different model:
+  1. Step-specific model (e.g. QUERY_ANALYZER_OLLAMA_MODEL)
+  2. Falls back to OLLAMA_MODEL if not set
 """
+
+import logging
 
 from config import Settings
 from providers.base import BaseLLMProvider, BaseSearchProvider
 
+logger = logging.getLogger(__name__)
 
-def get_llm_provider(settings: Settings, provider_override: str = "") -> BaseLLMProvider:
-    """
-    Instantiate and return the configured LLM provider.
-    provider_override lets the pipeline request a specific provider
-    for a specific step (e.g. extraction_llm_provider).
-    """
-    provider = provider_override or settings.llm_provider
 
+def _build_llm(
+    provider: str,
+    settings: Settings,
+    ollama_model_override: str = "",
+) -> BaseLLMProvider:
+    """
+    Instantiate an LLM provider by name.
+
+    Args:
+        provider: provider name string
+        settings: app settings
+        ollama_model_override: use this model instead of settings.ollama_model
+                               when provider is ollama. Falls back to ollama_model
+                               if empty.
+    """
     if provider == "ollama":
         from providers.llm.ollama import OllamaProvider
-        return OllamaProvider(
-            model=settings.ollama_model,
-            base_url=settings.ollama_base_url,
-        )
+        model = ollama_model_override or settings.ollama_model
+        logger.debug(f"[Factory] Building Ollama provider with model={model}")
+        return OllamaProvider(model=model, base_url=settings.ollama_base_url)
 
     if provider == "groq":
         from providers.llm.groq import GroqProvider
-        return GroqProvider(
-            api_key=settings.groq_api_key,
-            model=settings.groq_model,
-        )
+        return GroqProvider(api_key=settings.groq_api_key, model=settings.groq_model)
 
     if provider == "openai":
         from providers.llm.openai import OpenAIProvider
-        return OpenAIProvider(
-            api_key=settings.openai_api_key,
-            model=settings.openai_model,
-        )
+        return OpenAIProvider(api_key=settings.openai_api_key, model=settings.openai_model)
 
     if provider == "anthropic":
         from providers.llm.anthropic import AnthropicProvider
@@ -54,63 +62,61 @@ def get_llm_provider(settings: Settings, provider_override: str = "") -> BaseLLM
     )
 
 
-def get_extraction_llm_provider(settings: Settings) -> BaseLLMProvider | None:
+def get_llm_provider(settings: Settings) -> BaseLLMProvider:
     """
-    Returns a separate LLM provider for the extraction step, if configured.
-    Returns None if extraction_llm_provider is not set.
-
-    Local two-model split example:
-      LLM_PROVIDER=ollama + OLLAMA_MODEL=qwen3:4b         (query analysis)
-      EXTRACTION_LLM_PROVIDER=ollama + EXTRACTION_OLLAMA_MODEL=llama3.2:3b  (extraction)
-
-    Cloud split example:
-      LLM_PROVIDER=ollama + OLLAMA_MODEL=qwen3:4b         (query analysis, local)
-      EXTRACTION_LLM_PROVIDER=groq + GROQ_MODEL=llama-3.3-70b-versatile (extraction, cloud)
+    Returns the default LLM provider.
+    Used as the fallback when no step-specific provider is configured.
     """
-    if not settings.extraction_llm_provider:
-        return None
+    return _build_llm(settings.llm_provider, settings)
 
-    provider = settings.extraction_llm_provider
 
-    if provider == "ollama":
-        from providers.llm.ollama import OllamaProvider
-        # Use extraction_ollama_model if set, fall back to ollama_model
-        model = settings.extraction_ollama_model or settings.ollama_model
-        return OllamaProvider(
-            model=model,
-            base_url=settings.ollama_base_url,
-        )
-
-    if provider == "groq":
-        from providers.llm.groq import GroqProvider
-        return GroqProvider(
-            api_key=settings.groq_api_key,
-            model=settings.groq_model,
-        )
-
-    if provider == "openai":
-        from providers.llm.openai import OpenAIProvider
-        return OpenAIProvider(
-            api_key=settings.openai_api_key,
-            model=settings.openai_model,
-        )
-
-    if provider == "anthropic":
-        from providers.llm.anthropic import AnthropicProvider
-        return AnthropicProvider(
-            api_key=settings.anthropic_api_key,
-            model=settings.anthropic_model,
-        )
-
-    raise ValueError(
-        f"Unknown extraction LLM provider: '{provider}'. "
-        "Valid options: ollama | groq | openai | anthropic"
+def get_query_analyzer_llm(settings: Settings) -> BaseLLMProvider:
+    """
+    Returns the LLM for Step 1: query analysis.
+    Falls back to default LLM_PROVIDER if QUERY_ANALYZER_LLM_PROVIDER is not set.
+    """
+    provider = settings.query_analyzer_llm_provider or settings.llm_provider
+    model_override = (
+        settings.query_analyzer_ollama_model
+        if provider == "ollama"
+        else ""
     )
+    logger.info(f"[Factory] Query analyzer: {provider}/{model_override or settings.ollama_model}")
+    return _build_llm(provider, settings, ollama_model_override=model_override)
+
+
+def get_extraction_llm(settings: Settings) -> BaseLLMProvider:
+    """
+    Returns the LLM for Step 4: entity extraction.
+    Falls back to default LLM_PROVIDER if EXTRACTION_LLM_PROVIDER is not set.
+    """
+    provider = settings.extraction_llm_provider or settings.llm_provider
+    model_override = (
+        settings.extraction_ollama_model
+        if provider == "ollama"
+        else ""
+    )
+    logger.info(f"[Factory] Extraction LLM: {provider}/{model_override or settings.ollama_model}")
+    return _build_llm(provider, settings, ollama_model_override=model_override)
+
+
+def get_validator_llm(settings: Settings) -> BaseLLMProvider:
+    """
+    Returns the LLM for Step 7: post-extraction validation.
+    Falls back to default LLM_PROVIDER if VALIDATOR_LLM_PROVIDER is not set.
+    """
+    provider = settings.validator_llm_provider or settings.llm_provider
+    model_override = (
+        settings.validator_ollama_model
+        if provider == "ollama"
+        else ""
+    )
+    logger.info(f"[Factory] Validator LLM: {provider}/{model_override or settings.ollama_model}")
+    return _build_llm(provider, settings, ollama_model_override=model_override)
 
 
 def get_search_provider(settings: Settings) -> BaseSearchProvider:
-    """Instantiate and return the configured search provider."""
-
+    """Returns the configured search provider."""
     if settings.search_provider == "duckduckgo":
         from providers.search.duckduckgo import DuckDuckGoProvider
         return DuckDuckGoProvider()

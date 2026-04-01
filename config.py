@@ -3,9 +3,14 @@ config.py
 
 Single source of truth for all Narada settings.
 Every value is read from environment variables / .env file.
-Nothing is hardcoded here — no URLs, no keys, no model names.
+Nothing is hardcoded — no URLs, no keys, no model names.
 
-To change providers or tune the pipeline: edit .env only.
+Provider resolution order per step:
+  1. Step-specific provider (e.g. QUERY_ANALYZER_LLM_PROVIDER)
+  2. Falls back to LLM_PROVIDER if step-specific is not set
+
+This means you can run everything on one model, or mix and match
+any combination of local and cloud providers per step.
 """
 
 import logging
@@ -16,23 +21,22 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
 
-    # ── Provider selection ────────────────────────────────────────────────── #
-    llm_provider: str = "ollama"            # ollama | groq | openai | anthropic
-    search_provider: str = "tavily"         # duckduckgo | brave | tavily
+    # ── Default provider — fallback for all steps ─────────────────────────── #
+    llm_provider: str = "ollama"
+    search_provider: str = "tavily"
 
-    # ── Multi-model: optional separate provider for extraction step ───────── #
-    # Leave empty to use llm_provider for all steps.
-    # Examples:
-    #   Full Groq:        extraction_llm_provider=groq
-    #   Local split:      llm_provider=ollama, extraction_llm_provider=ollama
-    #                     ollama_model=qwen3:4b, extraction_ollama_model=llama3.2:3b
-    extraction_llm_provider: str = ""
+    # ── Per-step LLM provider overrides ───────────────────────────────────── #
+    # Leave empty to fall back to llm_provider for that step.
+    query_analyzer_llm_provider: str = ""   # Step 1: query analysis
+    extraction_llm_provider: str = ""       # Step 4: entity extraction
+    validator_llm_provider: str = ""        # Step 7: post-extraction validation
 
     # ── Ollama ────────────────────────────────────────────────────────────── #
     ollama_base_url: str
-    ollama_model: str                        # used for query analysis
-    extraction_ollama_model: str = ""        # if set, used for extraction step
-                                             # falls back to ollama_model if empty
+    ollama_model: str                        # default Ollama model
+    query_analyzer_ollama_model: str = ""   # override for query analysis step
+    extraction_ollama_model: str = ""       # override for extraction step
+    validator_ollama_model: str = ""        # override for validation step
 
     # ── Groq ──────────────────────────────────────────────────────────────── #
     groq_api_key: str = ""
