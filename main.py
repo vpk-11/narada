@@ -3,26 +3,24 @@ main.py
 
 Narada — FastAPI entry point.
 
-Security hardening:
-- CORS locked to ALLOWED_ORIGIN env var in production
-- CSP headers block inline scripts, restrict JS execution origins
-- HTTPS redirect enforced when FORCE_HTTPS=true
-- Request bodies are never logged
-- uvicorn access logs exclude headers (where keys live)
+In production, serves the React frontend as static files from frontend/dist/.
+In development, the React dev server (port 5173) proxies API calls to this server.
 
 Run locally:
     uvicorn main:app --reload
 
 Run production:
-    FORCE_HTTPS=true ALLOWED_ORIGIN=https://yourdomain.com uvicorn main:app
+    ENVIRONMENT=production FORCE_HTTPS=true uvicorn main:app --host 0.0.0.0 --port 8000
 """
 
 import logging
 import os
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from api.routes import router
 from config import configure_logging, get_settings
@@ -32,6 +30,10 @@ configure_logging(settings)
 
 logger = logging.getLogger(__name__)
 
+ENVIRONMENT  = os.getenv("ENVIRONMENT", "development")
+ALLOWED_ORIGIN = os.getenv("ALLOWED_ORIGIN", "*")
+FRONTEND_DIR = Path(__file__).parent / "frontend" / "dist"
+
 # --------------------------------------------------------------------------- #
 # App
 # --------------------------------------------------------------------------- #
@@ -40,57 +42,41 @@ app = FastAPI(
     title="Narada",
     description="Agentic search and structured entity extraction.",
     version="0.1.0",
-    # Disable detailed error responses in production to avoid leaking internals
-    docs_url="/docs" if os.getenv("ENVIRONMENT", "development") != "production" else None,
+    docs_url="/docs" if ENVIRONMENT != "production" else None,
     redoc_url=None,
 )
 
 # --------------------------------------------------------------------------- #
-# CORS — locked in production, open in development
+# CORS
 # --------------------------------------------------------------------------- #
-
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-ALLOWED_ORIGIN = os.getenv("ALLOWED_ORIGIN", "*")
-
-if ENVIRONMENT == "production" and ALLOWED_ORIGIN == "*":
-    logger.warning(
-        "ALLOWED_ORIGIN is '*' in production. "
-        "Set ALLOWED_ORIGIN=https://yourdomain.com to lock CORS."
-    )
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[ALLOWED_ORIGIN],
     allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
-    allow_headers=["*"],  # must allow * so custom x-api-key headers pass through
-    allow_credentials=False,  # no cookies used
+    allow_headers=["*"],
+    allow_credentials=False,
 )
 
 # --------------------------------------------------------------------------- #
-# Security headers middleware
+# Security headers
 # --------------------------------------------------------------------------- #
 
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
-    """
-    Add security headers to every response.
-
-    CSP prevents XSS from stealing sessionStorage contents.
-    HSTS enforces HTTPS for a year once set.
-    """
-    # HTTPS redirect
     if os.getenv("FORCE_HTTPS") == "true":
-        if request.headers.get("x-forwarded-proto") == "http":
-            https_url = str(request.url).replace("http://", "https://", 1)
-            return RedirectResponse(https_url, status_code=301)
+        proto = request.headers.get("x-forwarded-proto")
+        if proto == "http":
+            return RedirectResponse(
+                str(request.url).replace("http://", "https://", 1),
+                status_code=301,
+            )
 
     response = await call_next(request)
 
-    # CSP: only load scripts from self and trusted CDNs
-    # Blocks inline scripts -- if an attacker injects <script>, it won't run
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "script-src 'self' https://fonts.googleapis.com; "
+        "script-src 'self'; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
@@ -118,7 +104,7 @@ async def security_headers(request: Request, call_next):
     return response
 
 # --------------------------------------------------------------------------- #
-# Routes
+# API routes
 # --------------------------------------------------------------------------- #
 
 app.include_router(router, prefix="/api")
@@ -126,10 +112,32 @@ app.include_router(router, prefix="/api")
 
 @app.get("/health")
 async def health() -> dict:
-    """Liveness check. Never includes key material."""
     return {
         "status": "ok",
         "environment": ENVIRONMENT,
         "llm_provider": settings.llm_provider,
         "search_provider": settings.search_provider,
     }
+
+# --------------------------------------------------------------------------- #
+# Serve React frontend (production only)
+# --------------------------------------------------------------------------- #
+
+if FRONTEND_DIR.exists():
+    # Mount static assets (JS, CSS, images)
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIR / "assets"), name="assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_frontend(full_path: str):
+        """
+        Catch-all route that serves the React app for any non-API path.
+        React Router handles client-side routing from there.
+        """
+        file_path = FRONTEND_DIR / full_path
+        if file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(FRONTEND_DIR / "index.html")
+
+    logger.info(f"[Narada] Serving frontend from {FRONTEND_DIR}")
+else:
+    logger.info("[Narada] Frontend not built — API-only mode. Run: cd frontend && npm run build")

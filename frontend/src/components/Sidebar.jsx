@@ -9,7 +9,7 @@ const LLM_MODELS = {
   ollama:    [],
 }
 
-const SEARCH_PROVIDERS = ['tavily', 'duckduckgo']
+const SEARCH_PROVIDERS = ['tavily', 'duckduckgo', 'brave']
 
 const STEPS = [
   { key: 'query_analyzer', label: 'Query Analyzer' },
