@@ -29,11 +29,6 @@ _TIMEOUT_SECONDS = 60  # Groq is fast — 60s is generous
 class GroqProvider(BaseLLMProvider):
 
     def __init__(self, api_key: str, model: str) -> None:
-        if not api_key:
-            raise ValueError(
-                "GROQ_API_KEY is not set in .env. "
-                "Sign up at console.groq.com for a free API key."
-            )
         self._api_key = api_key
         self._model = model
 

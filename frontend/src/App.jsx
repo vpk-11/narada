@@ -63,7 +63,13 @@ export default function App() {
       setResult(data.result)
       setMeta(data.result.metadata)
     } catch (e) {
-      setError(e.message)
+      // Parse the error message — 400s from the server are user-facing config errors
+      const msg = e.message || 'Unknown error'
+      if (msg.includes('API key') || msg.includes('api key')) {
+        setError(msg + ' — open Settings in the sidebar to add your keys.')
+      } else {
+        setError(msg)
+      }
     } finally {
       clearInterval(iv)
       setLoading(false)
