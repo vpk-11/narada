@@ -220,9 +220,15 @@ __marimo__/
 Thumbs.db
 
 # Logs
+*.log
 logs/
 
-# Cache
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+-e 
+# Pipeline cache — never commit cached results
 .cache/
 
 # Logs
