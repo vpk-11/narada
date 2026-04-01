@@ -36,12 +36,14 @@ Extracted entities (some may be wrong):
 Your job: return ONLY the names of entities that DIRECTLY match the query.
 
 STRICT RULES — remove an entity if ANY of these are true:
-1. It is from a completely different industry (e.g. fintech, defense, retail, logistics, social media)
+1. It is from a completely different industry (e.g. fintech, defense, retail, logistics, social media, crypto/blockchain)
 2. It is a VC firm, investment fund, or financial institution
 3. It is a large established corporation (founded before 2000) unless explicitly relevant
 4. It is a research firm, consulting company, or media outlet
 5. It does not relate to the specific domain in the query (e.g. if query says "healthcare", remove non-healthcare entities)
-6. You are unsure — when in doubt, REMOVE it
+6. It is a blockchain, crypto, or Web3 company unless the query explicitly asks for that
+7. It appears to be the name of a website, blog, or publication rather than a company
+8. You are unsure — when in doubt, REMOVE it
 
 Return JSON:
 {{
