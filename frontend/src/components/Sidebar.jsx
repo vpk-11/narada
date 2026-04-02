@@ -2,11 +2,11 @@ import { useSession } from '../hooks/useSession.js'
 
 const LLM_PROVIDERS = ['groq', 'openai', 'anthropic', 'ollama']
 
-const LLM_MODELS = {
-  groq:      ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'qwen-qwq-32b', 'gemma2-9b-it'],
-  openai:    ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo'],
-  anthropic: ['claude-opus-4-5', 'claude-sonnet-4-5', 'claude-haiku-4-5'],
-  ollama:    [],
+const DEFAULT_MODELS = {
+  groq:      'llama-3.3-70b-versatile',
+  openai:    'gpt-4o-mini',
+  anthropic: 'claude-haiku-4-5-20251001',
+  ollama:    'qwen3:4b',
 }
 
 const SEARCH_PROVIDERS = ['tavily', 'duckduckgo', 'brave']
@@ -60,8 +60,7 @@ export default function Sidebar() {
   }
 
   function onProviderChange(step, provider) {
-    const models = LLM_MODELS[provider]
-    setConfig(c => ({ ...c, [step]: { provider, model: models[0] || '' } }))
+    setConfig(c => ({ ...c, [step]: { provider, model: DEFAULT_MODELS[provider] || '' } }))
   }
 
   return (
@@ -158,16 +157,9 @@ export default function Sidebar() {
               </div>
               <div className="field">
                 <label>Model</label>
-                {LLM_MODELS[config[key]?.provider]?.length > 0 ? (
-                  <select value={config[key]?.model || ''}
-                    onChange={e => setStep(key, 'model', e.target.value)}>
-                    {LLM_MODELS[config[key]?.provider].map(m => <option key={m} value={m}>{m}</option>)}
-                  </select>
-                ) : (
-                  <input type="text" placeholder="e.g. qwen3:4b"
-                    value={config[key]?.model || ''}
-                    onChange={e => setStep(key, 'model', e.target.value)} />
-                )}
+                <input type="text" placeholder={DEFAULT_MODELS[config[key]?.provider] || 'model name'}
+                  value={config[key]?.model || ''}
+                  onChange={e => setStep(key, 'model', e.target.value)} />
               </div>
             </div>
           ))}
