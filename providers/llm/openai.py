@@ -21,8 +21,6 @@ _TIMEOUT_SECONDS = 60
 class OpenAIProvider(BaseLLMProvider):
 
     def __init__(self, api_key: str, model: str) -> None:
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY is not set.")
         self._api_key = api_key
         self._model = model
 
@@ -35,6 +33,12 @@ class OpenAIProvider(BaseLLMProvider):
         return self._model
 
     async def complete(self, prompt: str, system: str = "", **kwargs) -> str:
+        if not self._api_key:
+            raise ValueError(
+                "OpenAI API key is missing. "
+                "Add your OpenAI API key in the Settings sidebar."
+            )
+
         messages: list[dict] = []
         if system:
             messages.append({"role": "system", "content": system})

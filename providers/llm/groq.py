@@ -46,6 +46,12 @@ class GroqProvider(BaseLLMProvider):
         Uses the OpenAI-compatible /v1/chat/completions endpoint.
         kwargs are accepted but ignored — Groq manages its own context.
         """
+        if not self._api_key:
+            raise ValueError(
+                "Groq API key is missing. "
+                "Add your Groq API key in the Settings sidebar."
+            )
+
         messages: list[dict] = []
 
         if system:

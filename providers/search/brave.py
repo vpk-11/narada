@@ -25,11 +25,6 @@ _TIMEOUT_SECONDS = 30
 class BraveProvider(BaseSearchProvider):
 
     def __init__(self, api_key: str) -> None:
-        if not api_key:
-            raise ValueError(
-                "BRAVE_API_KEY is not set in .env. "
-                "Sign up at brave.com/search/api for a free API key."
-            )
         self._api_key = api_key
 
     @property
@@ -41,6 +36,12 @@ class BraveProvider(BaseSearchProvider):
         Search via Brave Search API and return structured results.
         Uses the web search endpoint with freshness=none for broadest coverage.
         """
+        if not self._api_key:
+            raise ValueError(
+                "Brave API key is missing. "
+                "Add your Brave API key in the Settings sidebar."
+            )
+
         headers = {
             "Accept": "application/json",
             "Accept-Encoding": "gzip",
