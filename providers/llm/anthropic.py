@@ -22,8 +22,6 @@ _TIMEOUT_SECONDS = 60
 class AnthropicProvider(BaseLLMProvider):
 
     def __init__(self, api_key: str, model: str) -> None:
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY is not set.")
         self._api_key = api_key
         self._model = model
 
@@ -36,6 +34,12 @@ class AnthropicProvider(BaseLLMProvider):
         return self._model
 
     async def complete(self, prompt: str, system: str = "", **kwargs) -> str:
+        if not self._api_key:
+            raise ValueError(
+                "Anthropic API key is missing. "
+                "Add your Anthropic API key in the Settings sidebar."
+            )
+
         payload: dict = {
             "model": self._model,
             "max_tokens": 2048,
