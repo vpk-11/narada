@@ -258,3 +258,5 @@ dist-ssr
 
 # Keep frontend build — served by FastAPI in production
 !frontend/dist/
+
+.claude/
