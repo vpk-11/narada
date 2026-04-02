@@ -305,6 +305,12 @@ Liveness check.
 
 **Source traceability at the cell level.** Every attribute value is a `CellValue(value, source_url)`. It is impossible to store a value without a source — enforced by the data model.
 
+**Primary-subject extraction rule.** The extractor only pulls entities that are the *main focus* of a page, not every entity mentioned in passing. A page about Abridge that mentions Epic Systems yields only Abridge. This eliminates a large class of noise that would otherwise require expensive post-processing. Investors, partners, media outlets, and competitors are explicitly excluded by the system prompt.
+
+**Invalid-value filtering.** Before any entity attribute is stored, it is checked against a blocklist of non-answers ("N/A", "not available", "not mentioned", "unknown", etc.). Entities with zero valid attributes after this filter are dropped entirely. This keeps junk data from propagating through the pipeline.
+
+**Name normalization in aggregation.** Entities are deduplicated by normalized name — punctuation stripped, whitespace collapsed, lowercased. "OpenAI, Inc." and "Open AI" resolve to the same entity. When two sources provide the same attribute for the same entity, the longer value wins (more content = more informative). The merged entity carries source URLs from whichever page contributed each attribute.
+
 **Provider pattern.** No agent or pipeline code imports a concrete LLM or search implementation. Everything goes through abstract interfaces. Adding a new provider means implementing one class and registering it in `factory.py`.
 
 **Per-step LLM configuration.** Query analysis is a short reasoning task — a lightweight local model handles it fine. Extraction reads dense content and benefits from a larger model. The architecture lets each step use the best model for its job.
@@ -312,6 +318,8 @@ Liveness check.
 **Sequential extraction, concurrent scraping.** Scraping is I/O-bound — all pages fetch in parallel. Extraction is compute-bound and LLM-sequential — running concurrent extraction calls against a local Ollama instance causes timeouts.
 
 **Aggregation before validation.** Deduplication runs first (pure logic, no LLM), then one validation call sees the full merged entity list. Cheaper than validating per-page and produces better results since the validator sees relative context.
+
+**Keep-borderline validator strategy.** The validator is tuned to remove only entities it is *confident* do not belong — the prompt targets 70–80% retention. It is better to return a borderline entity than to silently drop a valid one. The validator falls back to the full unfiltered list if the LLM call itself fails.
 
 **Disk cache.** Results survive server restarts. No Redis dependency. Cache key is `SHA256(query + provider + model + search_provider)`.
 
