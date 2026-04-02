@@ -187,6 +187,12 @@ export default function App() {
                 Configure your API keys in the sidebar, then enter a topic above.
                 Every result cell links to its source.
               </div>
+              <div className="empty-links">
+                <span>Get free API keys:</span>
+                <a href="https://console.groq.com" target="_blank" rel="noreferrer">Groq</a>
+                <span className="empty-links-sep">·</span>
+                <a href="https://tavily.com" target="_blank" rel="noreferrer">Tavily</a>
+              </div>
             </div>
           )}
 
