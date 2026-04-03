@@ -10,6 +10,56 @@ Named after the Hindu divine sage Narada: the first journalist, who traveled all
 
 ---
 
+## Using the App
+
+### Step 1 — Get free API keys
+
+Narada needs two things: an LLM to reason over scraped content, and a search provider to find pages. Both recommended options have free tiers:
+
+| Provider | Purpose | Free tier | Sign up |
+|---|---|---|---|
+| **Groq** | LLM (query analysis, extraction, validation) | 14,400 requests/day | [console.groq.com](https://console.groq.com) |
+| **Tavily** | Web search | 1,000 searches/month | [tavily.com](https://tavily.com) |
+
+You can also use OpenAI, Anthropic, or a local Ollama instance for the LLM, and Brave Search or DuckDuckGo as alternatives to Tavily.
+
+### Step 2 — Configure the sidebar
+
+Open the app and look at the sidebar on the left:
+
+1. Under **Search Provider**, make sure `tavily` is selected, then paste your Tavily API key into the field below it.
+2. Under **LLM API Keys**, paste your Groq key into the `Groq` field.
+3. Leave everything else as-is. The default pipeline uses Groq (`llama-3.3-70b-versatile`) for all three LLM steps.
+
+Keys are stored in `sessionStorage` only — they are cleared when you close the tab and never sent to or stored on the server.
+
+### Step 3 — Run a query
+
+Type a topic into the search bar and press **Enter** (or click Search). Good queries describe a category of entities you want to research:
+
+```
+AI startups in healthcare
+top pizza places in Brooklyn
+electric vehicle companies in Europe
+Formula 1 drivers in the 2024 season
+venture capital firms in Southeast Asia
+```
+
+The pipeline runs in about 15–20 seconds on Groq. You'll see a live step tracker while it works.
+
+### Reading the results
+
+- Each row is one entity (a company, person, place, etc.).
+- Click the **+** button on any row to expand it and see all attributes with individual source links.
+- Source chips at the bottom of each attribute card link directly to the URL the value came from.
+- Click **Refresh** to re-run the query and bypass the cache.
+
+### Advanced: per-step LLM config
+
+The sidebar lets you set a different LLM provider and model for each pipeline step (Query Analyzer, Extractor, Validator). This is useful if you want to use a fast local model for lightweight steps and a larger cloud model for extraction.
+
+---
+
 ## How It Works
 
 The pipeline runs 7 steps:
