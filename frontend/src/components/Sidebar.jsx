@@ -39,14 +39,6 @@ function LogoMark() {
   )
 }
 
-function UserIcon() {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <circle cx="8" cy="5.5" r="2.5"/>
-      <path d="M2.5 13.5c0-3.038 2.462-5.5 5.5-5.5s5.5 2.462 5.5 5.5"/>
-    </svg>
-  )
-}
 
 export default function Sidebar() {
   const [config, setConfig] = useSession('narada_config', DEFAULT_CONFIG)
@@ -165,15 +157,6 @@ export default function Sidebar() {
           ))}
         </div>
 
-      </div>
-
-      {/* Footer */}
-      <div className="sidebar-footer">
-        <div className="avatar"><UserIcon /></div>
-        <div>
-          <div className="profile-name">Kaushik</div>
-          <div className="profile-ver">narada v0.1</div>
-        </div>
       </div>
 
     </aside>

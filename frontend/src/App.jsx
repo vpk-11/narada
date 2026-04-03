@@ -39,6 +39,7 @@ export default function App() {
   const [result, setResult]   = useState(null)
   const [error, setError]     = useState(null)
   const [meta, setMeta]       = useState(null)
+  const [showHelp, setShowHelp] = useState(false)
 
   async function run(refresh = false) {
     const q = query.trim()
@@ -81,9 +82,63 @@ export default function App() {
       <Sidebar />
 
       <main className="main">
+        {/* Help modal */}
+        {showHelp && (
+          <div className="help-overlay" onClick={() => setShowHelp(false)}>
+            <div className="help-modal" onClick={e => e.stopPropagation()}>
+              <div className="help-modal-header">
+                <span className="help-modal-title">How to use Narada</span>
+                <button className="help-close" onClick={() => setShowHelp(false)}>✕</button>
+              </div>
+              <div className="help-modal-body">
+                <div className="help-step">
+                  <div className="help-num">1</div>
+                  <div>
+                    <div className="help-step-title">Get free API keys</div>
+                    <div className="help-step-desc">Narada needs an LLM and a search provider. Both have generous free tiers.</div>
+                    <div className="help-key-links">
+                      <a href="https://console.groq.com" target="_blank" rel="noreferrer">Groq <span>LLM · free</span></a>
+                      <a href="https://tavily.com" target="_blank" rel="noreferrer">Tavily <span>Search · free</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div className="help-step">
+                  <div className="help-num">2</div>
+                  <div>
+                    <div className="help-step-title">Enter your keys in the sidebar</div>
+                    <div className="help-step-desc">Paste your <strong>Groq key</strong> under LLM API Keys and your <strong>Tavily key</strong> under Search Provider. Keys live in sessionStorage only — cleared when you close the tab, never stored server-side.</div>
+                  </div>
+                </div>
+                <div className="help-step">
+                  <div className="help-num">3</div>
+                  <div>
+                    <div className="help-step-title">Type a query and press Enter</div>
+                    <div className="help-step-desc">Describe what you want to research. Narada searches the web, scrapes relevant pages, and returns a structured table — every cell value linked to its source URL.</div>
+                    <div className="help-examples">
+                      <span>Try:</span>
+                      <code>AI startups in healthcare</code>
+                      <code>top pizza places in Brooklyn</code>
+                      <code>electric vehicle companies in Europe</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="search-header">
-          <div className="breadcrumb">Narada / Search</div>
+          <div className="search-header-top">
+            <div className="breadcrumb">Narada / Search</div>
+            <button className="help-btn" onClick={() => setShowHelp(true)} title="How to use">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="8" cy="8" r="6.5"/>
+                <path d="M6.2 6.2a2 2 0 1 1 2.4 2c-.4.2-.6.6-.6 1v.3M8 12.5h.01" strokeLinecap="round"/>
+              </svg>
+              Help
+            </button>
+          </div>
           <h1 className="page-title">What are you researching?</h1>
           <div className="search-row">
             <div className="search-wrap">
@@ -176,22 +231,40 @@ export default function App() {
           )}
 
           {!loading && !result && !error && (
-            <div className="empty-state">
-              <div className="empty-icon">
-                <svg width="22" height="22" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3">
-                  <circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 2.5 2.5"/>
-                </svg>
-              </div>
-              <div className="empty-title">Ready to search</div>
-              <div className="empty-desc">
-                Configure your API keys in the sidebar, then enter a topic above.
-                Every result cell links to its source.
-              </div>
-              <div className="empty-links">
-                <span>Get free API keys:</span>
-                <a href="https://console.groq.com" target="_blank" rel="noreferrer">Groq</a>
-                <span className="empty-links-sep">·</span>
-                <a href="https://tavily.com" target="_blank" rel="noreferrer">Tavily</a>
+            <div className="getting-started">
+              <div className="gs-title">Get started in 3 steps</div>
+              <div className="gs-steps">
+                <div className="gs-step">
+                  <div className="gs-num">1</div>
+                  <div className="gs-content">
+                    <div className="gs-step-title">Get free API keys</div>
+                    <div className="gs-step-desc">Narada needs an LLM and a search provider. Both have generous free tiers.</div>
+                    <div className="gs-key-links">
+                      <a href="https://console.groq.com" target="_blank" rel="noreferrer" className="gs-link">Groq <span>LLM · free</span></a>
+                      <a href="https://tavily.com" target="_blank" rel="noreferrer" className="gs-link">Tavily <span>Search · free</span></a>
+                    </div>
+                  </div>
+                </div>
+                <div className="gs-step">
+                  <div className="gs-num">2</div>
+                  <div className="gs-content">
+                    <div className="gs-step-title">Enter your keys in the sidebar</div>
+                    <div className="gs-step-desc">Paste your <strong>Groq key</strong> under LLM API Keys and your <strong>Tavily key</strong> under Search Provider. Keys live in sessionStorage only — cleared when you close the tab, never stored server-side.</div>
+                  </div>
+                </div>
+                <div className="gs-step">
+                  <div className="gs-num">3</div>
+                  <div className="gs-content">
+                    <div className="gs-step-title">Type a query and press Enter</div>
+                    <div className="gs-step-desc">Describe what you want to research. Narada searches the web, scrapes relevant pages, and returns a structured table — every cell value linked to its source URL.</div>
+                    <div className="gs-examples">
+                      <span className="gs-ex-label">Try:</span>
+                      <button className="gs-ex" onClick={() => setQuery('AI startups in healthcare')}>AI startups in healthcare</button>
+                      <button className="gs-ex" onClick={() => setQuery('top pizza places in Brooklyn')}>top pizza places in Brooklyn</button>
+                      <button className="gs-ex" onClick={() => setQuery('electric vehicle companies in Europe')}>electric vehicle companies in Europe</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
