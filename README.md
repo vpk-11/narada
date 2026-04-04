@@ -1,10 +1,12 @@
 # Narada
 
-Narada takes a research query, searches the web, scrapes relevant pages, and returns a structured table of entities with every attribute value traced to its source URL.
+You type a research question. Narada searches the web, reads the relevant pages, and hands you back a structured table — every cell linked to the exact URL it came from.
+
+No copy-pasting across tabs. No manual summarising. Just ask, and get a sourced, structured answer.
+
+**Example:** `"AI startups in healthcare"` → a table of companies with columns like `founded`, `funding_raised`, `headquarters`, `what_they_do` — each value traced back to its source page.
 
 Named after the Hindu divine sage Narada: the first journalist, who traveled all three worlds gathering and delivering structured knowledge.
-
-**Example:** Query `"AI startups in healthcare"` returns a table of companies with columns like `founded`, `funding_raised`, `headquarters`, `what_they_do` — each cell linked to the exact URL it came from.
 
 **Live demo:** https://narada-heij.onrender.com
 
@@ -12,30 +14,67 @@ Named after the Hindu divine sage Narada: the first journalist, who traveled all
 
 ## Using the App
 
-### Step 1 — Get free API keys
+Narada doesn't store any API keys — you bring your own and they stay in your browser tab. This means the app has no running costs tied to usage, and your keys never touch the server.
 
-Narada needs two things: an LLM to reason over scraped content, and a search provider to find pages. Both recommended options have free tiers:
+To use it you need two things: an **LLM** (the AI that reads pages and extracts information) and a **search provider** (what finds the relevant URLs in the first place).
 
-| Provider | Purpose | Free tier | Sign up |
-|---|---|---|---|
-| **Groq** | LLM (query analysis, extraction, validation) | 14,400 requests/day | [console.groq.com](https://console.groq.com) |
-| **Tavily** | Web search | 1,000 searches/month | [tavily.com](https://tavily.com) |
+### What providers are supported?
 
-You can also use OpenAI, Anthropic, or a local Ollama instance for the LLM, and Brave Search or DuckDuckGo as alternatives to Tavily.
+**LLM — pick one:**
+
+| Provider | Notes | Sign up |
+|---|---|---|
+| **Groq** | Recommended. Fast, free tier: 14,400 requests/day | [console.groq.com](https://console.groq.com) |
+| **OpenAI** | GPT models. Paid. | [platform.openai.com](https://platform.openai.com) |
+| **Anthropic** | Claude models. Paid. | [console.anthropic.com](https://console.anthropic.com) |
+| **Ollama** | Run models locally — no API key needed, just Ollama installed | [ollama.com](https://ollama.com) |
+
+**Search — pick one:**
+
+| Provider | Notes | Sign up |
+|---|---|---|
+| **Tavily** | Recommended. Built for AI agents. Free tier: 1,000 searches/month | [tavily.com](https://tavily.com) |
+| **Brave Search** | Privacy-focused. Paid API. | [brave.com/search/api](https://brave.com/search/api) |
+| **DuckDuckGo** | Free, no key needed. Less reliable for structured research. | — |
+
+**If you just want to try it:** sign up for Groq and Tavily — both are free and take under a minute to set up.
+
+### Step 1 — Get your API keys
+
+Go to [console.groq.com](https://console.groq.com) and grab a free API key. Do the same at [tavily.com](https://tavily.com). That's all you need to get started.
+
+If you'd rather use a different provider (OpenAI, Anthropic, etc.), get the key for that instead.
 
 ### Step 2 — Configure the sidebar
 
-Open the app and look at the sidebar on the left:
+Open the app. On the left you'll see a sidebar. Here's what to fill in:
 
-1. Under **Search Provider**, make sure `tavily` is selected, then paste your Tavily API key into the field below it.
-2. Under **LLM API Keys**, paste your Groq key into the `Groq` field.
-3. Leave everything else as-is. The default pipeline uses Groq (`llama-3.3-70b-versatile`) for all three LLM steps.
+**Search Provider section:**
+- Select your search provider from the dropdown (e.g. `tavily`)
+- Paste your API key into the field below it
 
-Keys are stored in `sessionStorage` only — they are cleared when you close the tab and never sent to or stored on the server.
+**LLM API Keys section:**
+- Paste your key into the matching field (e.g. `Groq` → paste your `gsk_...` key)
+- If you're using Ollama locally, enter your Ollama server URL instead (default: `http://localhost:11434`)
+
+**Pipeline Steps section:**
+- There are three steps that use an LLM: **Query Analyzer**, **Extractor**, and **Validator**
+- Each one has a provider dropdown and a model name field
+- Set the provider to match whichever LLM you're using, and make sure the model name is correct
+
+  Recommended model names:
+  - Groq → `llama-3.3-70b-versatile`
+  - OpenAI → `gpt-4o-mini`
+  - Anthropic → `claude-haiku-4-5-20251001`
+  - Ollama → whatever model you've pulled (e.g. `qwen3:4b`)
+
+> Your keys are stored in `sessionStorage` only — they disappear when you close the tab and are never sent to or stored on the server.
 
 ### Step 3 — Run a query
 
-Type a topic into the search bar and press **Enter** (or click Search). Good queries describe a category of entities you want to research:
+Type what you want to research into the search bar and press **Enter**. Think of it as asking: *"give me a table of X"*.
+
+Good queries describe a **category of things** rather than a single item:
 
 ```
 AI startups in healthcare
@@ -45,18 +84,21 @@ Formula 1 drivers in the 2024 season
 venture capital firms in Southeast Asia
 ```
 
-The pipeline runs in about 15–20 seconds on Groq. You'll see a live step tracker while it works.
+The pipeline takes about 15–20 seconds on Groq. You'll see a live step tracker while it runs.
 
 ### Reading the results
 
-- Each row is one entity (a company, person, place, etc.).
-- Click the **+** button on any row to expand it and see all attributes with individual source links.
-- Source chips at the bottom of each attribute card link directly to the URL the value came from.
-- Click **Refresh** to re-run the query and bypass the cache.
+- Each **row** is one entity (a company, a person, a place, etc.)
+- Click **+** on any row to expand it and see every attribute with its source link
+- Each value card shows a **source chip** — click it to open the exact page the value came from
+- Click **Refresh** to bypass the cache and run a fresh search
 
-### Advanced: per-step LLM config
+### Tips
 
-The sidebar lets you set a different LLM provider and model for each pipeline step (Query Analyzer, Extractor, Validator). This is useful if you want to use a fast local model for lightweight steps and a larger cloud model for extraction.
+- **More specific = better results.** `"Series A AI startups in healthcare founded after 2020"` will give you tighter, more relevant results than just `"AI startups"`.
+- **If results look thin**, try Refresh — the web search may have returned different pages the second time.
+- **Ollama is slower** — expect 3–6 minutes for a full pipeline run with a small local model like `qwen3:4b`. Groq is under 20 seconds.
+- **The cache** saves results so identical queries return instantly. Hit Refresh any time you want a fresh run.
 
 ---
 

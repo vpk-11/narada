@@ -12,9 +12,21 @@ const DEFAULT_MODELS = {
 const SEARCH_PROVIDERS = ['tavily', 'duckduckgo', 'brave']
 
 const STEPS = [
-  { key: 'query_analyzer', label: 'Query Analyzer' },
-  { key: 'extractor',      label: 'Extractor' },
-  { key: 'validator',      label: 'Validator' },
+  {
+    key: 'query_analyzer',
+    label: 'Query Analyzer',
+    tip: 'Figures out what kind of things you\'re looking for and what details to extract. Also generates targeted search queries from your input.',
+  },
+  {
+    key: 'extractor',
+    label: 'Extractor',
+    tip: 'Reads each web page and pulls out structured data — names, dates, locations, and whatever other attributes fit your query.',
+  },
+  {
+    key: 'validator',
+    label: 'Validator',
+    tip: 'Reviews all extracted results and filters out anything that doesn\'t actually match your query — removing noise and off-topic entries.',
+  },
 ]
 
 export const DEFAULT_CONFIG = {
@@ -134,11 +146,15 @@ export default function Sidebar() {
         {/* Pipeline steps */}
         <div className="s-section">
           <div className="s-label">Pipeline Steps</div>
-          {STEPS.map(({ key, label }) => (
+          {STEPS.map(({ key, label, tip }) => (
             <div className="step-block" key={key}>
               <div className="step-header">
                 <div className="step-dot" />
                 <span className="step-name">{label}</span>
+                <div className="step-help">
+                  <div className="step-help-icon">?</div>
+                  <div className="step-tooltip">{tip}</div>
+                </div>
               </div>
               <div className="field">
                 <label>Provider</label>
