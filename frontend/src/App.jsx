@@ -231,32 +231,57 @@ export default function App() {
           )}
 
           {!loading && !result && !error && (
+            <>
+            <div className="narada-intro">
+              <div className="narada-intro-title">What is Narada?</div>
+              <div className="narada-intro-desc">
+                Narada turns a plain-English research question into a <strong>structured table</strong> — with every piece of information linked back to where it came from.
+              </div>
+              <div className="narada-intro-desc">
+                You type something like <strong>"AI startups in healthcare"</strong> and Narada searches the web, reads the relevant pages, and builds a table of companies with columns like <em>founded, funding raised, headquarters</em> — each cell pointing to its source URL.
+              </div>
+              <div className="narada-intro-note">
+                No more copying and pasting across tabs. Just ask, and get a clean, sourced table back.
+              </div>
+            </div>
             <div className="getting-started">
               <div className="gs-title">Get started in 3 steps</div>
               <div className="gs-steps">
                 <div className="gs-step">
                   <div className="gs-num">1</div>
                   <div className="gs-content">
-                    <div className="gs-step-title">Get free API keys</div>
-                    <div className="gs-step-desc">Narada needs an LLM and a search provider. Both have generous free tiers.</div>
-                    <div className="gs-key-links">
-                      <a href="https://console.groq.com" target="_blank" rel="noreferrer" className="gs-link">Groq <span>LLM · free</span></a>
-                      <a href="https://tavily.com" target="_blank" rel="noreferrer" className="gs-link">Tavily <span>Search · free</span></a>
+                    <div className="gs-step-title">Get your API keys</div>
+                    <div className="gs-step-desc">
+                      Narada needs an <strong>LLM</strong> and a <strong>search provider</strong> — you bring your own keys.
+                    </div>
+                    <div className="gs-providers">
+                      <div className="gs-provider-row">
+                        <span className="gs-provider-type">LLM</span>
+                        <span className="gs-provider-list">Groq · OpenAI · Anthropic · Ollama</span>
+                      </div>
+                      <div className="gs-provider-row">
+                        <span className="gs-provider-type">Search</span>
+                        <span className="gs-provider-list">Tavily · Brave · DuckDuckGo</span>
+                      </div>
+                    </div>
+                    <div className="gs-free-note">
+                      <a href="https://console.groq.com" target="_blank" rel="noreferrer" className="gs-link">Groq <span>LLM · free tier</span></a>
+                      <a href="https://tavily.com" target="_blank" rel="noreferrer" className="gs-link">Tavily <span>Search · free tier</span></a>
+                      <span className="gs-free-label">both have generous free tiers</span>
                     </div>
                   </div>
                 </div>
                 <div className="gs-step">
                   <div className="gs-num">2</div>
                   <div className="gs-content">
-                    <div className="gs-step-title">Enter your keys in the sidebar</div>
-                    <div className="gs-step-desc">Paste your <strong>Groq key</strong> under LLM API Keys and your <strong>Tavily key</strong> under Search Provider. Keys live in sessionStorage only — cleared when you close the tab, never stored server-side.</div>
+                    <div className="gs-step-title">Configure the sidebar</div>
+                    <div className="gs-step-desc">Open the sidebar on the left. Pick your providers, paste in your API keys, and make sure the model name is set correctly for each pipeline step.</div>
                   </div>
                 </div>
                 <div className="gs-step">
                   <div className="gs-num">3</div>
                   <div className="gs-content">
                     <div className="gs-step-title">Type a query and press Enter</div>
-                    <div className="gs-step-desc">Describe what you want to research. Narada searches the web, scrapes relevant pages, and returns a structured table — every cell value linked to its source URL.</div>
                     <div className="gs-examples">
                       <span className="gs-ex-label">Try:</span>
                       <button className="gs-ex" onClick={() => setQuery('AI startups in healthcare')}>AI startups in healthcare</button>
@@ -267,6 +292,7 @@ export default function App() {
                 </div>
               </div>
             </div>
+            </>
           )}
 
         </div>
