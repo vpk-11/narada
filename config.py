@@ -41,14 +41,23 @@ class Settings(BaseSettings):
     # ── Groq ──────────────────────────────────────────────────────────────── #
     groq_api_key: str = ""
     groq_model: str = ""
+    query_analyzer_groq_model: str = ""
+    extraction_groq_model: str = ""
+    validator_groq_model: str = ""
 
     # ── OpenAI ────────────────────────────────────────────────────────────── #
     openai_api_key: str = ""
     openai_model: str = ""
+    query_analyzer_openai_model: str = ""
+    extraction_openai_model: str = ""
+    validator_openai_model: str = ""
 
     # ── Anthropic ─────────────────────────────────────────────────────────── #
     anthropic_api_key: str = ""
     anthropic_model: str = ""
+    query_analyzer_anthropic_model: str = ""
+    extraction_anthropic_model: str = ""
+    validator_anthropic_model: str = ""
 
     # ── Brave ─────────────────────────────────────────────────────────────── #
     brave_api_key: str = ""
@@ -60,6 +69,12 @@ class Settings(BaseSettings):
     search_results_per_query: int = 8
     max_pages_to_scrape: int = 6
     scrape_timeout_seconds: int = 10
+
+    # ── Pipeline tuning ───────────────────────────────────────────────────── #  (continued)
+    # Allow the frontend to use server-side Groq + Tavily keys as a fallback
+    # when the user has not provided their own keys (production only).
+    # Set FALLBACK_ALLOW=true in your Render dashboard to enable.
+    fallback_allow: bool = False
 
     # ── Logging ───────────────────────────────────────────────────────────── #
     log_level: str = "INFO"

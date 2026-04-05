@@ -15,17 +15,53 @@ services:
         value: "*"
       - key: LOG_LEVEL
         value: WARNING
+
+      # ── Default providers ──────────────────────────────────────────────────
+      # These are the server-side fallbacks used when the frontend does not
+      # supply a key or provider selection. Users can override both from the
+      # sidebar without touching these values.
       - key: LLM_PROVIDER
         value: groq
       - key: SEARCH_PROVIDER
         value: tavily
-      - key: OLLAMA_BASE_URL
-        value: "http://localhost:11434"
-      - key: OLLAMA_MODEL
-        value: "llama3.2:3b"
+
+      # ── Groq (recommended default - free tier) ─────────────────────────────
       - key: GROQ_MODEL
         value: "llama-3.3-70b-versatile"
       - key: GROQ_API_KEY
-        sync: false
+        sync: false   # set in Render dashboard under Environment -> Secret Files
+
+      # ── Tavily (recommended default - free tier) ───────────────────────────
       - key: TAVILY_API_KEY
-        sync: false
+        sync: false   # set in Render dashboard under Environment -> Secret Files
+
+      # ── OpenAI (optional fallback) ─────────────────────────────────────────
+      - key: OPENAI_MODEL
+        value: "gpt-4o-mini"
+      - key: OPENAI_API_KEY
+        sync: false   # optional - only set if you want OpenAI as a backend fallback
+
+      # ── Anthropic (optional fallback) ──────────────────────────────────────
+      - key: ANTHROPIC_MODEL
+        value: "claude-haiku-4-5-20251001"
+      - key: ANTHROPIC_API_KEY
+        sync: false   # optional - only set if you want Anthropic as a backend fallback
+
+      # ── Brave Search (optional fallback) ───────────────────────────────────
+      - key: BRAVE_API_KEY
+        sync: false   # optional - only set if you want Brave as a backend fallback
+
+      # ── Fallback ───────────────────────────────────────────────────────────
+      # Set to "true" to let users run with the server's Groq + Tavily keys
+      # when they have not configured their own keys in the sidebar.
+      # Only exposes that the option exists — keys are never sent to the client.
+      - key: FALLBACK_ALLOW
+        value: "false"   # change to "true" in dashboard to enable
+
+      # ── Pipeline tuning ────────────────────────────────────────────────────
+      - key: SEARCH_RESULTS_PER_QUERY
+        value: "8"
+      - key: MAX_PAGES_TO_SCRAPE
+        value: "6"
+      - key: SCRAPE_TIMEOUT_SECONDS
+        value: "10"
