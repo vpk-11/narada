@@ -16,6 +16,7 @@ Security model:
 import logging
 import os
 
+import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -122,15 +123,23 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
         overrides["query_analyzer_llm_provider"] = h[_H_QA_PROVIDER]
     if h.get(_H_QA_MODEL):
         overrides["query_analyzer_ollama_model"] = h[_H_QA_MODEL]
-        overrides["groq_model"] = h[_H_QA_MODEL]
+        overrides["query_analyzer_groq_model"] = h[_H_QA_MODEL]
+        overrides["query_analyzer_openai_model"] = h[_H_QA_MODEL]
+        overrides["query_analyzer_anthropic_model"] = h[_H_QA_MODEL]
     if h.get(_H_EX_PROVIDER):
         overrides["extraction_llm_provider"] = h[_H_EX_PROVIDER]
     if h.get(_H_EX_MODEL):
         overrides["extraction_ollama_model"] = h[_H_EX_MODEL]
+        overrides["extraction_groq_model"] = h[_H_EX_MODEL]
+        overrides["extraction_openai_model"] = h[_H_EX_MODEL]
+        overrides["extraction_anthropic_model"] = h[_H_EX_MODEL]
     if h.get(_H_VA_PROVIDER):
         overrides["validator_llm_provider"] = h[_H_VA_PROVIDER]
     if h.get(_H_VA_MODEL):
         overrides["validator_ollama_model"] = h[_H_VA_MODEL]
+        overrides["validator_groq_model"] = h[_H_VA_MODEL]
+        overrides["validator_openai_model"] = h[_H_VA_MODEL]
+        overrides["validator_anthropic_model"] = h[_H_VA_MODEL]
 
     if not overrides:
         return base
@@ -156,10 +165,10 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
         raise HTTPException(status_code=400, detail="query cannot be empty")
 
     base_settings = get_settings()
-    settings = _build_settings_from_headers(request, base_settings)
-    search_provider = get_search_provider(settings)
 
     try:
+        settings = _build_settings_from_headers(request, base_settings)
+        search_provider = get_search_provider(settings)
         result = await run_pipeline(
             query=query,
             settings=settings,
@@ -168,11 +177,86 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
         )
         return SearchResponse(result=result)
 
+    except ValueError as e:
+        # Config/validation errors (missing key, unknown provider) - safe to expose
+        logger.warning(f"[Routes] Config error for '{query}': {type(e).__name__}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+    except httpx.HTTPStatusError as e:
+        status = e.response.status_code
+        logger.error(f"[Routes] HTTP {status} from external API for '{query}'")
+        if status == 401:
+            detail = (
+                "API key rejected (401 Unauthorized). "
+                "Your key may be invalid or expired. Check it in the sidebar and try again."
+            )
+        elif status == 403:
+            detail = (
+                "Access denied (403 Forbidden). "
+                "Your API key may not have permission for this endpoint."
+            )
+        elif status == 429:
+            detail = (
+                "Rate limit reached (429). "
+                "You have hit your provider's request limit. Wait a moment and try again, "
+                "or switch to a different provider."
+            )
+        elif status >= 500:
+            detail = (
+                f"The provider's server returned an error ({status}). "
+                "This is on their end - try again in a moment."
+            )
+        else:
+            detail = f"External API returned HTTP {status}. Try again or switch providers."
+        raise HTTPException(status_code=502, detail=detail)
+
+    except httpx.ConnectError:
+        logger.error(f"[Routes] Connection error for '{query}'")
+        raise HTTPException(
+            status_code=502,
+            detail=(
+                "Could not connect to the provider. "
+                "Check your internet connection. "
+                "If you are using Ollama, make sure it is running at the configured URL."
+            ),
+        )
+
+    except httpx.TimeoutException:
+        logger.error(f"[Routes] Timeout for '{query}'")
+        raise HTTPException(
+            status_code=504,
+            detail=(
+                "Request timed out while contacting the provider. "
+                "Try again, or reduce the scope of your query."
+            ),
+        )
+
     except Exception as e:
-        # Log the error type but never the full exception message
-        # (it might contain key material from error strings)
+        # Log the error type only - never log the full message (may contain key material)
         logger.error(f"[Routes] Pipeline failed for '{query}': {type(e).__name__}")
-        raise HTTPException(status_code=500, detail=f"Pipeline error: {type(e).__name__}")
+        raise HTTPException(
+            status_code=500,
+            detail=(
+                f"An unexpected error occurred ({type(e).__name__}). "
+                "Try again. If this keeps happening, check your provider settings."
+            ),
+        )
+
+
+class ServerConfig(BaseModel):
+    fallback_allow: bool
+
+
+@router.get("/server-config", response_model=ServerConfig)
+async def get_server_config() -> ServerConfig:
+    """
+    Returns public server configuration flags for the frontend.
+    Currently exposes only fallback_allow — whether the server permits
+    the frontend to use the server's own Groq + Tavily keys as a last-resort
+    fallback when the user has not supplied their own keys.
+    """
+    settings = get_settings()
+    return ServerConfig(fallback_allow=settings.fallback_allow)
 
 
 @router.delete("/cache", response_model=CacheClearResponse)

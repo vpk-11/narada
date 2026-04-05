@@ -77,13 +77,29 @@ def _get_step_model_override(provider: str, settings: Settings, step: str) -> st
     Get the model override for a specific step and provider combination.
     Returns empty string if no override is set -- _build_llm will use the default.
     """
-    if provider == "ollama":
-        return {
+    overrides: dict[str, dict[str, str]] = {
+        "ollama": {
             "query_analyzer": settings.query_analyzer_ollama_model,
             "extractor": settings.extraction_ollama_model,
             "validator": settings.validator_ollama_model,
-        }.get(step, "")
-    return ""
+        },
+        "groq": {
+            "query_analyzer": settings.query_analyzer_groq_model,
+            "extractor": settings.extraction_groq_model,
+            "validator": settings.validator_groq_model,
+        },
+        "openai": {
+            "query_analyzer": settings.query_analyzer_openai_model,
+            "extractor": settings.extraction_openai_model,
+            "validator": settings.validator_openai_model,
+        },
+        "anthropic": {
+            "query_analyzer": settings.query_analyzer_anthropic_model,
+            "extractor": settings.extraction_anthropic_model,
+            "validator": settings.validator_anthropic_model,
+        },
+    }
+    return overrides.get(provider, {}).get(step, "")
 
 
 def get_query_analyzer_llm(settings: Settings) -> BaseLLMProvider:
