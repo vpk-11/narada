@@ -261,3 +261,6 @@ dist-ssr
 !frontend/dist/
 
 .claude/
+
+graphify-out/manifest.json
+graphify-out/cost.json
