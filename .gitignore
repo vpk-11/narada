@@ -219,6 +219,10 @@ __marimo__/
 .DS_Store
 Thumbs.db
 
+# Graphify local state
+graphify-out/.graphify_root
+graphify-out/.graphify_python
+
 # Logs
 *.log
 logs/
