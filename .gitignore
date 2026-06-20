@@ -266,5 +266,8 @@ dist-ssr
 
 .claude/
 
+# Local project context docs -- never commit
+*PROJECT_CONTEXT.md
+
 graphify-out/manifest.json
 graphify-out/cost.json
