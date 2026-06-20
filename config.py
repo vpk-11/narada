@@ -3,14 +3,14 @@ config.py
 
 Single source of truth for all Narada settings.
 Every value is read from environment variables / .env file.
-Nothing is hardcoded — no URLs, no keys, no model names.
 
-Provider resolution order per step:
-  1. Step-specific provider (e.g. QUERY_ANALYZER_LLM_PROVIDER)
-  2. Falls back to LLM_PROVIDER if step-specific is not set
+LLM model strings use LiteLLM format: provider/model-name
+  groq/llama-3.3-70b-versatile
+  openai/gpt-4o-mini
+  anthropic/claude-haiku-4-5-20251001
+  ollama/qwen3:4b
 
-This means you can run everything on one model, or mix and match
-any combination of local and cloud providers per step.
+Per-step overrides follow the same format. Leave empty to use llm_model for all steps.
 """
 
 import logging
@@ -21,48 +21,24 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
 
-    # ── Default provider — fallback for all steps ─────────────────────────── #
-    llm_provider: str = "ollama"
+    # ── Default LLM — full LiteLLM model string ───────────────────────────── #
+    llm_model: str = "ollama/qwen3:4b"
     search_provider: str = "tavily"
 
-    # ── Per-step LLM provider overrides ───────────────────────────────────── #
-    # Leave empty to fall back to llm_provider for that step.
-    query_analyzer_llm_provider: str = ""   # Step 1: query analysis
-    extraction_llm_provider: str = ""       # Step 4: entity extraction
-    validator_llm_provider: str = ""        # Step 7: post-extraction validation
+    # ── Per-step LLM overrides ────────────────────────────────────────────── #
+    # Leave empty to fall back to llm_model for that step.
+    query_analyzer_model: str = ""   # Step 1: query analysis
+    extraction_model: str = ""       # Step 4: entity extraction
+    validator_model: str = ""        # Step 6: post-extraction validation
 
     # ── Ollama ────────────────────────────────────────────────────────────── #
     ollama_base_url: str = "http://localhost:11434"
-    ollama_model: str = "llama3.2:3b"               # default Ollama model
-    query_analyzer_ollama_model: str = ""   # override for query analysis step
-    extraction_ollama_model: str = ""       # override for extraction step
-    validator_ollama_model: str = ""        # override for validation step
 
-    # ── Groq ──────────────────────────────────────────────────────────────── #
+    # ── API Keys ──────────────────────────────────────────────────────────── #
     groq_api_key: str = ""
-    groq_model: str = ""
-    query_analyzer_groq_model: str = ""
-    extraction_groq_model: str = ""
-    validator_groq_model: str = ""
-
-    # ── OpenAI ────────────────────────────────────────────────────────────── #
     openai_api_key: str = ""
-    openai_model: str = ""
-    query_analyzer_openai_model: str = ""
-    extraction_openai_model: str = ""
-    validator_openai_model: str = ""
-
-    # ── Anthropic ─────────────────────────────────────────────────────────── #
     anthropic_api_key: str = ""
-    anthropic_model: str = ""
-    query_analyzer_anthropic_model: str = ""
-    extraction_anthropic_model: str = ""
-    validator_anthropic_model: str = ""
-
-    # ── Brave ─────────────────────────────────────────────────────────────── #
     brave_api_key: str = ""
-
-    # ── Tavily ────────────────────────────────────────────────────────────── #
     tavily_api_key: str = ""
 
     # ── Pipeline tuning ───────────────────────────────────────────────────── #
@@ -70,10 +46,8 @@ class Settings(BaseSettings):
     max_pages_to_scrape: int = 6
     scrape_timeout_seconds: int = 10
 
-    # ── Pipeline tuning ───────────────────────────────────────────────────── #  (continued)
-    # Allow the frontend to use server-side Groq + Tavily keys as a fallback
-    # when the user has not provided their own keys (production only).
-    # Set FALLBACK_ALLOW=true in your Render dashboard to enable.
+    # Allow the frontend to use server-side keys as a fallback when the user
+    # has not provided their own keys (production only).
     fallback_allow: bool = False
 
     # ── Logging ───────────────────────────────────────────────────────────── #
