@@ -44,23 +44,19 @@ function buildHeaders(config) {
   const mode = config.llm_mode || 'unified'
   if (mode === 'unified') {
     const { provider, model } = config.llm || {}
-    if (provider) {
-      h['x-query-analyzer-provider'] = provider
-      h['x-extractor-provider']      = provider
-      h['x-validator-provider']      = provider
-    }
-    if (model) {
-      h['x-query-analyzer-model'] = model
-      h['x-extractor-model']      = model
-      h['x-validator-model']      = model
+    if (provider && model) {
+      const full = `${provider}/${model}`
+      h['x-query-analyzer-model'] = full
+      h['x-extractor-model']      = full
+      h['x-validator-model']      = full
     }
   } else {
-    if (config.query_analyzer?.provider) h['x-query-analyzer-provider'] = config.query_analyzer.provider
-    if (config.query_analyzer?.model)    h['x-query-analyzer-model']    = config.query_analyzer.model
-    if (config.extractor?.provider)      h['x-extractor-provider']      = config.extractor.provider
-    if (config.extractor?.model)         h['x-extractor-model']         = config.extractor.model
-    if (config.validator?.provider)      h['x-validator-provider']      = config.validator.provider
-    if (config.validator?.model)         h['x-validator-model']         = config.validator.model
+    if (config.query_analyzer?.provider && config.query_analyzer?.model)
+      h['x-query-analyzer-model'] = `${config.query_analyzer.provider}/${config.query_analyzer.model}`
+    if (config.extractor?.provider && config.extractor?.model)
+      h['x-extractor-model'] = `${config.extractor.provider}/${config.extractor.model}`
+    if (config.validator?.provider && config.validator?.model)
+      h['x-validator-model'] = `${config.validator.provider}/${config.validator.model}`
   }
   return h
 }

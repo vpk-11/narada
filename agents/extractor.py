@@ -23,7 +23,7 @@ import re
 
 from core.models import CellValue, Entity, QueryAnalysis, ScrapedPage
 from providers.base import BaseLLMProvider
-from providers.llm.ollama import NUM_CTX_LARGE
+NUM_CTX_LARGE = 8192  # context window for extraction prompts that include page content
 
 logger = logging.getLogger(__name__)
 

@@ -115,7 +115,7 @@ async def health() -> dict:
     return {
         "status": "ok",
         "environment": ENVIRONMENT,
-        "llm_provider": settings.llm_provider,
+        "llm_model": settings.llm_model,
         "search_provider": settings.search_provider,
     }
 

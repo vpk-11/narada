@@ -45,11 +45,9 @@ _H_TAVILY_KEY      = "x-tavily-api-key"
 _H_BRAVE_KEY       = "x-brave-api-key"
 _H_OLLAMA_URL      = "x-ollama-base-url"
 _H_SEARCH_PROVIDER = "x-search-provider"
-_H_QA_PROVIDER     = "x-query-analyzer-provider"
+# Model strings use LiteLLM format: provider/model-name (e.g. groq/llama-3.3-70b-versatile)
 _H_QA_MODEL        = "x-query-analyzer-model"
-_H_EX_PROVIDER     = "x-extractor-provider"
 _H_EX_MODEL        = "x-extractor-model"
-_H_VA_PROVIDER     = "x-validator-provider"
 _H_VA_MODEL        = "x-validator-model"
 
 
@@ -116,30 +114,15 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
     if h.get(_H_OLLAMA_URL):
         overrides["ollama_base_url"] = h[_H_OLLAMA_URL]
 
-    # Provider selection
+    # Provider + model selection (full LiteLLM model strings)
     if h.get(_H_SEARCH_PROVIDER):
         overrides["search_provider"] = h[_H_SEARCH_PROVIDER]
-    if h.get(_H_QA_PROVIDER):
-        overrides["query_analyzer_llm_provider"] = h[_H_QA_PROVIDER]
     if h.get(_H_QA_MODEL):
-        overrides["query_analyzer_ollama_model"] = h[_H_QA_MODEL]
-        overrides["query_analyzer_groq_model"] = h[_H_QA_MODEL]
-        overrides["query_analyzer_openai_model"] = h[_H_QA_MODEL]
-        overrides["query_analyzer_anthropic_model"] = h[_H_QA_MODEL]
-    if h.get(_H_EX_PROVIDER):
-        overrides["extraction_llm_provider"] = h[_H_EX_PROVIDER]
+        overrides["query_analyzer_model"] = h[_H_QA_MODEL]
     if h.get(_H_EX_MODEL):
-        overrides["extraction_ollama_model"] = h[_H_EX_MODEL]
-        overrides["extraction_groq_model"] = h[_H_EX_MODEL]
-        overrides["extraction_openai_model"] = h[_H_EX_MODEL]
-        overrides["extraction_anthropic_model"] = h[_H_EX_MODEL]
-    if h.get(_H_VA_PROVIDER):
-        overrides["validator_llm_provider"] = h[_H_VA_PROVIDER]
+        overrides["extraction_model"] = h[_H_EX_MODEL]
     if h.get(_H_VA_MODEL):
-        overrides["validator_ollama_model"] = h[_H_VA_MODEL]
-        overrides["validator_groq_model"] = h[_H_VA_MODEL]
-        overrides["validator_openai_model"] = h[_H_VA_MODEL]
-        overrides["validator_anthropic_model"] = h[_H_VA_MODEL]
+        overrides["validator_model"] = h[_H_VA_MODEL]
 
     if not overrides:
         return base
@@ -286,6 +269,6 @@ async def get_providers() -> ProvidersResponse:
         extractor=ProviderInfo(provider=extractor.provider_name, model=extractor.model_name),
         validator=ProviderInfo(provider=validator.provider_name, model=validator.model_name),
         search=search.provider_name,
-        available_llm_providers=["ollama", "groq", "openai", "anthropic"],
+        available_llm_providers=["groq", "openai", "anthropic", "ollama"],
         available_search_providers=["tavily", "brave", "duckduckgo"],
     )
