@@ -103,164 +103,644 @@
   },
   "nodes": [
     {
-      "label": "extractor.py",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_extractor",
-      "community": 0,
-      "norm_label": "extractor.py"
+      "id": "readme",
+      "community": 11,
+      "norm_label": "readme.md"
     },
     {
-      "label": "_is_valid_value()",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L104",
+      "label": "Narada",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_extractor_is_valid_value",
-      "community": 0,
-      "norm_label": "_is_valid_value()"
+      "id": "readme_narada",
+      "community": 11,
+      "norm_label": "narada"
     },
     {
-      "label": "_parse_llm_json()",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L115",
+      "label": "Using the App",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L15",
       "_origin": "ast",
-      "id": "agents_extractor_parse_llm_json",
-      "community": 0,
-      "norm_label": "_parse_llm_json()"
+      "id": "readme_using_the_app",
+      "community": 11,
+      "norm_label": "using the app"
     },
     {
-      "label": "_build_entities()",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L141",
+      "label": "What you need",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L17",
       "_origin": "ast",
-      "id": "agents_extractor_build_entities",
-      "community": 0,
-      "norm_label": "_build_entities()"
+      "id": "readme_what_you_need",
+      "community": 11,
+      "norm_label": "what you need"
     },
     {
-      "label": "Entity",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L141",
+      "label": "Step 1 - Get your API keys",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L42",
       "_origin": "ast",
-      "id": "entity",
-      "community": 0,
-      "norm_label": "entity"
+      "id": "readme_step_1_get_your_api_keys",
+      "community": 11,
+      "norm_label": "step 1 - get your api keys"
     },
     {
-      "label": "_extract_from_page()",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
+      "label": "Step 2 - Configure the sidebar",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L46",
       "_origin": "ast",
-      "id": "agents_extractor_extract_from_page",
-      "community": 0,
-      "norm_label": "_extract_from_page()"
+      "id": "readme_step_2_configure_the_sidebar",
+      "community": 11,
+      "norm_label": "step 2 - configure the sidebar"
+    },
+    {
+      "label": "Step 3 - Run a query",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "readme_step_3_run_a_query",
+      "community": 11,
+      "norm_label": "step 3 - run a query"
+    },
+    {
+      "label": "Reading the results",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L94",
+      "_origin": "ast",
+      "id": "readme_reading_the_results",
+      "community": 11,
+      "norm_label": "reading the results"
+    },
+    {
+      "label": "Tips",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "readme_tips",
+      "community": 11,
+      "norm_label": "tips"
+    },
+    {
+      "label": "Local vs Production Behaviour",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L109",
+      "_origin": "ast",
+      "id": "readme_local_vs_production_behaviour",
+      "community": 11,
+      "norm_label": "local vs production behaviour"
+    },
+    {
+      "label": "Local dev mode",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "readme_local_dev_mode",
+      "community": 11,
+      "norm_label": "local dev mode"
+    },
+    {
+      "label": "Production mode",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L119",
+      "_origin": "ast",
+      "id": "readme_production_mode",
+      "community": 11,
+      "norm_label": "production mode"
+    },
+    {
+      "label": "Dev sim-prod toggle (local only)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L128",
+      "_origin": "ast",
+      "id": "readme_dev_sim_prod_toggle_local_only",
+      "community": 11,
+      "norm_label": "dev sim-prod toggle (local only)"
+    },
+    {
+      "label": "Key Fallback Behaviour",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "readme_key_fallback_behaviour",
+      "community": 11,
+      "norm_label": "key fallback behaviour"
+    },
+    {
+      "label": "How It Works",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L152",
+      "_origin": "ast",
+      "id": "readme_how_it_works",
+      "community": 11,
+      "norm_label": "how it works"
+    },
+    {
+      "label": "Architecture",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L176",
+      "_origin": "ast",
+      "id": "readme_architecture",
+      "community": 11,
+      "norm_label": "architecture"
+    },
+    {
+      "label": "Provider Pattern",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L178",
+      "_origin": "ast",
+      "id": "readme_provider_pattern",
+      "community": 11,
+      "norm_label": "provider pattern"
+    },
+    {
+      "label": "Per-Step LLM Configuration",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L193",
+      "_origin": "ast",
+      "id": "readme_per_step_llm_configuration",
+      "community": 11,
+      "norm_label": "per-step llm configuration"
+    },
+    {
+      "label": "API Key Security",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L207",
+      "_origin": "ast",
+      "id": "readme_api_key_security",
+      "community": 11,
+      "norm_label": "api key security"
+    },
+    {
+      "label": "Error Handling",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L217",
+      "_origin": "ast",
+      "id": "readme_error_handling",
+      "community": 11,
+      "norm_label": "error handling"
+    },
+    {
+      "label": "Project Structure",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "readme_project_structure",
+      "community": 11,
+      "norm_label": "project structure"
+    },
+    {
+      "label": "Setup",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L276",
+      "_origin": "ast",
+      "id": "readme_setup",
+      "community": 11,
+      "norm_label": "setup"
+    },
+    {
+      "label": "Prerequisites",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L278",
+      "_origin": "ast",
+      "id": "readme_prerequisites",
+      "community": 11,
+      "norm_label": "prerequisites"
+    },
+    {
+      "label": "1. Create the Conda environment",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L285",
+      "_origin": "ast",
+      "id": "readme_1_create_the_conda_environment",
+      "community": 11,
+      "norm_label": "1. create the conda environment"
+    },
+    {
+      "label": "2. Configure environment variables",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L292",
+      "_origin": "ast",
+      "id": "readme_2_configure_environment_variables",
+      "community": 11,
+      "norm_label": "2. configure environment variables"
+    },
+    {
+      "label": "3. Pull Ollama models (only if using Ollama)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L300",
+      "_origin": "ast",
+      "id": "readme_3_pull_ollama_models_only_if_using_ollama",
+      "community": 11,
+      "norm_label": "3. pull ollama models (only if using ollama)"
+    },
+    {
+      "label": "4. Start the server",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L307",
+      "_origin": "ast",
+      "id": "readme_4_start_the_server",
+      "community": 11,
+      "norm_label": "4. start the server"
+    },
+    {
+      "label": "5. Start the frontend (separate terminal)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L313",
+      "_origin": "ast",
+      "id": "readme_5_start_the_frontend_separate_terminal",
+      "community": 11,
+      "norm_label": "5. start the frontend (separate terminal)"
+    },
+    {
+      "label": "6. Open Swagger docs",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L322",
+      "_origin": "ast",
+      "id": "readme_6_open_swagger_docs",
+      "community": 11,
+      "norm_label": "6. open swagger docs"
+    },
+    {
+      "label": "Environment Variables",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L330",
+      "_origin": "ast",
+      "id": "readme_environment_variables",
+      "community": 11,
+      "norm_label": "environment variables"
+    },
+    {
+      "label": "API Reference",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L380",
+      "_origin": "ast",
+      "id": "readme_api_reference",
+      "community": 11,
+      "norm_label": "api reference"
+    },
+    {
+      "label": "POST /api/search",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L384",
+      "_origin": "ast",
+      "id": "readme_post_api_search",
+      "community": 11,
+      "norm_label": "post /api/search"
+    },
+    {
+      "label": "DELETE /api/cache",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L439",
+      "_origin": "ast",
+      "id": "readme_delete_api_cache",
+      "community": 11,
+      "norm_label": "delete /api/cache"
+    },
+    {
+      "label": "GET /api/providers",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L443",
+      "_origin": "ast",
+      "id": "readme_get_api_providers",
+      "community": 11,
+      "norm_label": "get /api/providers"
+    },
+    {
+      "label": "GET /api/server-config",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L447",
+      "_origin": "ast",
+      "id": "readme_get_api_server_config",
+      "community": 11,
+      "norm_label": "get /api/server-config"
+    },
+    {
+      "label": "GET /health",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L455",
+      "_origin": "ast",
+      "id": "readme_get_health",
+      "community": 11,
+      "norm_label": "get /health"
+    },
+    {
+      "label": "Deployment on Render (Free)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L461",
+      "_origin": "ast",
+      "id": "readme_deployment_on_render_free",
+      "community": 11,
+      "norm_label": "deployment on render (free)"
+    },
+    {
+      "label": "Prerequisites",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L463",
+      "_origin": "ast",
+      "id": "readme_prerequisites_463",
+      "community": 11,
+      "norm_label": "prerequisites"
+    },
+    {
+      "label": "Steps",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L470",
+      "_origin": "ast",
+      "id": "readme_steps",
+      "community": 11,
+      "norm_label": "steps"
+    },
+    {
+      "label": "Auto-deploy",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L508",
+      "_origin": "ast",
+      "id": "readme_auto_deploy",
+      "community": 11,
+      "norm_label": "auto-deploy"
+    },
+    {
+      "label": "Design Decisions",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L514",
+      "_origin": "ast",
+      "id": "readme_design_decisions",
+      "community": 11,
+      "norm_label": "design decisions"
+    },
+    {
+      "label": "Known Limitations",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L538",
+      "_origin": "ast",
+      "id": "readme_known_limitations",
+      "community": 11,
+      "norm_label": "known limitations"
+    },
+    {
+      "label": "Adding a New Provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L552",
+      "_origin": "ast",
+      "id": "readme_adding_a_new_provider",
+      "community": 11,
+      "norm_label": "adding a new provider"
+    },
+    {
+      "label": "LLM provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L554",
+      "_origin": "ast",
+      "id": "readme_llm_provider",
+      "community": 11,
+      "norm_label": "llm provider"
+    },
+    {
+      "label": "Search provider",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L566",
+      "_origin": "ast",
+      "id": "readme_search_provider",
+      "community": 11,
+      "norm_label": "search provider"
+    },
+    {
+      "label": "scraper.py",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "agents_scraper",
+      "community": 6,
+      "norm_label": "scraper.py"
+    },
+    {
+      "label": "_is_blocked()",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "agents_scraper_is_blocked",
+      "community": 6,
+      "norm_label": "_is_blocked()"
+    },
+    {
+      "label": "_is_ssrf_risk()",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L51",
+      "_origin": "ast",
+      "id": "agents_scraper_is_ssrf_risk",
+      "community": 6,
+      "norm_label": "_is_ssrf_risk()"
+    },
+    {
+      "label": "_extract_text()",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "agents_scraper_extract_text",
+      "community": 6,
+      "norm_label": "_extract_text()"
+    },
+    {
+      "label": "_extract_title()",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "agents_scraper_extract_title",
+      "community": 6,
+      "norm_label": "_extract_title()"
+    },
+    {
+      "label": "_scrape_one()",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "agents_scraper_scrape_one",
+      "community": 6,
+      "norm_label": "_scrape_one()"
+    },
+    {
+      "label": "AsyncClient",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "asyncclient",
+      "community": 6,
+      "norm_label": "asyncclient"
+    },
+    {
+      "label": "SearchResult",
+      "file_type": "code",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "searchresult",
+      "community": 6,
+      "norm_label": "searchresult"
     },
     {
       "label": "ScrapedPage",
       "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
       "_origin": "ast",
       "id": "scrapedpage",
-      "community": 0,
+      "community": 6,
       "norm_label": "scrapedpage"
     },
     {
-      "label": "QueryAnalysis",
+      "label": "scrape_pages()",
       "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
+      "source_file": "agents/scraper.py",
+      "source_location": "L176",
       "_origin": "ast",
-      "id": "queryanalysis",
-      "community": 0,
-      "norm_label": "queryanalysis"
+      "id": "agents_scraper_scrape_pages",
+      "community": 6,
+      "norm_label": "scrape_pages()"
     },
     {
-      "label": "BaseLLMProvider",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
-      "_origin": "ast",
-      "id": "agents_extractor_py_basellmprovider",
-      "community": 0,
-      "norm_label": "basellmprovider"
-    },
-    {
-      "label": "extract_entities()",
-      "file_type": "code",
-      "source_file": "agents/extractor.py",
-      "source_location": "L220",
-      "_origin": "ast",
-      "id": "agents_extractor_extract_entities",
-      "community": 0,
-      "norm_label": "extract_entities()"
-    },
-    {
-      "label": "agents/extractor.py  Step 4 of the Narada pipeline.  For each page, sends conten",
+      "label": "agents/scraper.py  Step 3 of the Narada pipeline.  Takes a list of URLs from the",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
+      "source_file": "agents/scraper.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_1",
-      "community": 0,
-      "norm_label": "agents/extractor.py  step 4 of the narada pipeline.  for each page, sends conten"
+      "id": "agents_scraper_rationale_1",
+      "community": 6,
+      "norm_label": "agents/scraper.py  step 3 of the narada pipeline.  takes a list of urls from the"
     },
     {
-      "label": "Return False for junk values the model writes when it can't find something.",
+      "label": "Return True if the URL matches a known low-quality source.",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
-      "source_location": "L105",
+      "source_file": "agents/scraper.py",
+      "source_location": "L47",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_105",
-      "community": 0,
-      "norm_label": "return false for junk values the model writes when it can't find something."
+      "id": "agents_scraper_rationale_47",
+      "community": 6,
+      "norm_label": "return true if the url matches a known low-quality source."
     },
     {
-      "label": "Parse JSON from LLM output.     Handles {\"entities\":[...]} and bare [...] respon",
+      "label": "Return True if the URL targets a private/loopback/link-local address.     Guards",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
-      "source_location": "L116",
+      "source_file": "agents/scraper.py",
+      "source_location": "L52",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_116",
-      "community": 0,
-      "norm_label": "parse json from llm output.     handles {\"entities\":[...]} and bare [...] respon"
+      "id": "agents_scraper_rationale_52",
+      "community": 6,
+      "norm_label": "return true if the url targets a private/loopback/link-local address.     guards"
     },
     {
-      "label": "Convert parsed LLM JSON into Entity objects.     Attaches source_url to every Ce",
+      "label": "Strip HTML and return clean plain text.     Removes noise tags first, then extra",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
-      "source_location": "L146",
+      "source_file": "agents/scraper.py",
+      "source_location": "L96",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_146",
-      "community": 0,
-      "norm_label": "convert parsed llm json into entity objects.     attaches source_url to every ce"
+      "id": "agents_scraper_rationale_96",
+      "community": 6,
+      "norm_label": "strip html and return clean plain text.     removes noise tags first, then extra"
     },
     {
-      "label": "Extract entities from a single page. Returns empty list on failure.",
+      "label": "Extract page title from HTML. Returns empty string if not found.",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
-      "source_location": "L189",
+      "source_file": "agents/scraper.py",
+      "source_location": "L114",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_189",
-      "community": 0,
-      "norm_label": "extract entities from a single page. returns empty list on failure."
+      "id": "agents_scraper_rationale_114",
+      "community": 6,
+      "norm_label": "extract page title from html. returns empty string if not found."
     },
     {
-      "label": "Extract entities from all pages sequentially.     Sequential because Ollama hand",
+      "label": "Fetch and parse a single URL.     Returns None on any failure \u2014 caller decides w",
       "file_type": "rationale",
-      "source_file": "agents/extractor.py",
-      "source_location": "L226",
+      "source_file": "agents/scraper.py",
+      "source_location": "L125",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_226",
-      "community": 0,
-      "norm_label": "extract entities from all pages sequentially.     sequential because ollama hand"
+      "id": "agents_scraper_rationale_125",
+      "community": 6,
+      "norm_label": "fetch and parse a single url.     returns none on any failure \u2014 caller decides w"
+    },
+    {
+      "label": "Scrape a list of search results concurrently.     Returns only successfully scra",
+      "file_type": "rationale",
+      "source_file": "agents/scraper.py",
+      "source_location": "L181",
+      "_origin": "ast",
+      "id": "agents_scraper_rationale_181",
+      "community": 6,
+      "norm_label": "scrape a list of search results concurrently.     returns only successfully scra"
+    },
+    {
+      "label": "limiter.py",
+      "file_type": "code",
+      "source_file": "api/limiter.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "api_limiter",
+      "community": 2,
+      "norm_label": "limiter.py"
+    },
+    {
+      "label": "api/limiter.py  Shared rate limiter instance. Imported by main.py (to register o",
+      "file_type": "rationale",
+      "source_file": "api/limiter.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "api_limiter_rationale_1",
+      "community": 2,
+      "norm_label": "api/limiter.py  shared rate limiter instance. imported by main.py (to register o"
     },
     {
       "label": "routes.py",
@@ -269,17 +749,17 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes",
-      "community": 2,
+      "community": 3,
       "norm_label": "routes.py"
     },
     {
       "label": "SearchRequest",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L58",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "api_routes_searchrequest",
-      "community": 2,
+      "community": 8,
       "norm_label": "searchrequest"
     },
     {
@@ -296,17 +776,17 @@
       "label": "SearchResponse",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L63",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "api_routes_searchresponse",
-      "community": 2,
+      "community": 3,
       "norm_label": "searchresponse"
     },
     {
       "label": "CacheClearResponse",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L67",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "api_routes_cacheclearresponse",
       "community": 2,
@@ -316,67 +796,67 @@
       "label": "ProviderInfo",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L72",
+      "source_location": "L76",
       "_origin": "ast",
       "id": "api_routes_providerinfo",
-      "community": 2,
+      "community": 3,
       "norm_label": "providerinfo"
     },
     {
       "label": "ProvidersResponse",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L77",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "api_routes_providersresponse",
-      "community": 2,
+      "community": 3,
       "norm_label": "providersresponse"
     },
     {
       "label": "_build_settings_from_headers()",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L91",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "api_routes_build_settings_from_headers",
-      "community": 2,
+      "community": 8,
       "norm_label": "_build_settings_from_headers()"
     },
     {
       "label": "Request",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L91",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "api_routes_py_request",
-      "community": 2,
+      "community": 8,
       "norm_label": "request"
     },
     {
       "label": "Settings",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L91",
+      "source_location": "L95",
       "_origin": "ast",
-      "id": "api_routes_py_settings",
-      "community": 2,
+      "id": "settings",
+      "community": 8,
       "norm_label": "settings"
     },
     {
       "label": "search()",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L138",
+      "source_location": "L143",
       "_origin": "ast",
       "id": "api_routes_search",
-      "community": 2,
+      "community": 8,
       "norm_label": "search()"
     },
     {
       "label": "ServerConfig",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L229",
+      "source_location": "L239",
       "_origin": "ast",
       "id": "api_routes_serverconfig",
       "community": 2,
@@ -386,7 +866,7 @@
       "label": "get_server_config()",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L234",
+      "source_location": "L244",
       "_origin": "ast",
       "id": "api_routes_get_server_config",
       "community": 2,
@@ -396,7 +876,7 @@
       "label": "delete_cache()",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L246",
+      "source_location": "L256",
       "_origin": "ast",
       "id": "api_routes_delete_cache",
       "community": 2,
@@ -406,10 +886,10 @@
       "label": "get_providers()",
       "file_type": "code",
       "source_file": "api/routes.py",
-      "source_location": "L256",
+      "source_location": "L271",
       "_origin": "ast",
       "id": "api_routes_get_providers",
-      "community": 2,
+      "community": 3,
       "norm_label": "get_providers()"
     },
     {
@@ -419,57 +899,57 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "api_routes_rationale_1",
-      "community": 2,
+      "community": 3,
       "norm_label": "api/routes.py  narada api routes.  security model: - user api keys are sent as c"
     },
     {
       "label": "Build a Settings instance with per-request overrides from headers.      Only non",
       "file_type": "rationale",
       "source_file": "api/routes.py",
-      "source_location": "L92",
+      "source_location": "L96",
       "_origin": "ast",
-      "id": "api_routes_rationale_92",
-      "community": 2,
+      "id": "api_routes_rationale_96",
+      "community": 8,
       "norm_label": "build a settings instance with per-request overrides from headers.      only non"
     },
     {
       "label": "Run the Narada pipeline for a query.      API keys are read from request headers",
       "file_type": "rationale",
       "source_file": "api/routes.py",
-      "source_location": "L139",
+      "source_location": "L144",
       "_origin": "ast",
-      "id": "api_routes_rationale_139",
-      "community": 2,
+      "id": "api_routes_rationale_144",
+      "community": 8,
       "norm_label": "run the narada pipeline for a query.      api keys are read from request headers"
     },
     {
       "label": "Returns public server configuration flags for the frontend.     Currently expose",
       "file_type": "rationale",
       "source_file": "api/routes.py",
-      "source_location": "L235",
+      "source_location": "L245",
       "_origin": "ast",
-      "id": "api_routes_rationale_235",
+      "id": "api_routes_rationale_245",
       "community": 2,
       "norm_label": "returns public server configuration flags for the frontend.     currently expose"
     },
     {
-      "label": "Clear all cached pipeline results.",
+      "label": "Clear all cached pipeline results. Requires x-admin-key header when CACHE_ADMIN_",
       "file_type": "rationale",
       "source_file": "api/routes.py",
-      "source_location": "L247",
+      "source_location": "L259",
       "_origin": "ast",
-      "id": "api_routes_rationale_247",
+      "id": "api_routes_rationale_259",
       "community": 2,
-      "norm_label": "clear all cached pipeline results."
+      "norm_label": "clear all cached pipeline results. requires x-admin-key header when cache_admin_"
     },
     {
       "label": "Return active provider config per pipeline step.",
       "file_type": "rationale",
       "source_file": "api/routes.py",
-      "source_location": "L257",
+      "source_location": "L272",
       "_origin": "ast",
-      "id": "api_routes_rationale_257",
-      "community": 2,
+      "id": "api_routes_rationale_272",
+      "community": 3,
       "norm_label": "return active provider config per pipeline step."
     },
     {
@@ -489,7 +969,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "config_settings",
-      "community": 2,
+      "community": 8,
       "norm_label": "settings"
     },
     {
@@ -499,14 +979,14 @@
       "source_location": "",
       "_origin": "ast",
       "id": "basesettings",
-      "community": 2,
+      "community": 8,
       "norm_label": "basesettings"
     },
     {
       "label": "get_settings()",
       "file_type": "code",
       "source_file": "config.py",
-      "source_location": "L63",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "config_get_settings",
       "community": 2,
@@ -516,7 +996,7 @@
       "label": "configure_logging()",
       "file_type": "code",
       "source_file": "config.py",
-      "source_location": "L67",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "config_configure_logging",
       "community": 2,
@@ -533,106 +1013,6 @@
       "norm_label": "config.py  single source of truth for all narada settings. every value is read f"
     },
     {
-      "label": "App.jsx",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_app",
-      "community": 4,
-      "norm_label": "app.jsx"
-    },
-    {
-      "label": "IS_LOCAL",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "src_app_is_local",
-      "community": 4,
-      "norm_label": "is_local"
-    },
-    {
-      "label": "isEffectiveLocal()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "src_app_iseffectivelocal",
-      "community": 4,
-      "norm_label": "iseffectivelocal()"
-    },
-    {
-      "label": "NEEDS_KEY",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "src_app_needs_key",
-      "community": 4,
-      "norm_label": "needs_key"
-    },
-    {
-      "label": "getSidebarKey()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L16",
-      "_origin": "ast",
-      "id": "src_app_getsidebarkey",
-      "community": 4,
-      "norm_label": "getsidebarkey()"
-    },
-    {
-      "label": "hasSidebarKey()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "src_app_hassidebarkey",
-      "community": 4,
-      "norm_label": "hassidebarkey()"
-    },
-    {
-      "label": "getSelectedLlmProvider()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "src_app_getselectedllmprovider",
-      "community": 4,
-      "norm_label": "getselectedllmprovider()"
-    },
-    {
-      "label": "buildHeaders()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "src_app_buildheaders",
-      "community": 4,
-      "norm_label": "buildheaders()"
-    },
-    {
-      "label": "STEPS",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L64",
-      "_origin": "ast",
-      "id": "src_app_steps",
-      "community": 4,
-      "norm_label": "steps"
-    },
-    {
-      "label": "App()",
-      "file_type": "code",
-      "source_file": "frontend/src/App.jsx",
-      "source_location": "L74",
-      "_origin": "ast",
-      "id": "src_app_app",
-      "community": 4,
-      "norm_label": "app()"
-    },
-    {
       "label": "main.py",
       "file_type": "code",
       "source_file": "main.py",
@@ -646,27 +1026,27 @@
       "label": "security_headers()",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L66",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "main_security_headers",
-      "community": 6,
+      "community": 2,
       "norm_label": "security_headers()"
     },
     {
       "label": "Request",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L66",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "main_py_request",
-      "community": 6,
+      "community": 2,
       "norm_label": "request"
     },
     {
       "label": "health()",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L114",
+      "source_location": "L120",
       "_origin": "ast",
       "id": "main_health",
       "community": 2,
@@ -676,7 +1056,7 @@
       "label": "serve_frontend()",
       "file_type": "code",
       "source_file": "main.py",
-      "source_location": "L131",
+      "source_location": "L137",
       "_origin": "ast",
       "id": "main_serve_frontend",
       "community": 2,
@@ -696,11 +1076,261 @@
       "label": "Catch-all route that serves the React app for any non-API path.         React Ro",
       "file_type": "rationale",
       "source_file": "main.py",
-      "source_location": "L132",
+      "source_location": "L138",
       "_origin": "ast",
-      "id": "main_rationale_132",
+      "id": "main_rationale_138",
       "community": 2,
       "norm_label": "catch-all route that serves the react app for any non-api path.         react ro"
+    },
+    {
+      "label": "extractor.py",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "extractor.py",
+      "id": "agents_extractor"
+    },
+    {
+      "label": "_is_valid_value()",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L104",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "_is_valid_value()",
+      "id": "agents_extractor_is_valid_value"
+    },
+    {
+      "label": "_parse_llm_json()",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L115",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "_parse_llm_json()",
+      "id": "agents_extractor_parse_llm_json"
+    },
+    {
+      "label": "_build_entities()",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L141",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "_build_entities()",
+      "id": "agents_extractor_build_entities"
+    },
+    {
+      "label": "Entity",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L141",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "entity",
+      "id": "entity"
+    },
+    {
+      "label": "_extract_from_page()",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "_extract_from_page()",
+      "id": "agents_extractor_extract_from_page"
+    },
+    {
+      "label": "QueryAnalysis",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "queryanalysis",
+      "id": "queryanalysis"
+    },
+    {
+      "label": "BaseLLMProvider",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "basellmprovider",
+      "id": "agents_extractor_py_basellmprovider"
+    },
+    {
+      "label": "extract_entities()",
+      "file_type": "code",
+      "source_file": "agents/extractor.py",
+      "source_location": "L220",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "extract_entities()",
+      "id": "agents_extractor_extract_entities"
+    },
+    {
+      "label": "agents/extractor.py  Step 4 of the Narada pipeline.  For each page, sends conten",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "agents/extractor.py  step 4 of the narada pipeline.  for each page, sends conten",
+      "id": "agents_extractor_rationale_1"
+    },
+    {
+      "label": "Return False for junk values the model writes when it can't find something.",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L105",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "return false for junk values the model writes when it can't find something.",
+      "id": "agents_extractor_rationale_105"
+    },
+    {
+      "label": "Parse JSON from LLM output.     Handles {\"entities\":[...]} and bare [...] respon",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L116",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "parse json from llm output.     handles {\"entities\":[...]} and bare [...] respon",
+      "id": "agents_extractor_rationale_116"
+    },
+    {
+      "label": "Convert parsed LLM JSON into Entity objects.     Attaches source_url to every Ce",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L146",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "convert parsed llm json into entity objects.     attaches source_url to every ce",
+      "id": "agents_extractor_rationale_146"
+    },
+    {
+      "label": "Extract entities from a single page. Returns empty list on failure.",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L189",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "extract entities from a single page. returns empty list on failure.",
+      "id": "agents_extractor_rationale_189"
+    },
+    {
+      "label": "Extract entities from all pages sequentially.     Sequential because Ollama hand",
+      "file_type": "rationale",
+      "source_file": "agents/extractor.py",
+      "source_location": "L226",
+      "_origin": "ast",
+      "community": 6,
+      "norm_label": "extract entities from all pages sequentially.     sequential because ollama hand",
+      "id": "agents_extractor_rationale_226"
+    },
+    {
+      "label": "App.jsx",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "app.jsx",
+      "id": "src_app"
+    },
+    {
+      "label": "IS_LOCAL",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "is_local",
+      "id": "src_app_is_local"
+    },
+    {
+      "label": "isEffectiveLocal()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "iseffectivelocal()",
+      "id": "src_app_iseffectivelocal"
+    },
+    {
+      "label": "NEEDS_KEY",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "needs_key",
+      "id": "src_app_needs_key"
+    },
+    {
+      "label": "getSidebarKey()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "getsidebarkey()",
+      "id": "src_app_getsidebarkey"
+    },
+    {
+      "label": "hasSidebarKey()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L22",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "hassidebarkey()",
+      "id": "src_app_hassidebarkey"
+    },
+    {
+      "label": "getSelectedLlmProvider()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L26",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "getselectedllmprovider()",
+      "id": "src_app_getselectedllmprovider"
+    },
+    {
+      "label": "buildHeaders()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L34",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "buildheaders()",
+      "id": "src_app_buildheaders"
+    },
+    {
+      "label": "STEPS",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L64",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "steps",
+      "id": "src_app_steps"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "frontend/src/App.jsx",
+      "source_location": "L74",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "app()",
+      "id": "src_app_app"
     },
     {
       "label": "factory.py",
@@ -708,9 +1338,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_factory",
-      "community": 2,
-      "norm_label": "factory.py"
+      "community": 3,
+      "norm_label": "factory.py",
+      "id": "providers_factory"
     },
     {
       "label": "_build_llm()",
@@ -718,9 +1348,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "providers_factory_build_llm",
-      "community": 2,
-      "norm_label": "_build_llm()"
+      "community": 3,
+      "norm_label": "_build_llm()",
+      "id": "providers_factory_build_llm"
     },
     {
       "label": "Settings",
@@ -728,9 +1358,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "providers_factory_py_settings",
-      "community": 2,
-      "norm_label": "settings"
+      "community": 3,
+      "norm_label": "settings",
+      "id": "providers_factory_py_settings"
     },
     {
       "label": "BaseLLMProvider",
@@ -738,9 +1368,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "providers_factory_py_basellmprovider",
-      "community": 2,
-      "norm_label": "basellmprovider"
+      "community": 3,
+      "norm_label": "basellmprovider",
+      "id": "providers_factory_py_basellmprovider"
     },
     {
       "label": "get_llm_provider()",
@@ -748,9 +1378,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L50",
       "_origin": "ast",
-      "id": "providers_factory_get_llm_provider",
-      "community": 2,
-      "norm_label": "get_llm_provider()"
+      "community": 3,
+      "norm_label": "get_llm_provider()",
+      "id": "providers_factory_get_llm_provider"
     },
     {
       "label": "get_query_analyzer_llm()",
@@ -758,9 +1388,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "providers_factory_get_query_analyzer_llm",
-      "community": 2,
-      "norm_label": "get_query_analyzer_llm()"
+      "community": 3,
+      "norm_label": "get_query_analyzer_llm()",
+      "id": "providers_factory_get_query_analyzer_llm"
     },
     {
       "label": "get_extraction_llm()",
@@ -768,9 +1398,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "providers_factory_get_extraction_llm",
-      "community": 2,
-      "norm_label": "get_extraction_llm()"
+      "community": 3,
+      "norm_label": "get_extraction_llm()",
+      "id": "providers_factory_get_extraction_llm"
     },
     {
       "label": "get_validator_llm()",
@@ -778,9 +1408,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "providers_factory_get_validator_llm",
-      "community": 2,
-      "norm_label": "get_validator_llm()"
+      "community": 3,
+      "norm_label": "get_validator_llm()",
+      "id": "providers_factory_get_validator_llm"
     },
     {
       "label": "get_search_provider()",
@@ -788,9 +1418,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "providers_factory_get_search_provider",
-      "community": 2,
-      "norm_label": "get_search_provider()"
+      "community": 3,
+      "norm_label": "get_search_provider()",
+      "id": "providers_factory_get_search_provider"
     },
     {
       "label": "BaseSearchProvider",
@@ -798,9 +1428,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "basesearchprovider",
-      "community": 2,
-      "norm_label": "basesearchprovider"
+      "community": 3,
+      "norm_label": "basesearchprovider",
+      "id": "basesearchprovider"
     },
     {
       "label": "providers/factory.py  Builds provider instances from settings.  LLM resolution o",
@@ -808,9 +1438,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_factory_rationale_1",
-      "community": 2,
-      "norm_label": "providers/factory.py  builds provider instances from settings.  llm resolution o"
+      "community": 3,
+      "norm_label": "providers/factory.py  builds provider instances from settings.  llm resolution o",
+      "id": "providers_factory_rationale_1"
     },
     {
       "label": "litellm_provider.py",
@@ -818,9 +1448,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "llm_litellm_provider",
       "community": 1,
-      "norm_label": "litellm_provider.py"
+      "norm_label": "litellm_provider.py",
+      "id": "llm_litellm_provider"
     },
     {
       "label": "LiteLLMProvider",
@@ -828,9 +1458,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider",
       "community": 1,
-      "norm_label": "litellmprovider"
+      "norm_label": "litellmprovider",
+      "id": "llm_litellm_provider_litellmprovider"
     },
     {
       "label": "BaseLLMProvider",
@@ -838,9 +1468,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "basellmprovider",
       "community": 1,
-      "norm_label": "basellmprovider"
+      "norm_label": "basellmprovider",
+      "id": "basellmprovider"
     },
     {
       "label": ".__init__()",
@@ -848,9 +1478,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_init",
       "community": 1,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "llm_litellm_provider_litellmprovider_init"
     },
     {
       "label": ".provider_name()",
@@ -858,9 +1488,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_provider_name",
       "community": 1,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "llm_litellm_provider_litellmprovider_provider_name"
     },
     {
       "label": ".model_name()",
@@ -868,9 +1498,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_model_name",
       "community": 1,
-      "norm_label": ".model_name()"
+      "norm_label": ".model_name()",
+      "id": "llm_litellm_provider_litellmprovider_model_name"
     },
     {
       "label": ".complete()",
@@ -878,9 +1508,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_complete",
       "community": 1,
-      "norm_label": ".complete()"
+      "norm_label": ".complete()",
+      "id": "llm_litellm_provider_litellmprovider_complete"
     },
     {
       "label": "providers/llm/litellm_provider.py  Single LLM provider backed by LiteLLM. Suppor",
@@ -888,9 +1518,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "llm_litellm_provider_rationale_1",
       "community": 1,
-      "norm_label": "providers/llm/litellm_provider.py  single llm provider backed by litellm. suppor"
+      "norm_label": "providers/llm/litellm_provider.py  single llm provider backed by litellm. suppor",
+      "id": "llm_litellm_provider_rationale_1"
     },
     {
       "label": "__init__.py",
@@ -908,7 +1538,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "aggregator.py",
       "id": "agents_aggregator"
     },
@@ -918,7 +1548,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L29",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "_normalize_name()",
       "id": "agents_aggregator_normalize_name"
     },
@@ -928,7 +1558,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "_merge_attributes()",
       "id": "agents_aggregator_merge_attributes"
     },
@@ -938,7 +1568,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "cellvalue",
       "id": "cellvalue"
     },
@@ -948,7 +1578,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "aggregate_entities()",
       "id": "agents_aggregator_aggregate_entities"
     },
@@ -958,7 +1588,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "entity",
       "id": "agents_aggregator_py_entity"
     },
@@ -968,7 +1598,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "agents/aggregator.py  step 5 of the narada pipeline.  takes the flat list of ent",
       "id": "agents_aggregator_rationale_1"
     },
@@ -978,7 +1608,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "normalize an entity name for deduplication comparison.     lowercases, strips pu",
       "id": "agents_aggregator_rationale_30"
     },
@@ -988,7 +1618,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "merge two attribute dicts for the same entity.      strategy per attribute:",
       "id": "agents_aggregator_rationale_45"
     },
@@ -998,7 +1628,7 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L69",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "deduplicate and merge a list of entities extracted across multiple pages.      t",
       "id": "agents_aggregator_rationale_69"
     },
@@ -1101,156 +1731,6 @@
       "community": 0,
       "norm_label": "analyze a user query and produce a structured research plan.      args:",
       "id": "agents_query_analyzer_rationale_133"
-    },
-    {
-      "label": "scraper.py",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "scraper.py",
-      "id": "agents_scraper"
-    },
-    {
-      "label": "_is_blocked()",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L39",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "_is_blocked()",
-      "id": "agents_scraper_is_blocked"
-    },
-    {
-      "label": "_extract_text()",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L66",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "_extract_text()",
-      "id": "agents_scraper_extract_text"
-    },
-    {
-      "label": "_extract_title()",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L84",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "_extract_title()",
-      "id": "agents_scraper_extract_title"
-    },
-    {
-      "label": "_scrape_one()",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "_scrape_one()",
-      "id": "agents_scraper_scrape_one"
-    },
-    {
-      "label": "AsyncClient",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "asyncclient",
-      "id": "asyncclient"
-    },
-    {
-      "label": "SearchResult",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "searchresult",
-      "id": "agents_scraper_py_searchresult"
-    },
-    {
-      "label": "ScrapedPage",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "scrapedpage",
-      "id": "agents_scraper_py_scrapedpage"
-    },
-    {
-      "label": "scrape_pages()",
-      "file_type": "code",
-      "source_file": "agents/scraper.py",
-      "source_location": "L143",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "scrape_pages()",
-      "id": "agents_scraper_scrape_pages"
-    },
-    {
-      "label": "agents/scraper.py  Step 3 of the Narada pipeline.  Takes a list of URLs from the",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "agents/scraper.py  step 3 of the narada pipeline.  takes a list of urls from the",
-      "id": "agents_scraper_rationale_1"
-    },
-    {
-      "label": "Return True if the URL matches a known low-quality source.",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L40",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "return true if the url matches a known low-quality source.",
-      "id": "agents_scraper_rationale_40"
-    },
-    {
-      "label": "Strip HTML and return clean plain text.     Removes noise tags first, then extra",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L67",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "strip html and return clean plain text.     removes noise tags first, then extra",
-      "id": "agents_scraper_rationale_67"
-    },
-    {
-      "label": "Extract page title from HTML. Returns empty string if not found.",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L85",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "extract page title from html. returns empty string if not found.",
-      "id": "agents_scraper_rationale_85"
-    },
-    {
-      "label": "Fetch and parse a single URL.     Returns None on any failure \u2014 caller decides w",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L96",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "fetch and parse a single url.     returns none on any failure \u2014 caller decides w",
-      "id": "agents_scraper_rationale_96"
-    },
-    {
-      "label": "Scrape a list of search results concurrently.     Returns only successfully scra",
-      "file_type": "rationale",
-      "source_file": "agents/scraper.py",
-      "source_location": "L148",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "scrape a list of search results concurrently.     returns only successfully scra",
-      "id": "agents_scraper_rationale_148"
     },
     {
       "label": "validator.py",
@@ -1508,7 +1988,7 @@
       "source_file": "core/models.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "models.py",
       "id": "core_models"
     },
@@ -1528,7 +2008,7 @@
       "source_file": "core/models.py",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 3,
+      "community": 6,
       "norm_label": "scrapedpage",
       "id": "core_models_scrapedpage"
     },
@@ -1538,7 +2018,7 @@
       "source_file": "core/models.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "cellvalue",
       "id": "core_models_cellvalue"
     },
@@ -1588,7 +2068,7 @@
       "source_file": "core/models.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "core/models.py  all shared data shapes for the narada pipeline. interfaces are d",
       "id": "core_models_rationale_1"
     },
@@ -1608,7 +2088,7 @@
       "source_file": "core/models.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 3,
+      "community": 6,
       "norm_label": "cleaned plain-text content scraped from a url.",
       "id": "core_models_rationale_24"
     },
@@ -1618,7 +2098,7 @@
       "source_file": "core/models.py",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 7,
+      "community": 0,
       "norm_label": "a single attribute value for an entity.     source_url makes every cell in the o",
       "id": "core_models_rationale_35"
     },
@@ -2168,7 +2648,7 @@
       "source_file": "providers/base.py",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "basellmprovider",
       "id": "providers_base_basellmprovider"
     },
@@ -2178,7 +2658,7 @@
       "source_file": "providers/base.py",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": ".complete()",
       "id": "providers_base_basellmprovider_complete"
     },
@@ -2188,7 +2668,7 @@
       "source_file": "providers/base.py",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": ".provider_name()",
       "id": "providers_base_basellmprovider_provider_name"
     },
@@ -2198,7 +2678,7 @@
       "source_file": "providers/base.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": ".model_name()",
       "id": "providers_base_basellmprovider_model_name"
     },
@@ -2248,7 +2728,7 @@
       "source_file": "providers/base.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "contract every llm provider must fulfill.",
       "id": "providers_base_rationale_39"
     },
@@ -2258,7 +2738,7 @@
       "source_file": "providers/base.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "send a prompt and return the full model response.          args:             pro",
       "id": "providers_base_rationale_43"
     },
@@ -2268,7 +2748,7 @@
       "source_file": "providers/base.py",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "e.g. 'ollama', 'openai', 'anthropic",
       "id": "providers_base_rationale_59"
     },
@@ -2278,7 +2758,7 @@
       "source_file": "providers/base.py",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "e.g. 'qwen3:4b', 'gpt-4o-mini",
       "id": "providers_base_rationale_65"
     },
@@ -2298,7 +2778,7 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "braveprovider",
       "id": "search_brave_braveprovider"
     },
@@ -2308,7 +2788,7 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".__init__()",
       "id": "search_brave_braveprovider_init"
     },
@@ -2318,7 +2798,7 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".provider_name()",
       "id": "search_brave_braveprovider_provider_name"
     },
@@ -2398,7 +2878,7 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "duckduckgoprovider",
       "id": "search_duckduckgo_duckduckgoprovider"
     },
@@ -2408,7 +2888,7 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".provider_name()",
       "id": "search_duckduckgo_duckduckgoprovider_provider_name"
     },
@@ -2468,7 +2948,7 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "tavilyprovider",
       "id": "search_tavily_tavilyprovider"
     },
@@ -2478,7 +2958,7 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".__init__()",
       "id": "search_tavily_tavilyprovider_init"
     },
@@ -2488,7 +2968,7 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": ".provider_name()",
       "id": "search_tavily_tavilyprovider_provider_name"
     },
@@ -2663,19 +3143,6 @@
       "id": "workflows_buildfrontend_ci"
     },
     {
-      "label": "README.md (project documentation)",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "1-575",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 11,
-      "norm_label": "readme.md (project documentation)",
-      "id": "readme_narada"
-    },
-    {
       "label": "challenge.md (agentic search challenge spec)",
       "file_type": "document",
       "source_file": "challenge.md",
@@ -2715,84 +3182,6 @@
       "id": "frontend_indexhtml"
     },
     {
-      "label": "Provider Pattern (abstract interface isolation)",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": "180-188",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 3,
-      "norm_label": "provider pattern (abstract interface isolation)",
-      "id": "concept_provider_pattern"
-    },
-    {
-      "label": "Per-Step LLM Configuration",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": "192-202",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 2,
-      "norm_label": "per-step llm configuration",
-      "id": "concept_perstep_llm"
-    },
-    {
-      "label": "API Key Security Model (sessionStorage + headers)",
-      "file_type": "concept",
-      "source_file": "README.md",
-      "source_location": "205-212",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 6,
-      "norm_label": "api key security model (sessionstorage + headers)",
-      "id": "concept_key_security"
-    },
-    {
-      "label": "Dynamic Schema per Query",
-      "file_type": "rationale",
-      "source_file": "README.md",
-      "source_location": "518-520",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 2,
-      "norm_label": "dynamic schema per query",
-      "id": "concept_dynamic_schema"
-    },
-    {
-      "label": "Source Traceability at Cell Level (CellValue)",
-      "file_type": "rationale",
-      "source_file": "README.md",
-      "source_location": "522-524",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 2,
-      "norm_label": "source traceability at cell level (cellvalue)",
-      "id": "concept_cell_traceability"
-    },
-    {
-      "label": "Disk Cache (no Redis, SHA256 key)",
-      "file_type": "rationale",
-      "source_file": "README.md",
-      "source_location": "530-532",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 15,
-      "norm_label": "disk cache (no redis, sha256 key)",
-      "id": "concept_disk_cache"
-    },
-    {
       "label": "FALLBACK_ALLOW (server key sharing option)",
       "file_type": "concept",
       "source_file": "render.yaml",
@@ -2810,351 +3199,701 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L141",
+      "source_file": "README.md",
+      "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "agents_extractor_build_entities"
+      "source": "readme",
+      "target": "readme_narada",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md",
+      "source_location": "1-575",
+      "weight": 0.85,
+      "source": "readme_narada",
+      "target": "challenge_spec"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L220",
+      "source_file": "README.md",
+      "source_location": "L552",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "agents_extractor_extract_entities"
+      "source": "readme_narada",
+      "target": "readme_adding_a_new_provider",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
+      "source_file": "README.md",
+      "source_location": "L380",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "agents_extractor_extract_from_page"
+      "source": "readme_narada",
+      "target": "readme_api_reference",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L104",
+      "source_file": "README.md",
+      "source_location": "L176",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "agents_extractor_is_valid_value"
+      "source": "readme_narada",
+      "target": "readme_architecture",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L115",
+      "source_file": "README.md",
+      "source_location": "L461",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_deployment_on_render_free",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L514",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_design_decisions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L330",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_environment_variables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L152",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_how_it_works",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_key_fallback_behaviour",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L538",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_known_limitations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_local_vs_production_behaviour",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L276",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_setup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "readme_narada",
+      "target": "readme_using_the_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_reading_the_results",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_step_1_get_your_api_keys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_step_2_configure_the_sidebar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_step_3_run_a_query",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_tips",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "readme_using_the_app",
+      "target": "readme_what_you_need",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L128",
+      "weight": 1.0,
+      "source": "readme_local_vs_production_behaviour",
+      "target": "readme_dev_sim_prod_toggle_local_only",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "readme_local_vs_production_behaviour",
+      "target": "readme_local_dev_mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "readme_local_vs_production_behaviour",
+      "target": "readme_production_mode",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "readme_architecture",
+      "target": "readme_api_key_security",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L217",
+      "weight": 1.0,
+      "source": "readme_architecture",
+      "target": "readme_error_handling",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L193",
+      "weight": 1.0,
+      "source": "readme_architecture",
+      "target": "readme_per_step_llm_configuration",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "readme_architecture",
+      "target": "readme_project_structure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L178",
+      "weight": 1.0,
+      "source": "readme_architecture",
+      "target": "readme_provider_pattern",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L285",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_1_create_the_conda_environment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_2_configure_environment_variables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L300",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_3_pull_ollama_models_only_if_using_ollama",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L307",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_4_start_the_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L313",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_5_start_the_frontend_separate_terminal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L322",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_6_open_swagger_docs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L278",
+      "weight": 1.0,
+      "source": "readme_setup",
+      "target": "readme_prerequisites",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L439",
+      "weight": 1.0,
+      "source": "readme_api_reference",
+      "target": "readme_delete_api_cache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L443",
+      "weight": 1.0,
+      "source": "readme_api_reference",
+      "target": "readme_get_api_providers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L447",
+      "weight": 1.0,
+      "source": "readme_api_reference",
+      "target": "readme_get_api_server_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "readme_api_reference",
+      "target": "readme_get_health",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L384",
+      "weight": 1.0,
+      "source": "readme_api_reference",
+      "target": "readme_post_api_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L508",
+      "weight": 1.0,
+      "source": "readme_deployment_on_render_free",
+      "target": "readme_auto_deploy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L463",
+      "weight": 1.0,
+      "source": "readme_deployment_on_render_free",
+      "target": "readme_prerequisites_463",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L470",
+      "weight": 1.0,
+      "source": "readme_deployment_on_render_free",
+      "target": "readme_steps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L554",
+      "weight": 1.0,
+      "source": "readme_adding_a_new_provider",
+      "target": "readme_llm_provider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L566",
+      "weight": 1.0,
+      "source": "readme_adding_a_new_provider",
+      "target": "readme_search_provider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L66",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "agents_extractor_parse_llm_json"
+      "source": "agents_scraper",
+      "target": "agents_scraper_extract_text"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L84",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper",
+      "target": "agents_scraper_extract_title"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L39",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper",
+      "target": "agents_scraper_is_blocked"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "agents_scraper",
+      "target": "agents_scraper_is_ssrf_risk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L91",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper",
+      "target": "agents_scraper_scrape_one"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper",
+      "target": "agents_scraper_scrape_pages"
     },
     {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
+      "source_file": "agents/scraper.py",
+      "source_location": "L28",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor",
+      "source": "agents_scraper",
       "target": "core_models"
     },
     {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
+      "source_file": "agents/scraper.py",
+      "source_location": "L28",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "core_models_cellvalue"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "core_models_entity"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "core_models_queryanalysis"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
+      "source": "agents_scraper",
       "target": "core_models_scrapedpage"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "providers_base"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L25",
+      "source_file": "agents/scraper.py",
+      "source_location": "L28",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor",
-      "target": "providers_base_basellmprovider"
+      "source": "agents_scraper",
+      "target": "core_models_searchresult"
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
+      "source_file": "agents/scraper.py",
       "source_location": "L1",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_1",
-      "target": "agents_extractor"
+      "source": "agents_scraper_rationale_1",
+      "target": "agents_scraper"
     },
     {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "core/pipeline.py",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_pipeline",
-      "target": "agents_extractor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "line 172",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_build_entities",
-      "target": "agents_extractor_is_valid_value"
+      "target": "agents_scraper"
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L105",
+      "source_file": "agents/scraper.py",
+      "source_location": "L47",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_105",
-      "target": "agents_extractor_is_valid_value"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "line 206",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "agents_extractor_parse_llm_json"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "agents/extractor.py",
-      "source_location": "line 115",
-      "weight": 0.85,
-      "source": "agents_extractor_parse_llm_json",
-      "target": "agents_query_analyzer_parse_llm_json"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L116",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_116",
-      "target": "agents_extractor_parse_llm_json"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "agents/validator.py",
-      "source_location": "line 60",
-      "weight": 0.75,
-      "source": "agents_validator_parse_valid_names",
-      "target": "agents_extractor_parse_llm_json"
-    },
-    {
-      "relation": "references",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "line 170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_build_entities",
-      "target": "core_models_cellvalue"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_build_entities",
-      "target": "core_models_entity"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L141",
-      "weight": 1.0,
-      "source": "agents_extractor_build_entities",
-      "target": "entity",
+      "source": "agents_scraper_rationale_47",
+      "target": "agents_scraper_is_blocked",
       "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "line 207",
+      "source_file": "agents/scraper.py",
+      "source_location": "line 100",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "agents_extractor_build_entities"
+      "source": "agents_scraper_scrape_one",
+      "target": "agents_scraper_is_blocked"
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L146",
+      "source_file": "agents/scraper.py",
+      "source_location": "L52",
       "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_146",
-      "target": "agents_extractor_build_entities"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L220",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "entity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "entity",
+      "source": "agents_scraper_rationale_52",
+      "target": "agents_scraper_is_ssrf_risk",
       "confidence_score": 1.0
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "line 241",
+      "source_file": "agents/scraper.py",
+      "source_location": "L133",
+      "weight": 1.0,
+      "source": "agents_scraper_scrape_one",
+      "target": "agents_scraper_is_ssrf_risk",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "agents_scraper_rationale_96",
+      "target": "agents_scraper_extract_text",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "line 119",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "agents_extractor_extract_from_page"
+      "source": "agents_scraper_scrape_one",
+      "target": "agents_scraper_extract_text"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "agents_scraper_rationale_114",
+      "target": "agents_scraper_extract_title",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "line 120",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper_scrape_one",
+      "target": "agents_scraper_extract_title"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "agents_scraper_rationale_125",
+      "target": "agents_scraper_scrape_one",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L96",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper_rationale_96",
+      "target": "agents_scraper_scrape_one"
     },
     {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
+      "source_file": "agents/scraper.py",
+      "source_location": "L91",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "agents_extractor_py_basellmprovider"
+      "source": "agents_scraper_scrape_one",
+      "target": "asyncclient"
     },
     {
-      "relation": "references",
-      "context": "parameter_type",
+      "relation": "calls",
+      "context": "call",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "queryanalysis",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L184",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_from_page",
-      "target": "scrapedpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L189",
+      "source_file": "agents/scraper.py",
+      "source_location": "L126",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_189",
-      "target": "agents_extractor_extract_from_page"
+      "source": "agents_scraper_scrape_one",
+      "target": "core_models_scrapedpage"
     },
     {
       "relation": "references",
-      "context": "generic_arg",
+      "context": "return_type",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L220",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
       "weight": 1.0,
-      "source": "agents_extractor_extract_entities",
+      "source": "agents_scraper_scrape_one",
       "target": "scrapedpage",
       "confidence_score": 1.0
     },
@@ -3162,135 +3901,182 @@
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "agents_scraper_scrape_one",
+      "target": "searchresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "line 166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper_scrape_pages",
+      "target": "agents_scraper_scrape_one"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L165",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_scraper_scrape_pages",
+      "target": "asyncclient"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L28",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "asyncclient",
+      "target": "core_models_scrapedpage"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L28",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "asyncclient",
+      "target": "core_models_searchresult"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/scraper.py",
+      "source_location": "L176",
+      "weight": 1.0,
+      "source": "agents_scraper_scrape_pages",
+      "target": "searchresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
       "source_file": "agents/extractor.py",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_extract_entities",
-      "target": "queryanalysis",
-      "confidence_score": 1.0
+      "target": "scrapedpage"
     },
     {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
       "source_file": "agents/extractor.py",
-      "source_location": "L220",
+      "source_location": "L184",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "agents_extractor_py_basellmprovider"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_extractor_py_basellmprovider",
-      "target": "core_models_cellvalue"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_extractor_py_basellmprovider",
-      "target": "core_models_entity"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_extractor_py_basellmprovider",
-      "target": "core_models_queryanalysis"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L24",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_extractor_py_basellmprovider",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L25",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_extractor_py_basellmprovider",
-      "target": "providers_base_basellmprovider"
+      "source": "agents_extractor_extract_from_page",
+      "target": "scrapedpage"
     },
     {
       "relation": "references",
+      "context": "generic_arg",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "agents/extractor.py",
-      "source_location": "line 24",
+      "source_file": "agents/scraper.py",
+      "source_location": "L176",
       "weight": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "core_models_entity"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "agents/extractor.py",
-      "source_location": "line 24",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "core_models_queryanalysis"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "agents/extractor.py",
-      "source_location": "line 24",
-      "weight": 1.0,
-      "source": "agents_extractor_extract_entities",
-      "target": "core_models_scrapedpage"
+      "source": "agents_scraper_scrape_pages",
+      "target": "scrapedpage",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
-      "source_file": "agents/extractor.py",
-      "source_location": "L226",
+      "source_file": "agents/scraper.py",
+      "source_location": "L181",
       "weight": 1.0,
+      "source": "agents_scraper_rationale_181",
+      "target": "agents_scraper_scrape_pages",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source": "agents_extractor_rationale_226",
-      "target": "agents_extractor_extract_entities"
+      "source_file": "agents/scraper.py",
+      "source_location": "line 27",
+      "weight": 1.0,
+      "source": "agents_scraper_scrape_pages",
+      "target": "core_models_scrapedpage"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/scraper.py",
+      "source_location": "line 27",
+      "weight": 1.0,
+      "source": "agents_scraper_scrape_pages",
+      "target": "core_models_searchresult"
     },
     {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "core/pipeline.py",
-      "source_location": "L24",
+      "source_location": "L26",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_pipeline",
-      "target": "agents_extractor_extract_entities"
+      "target": "agents_scraper_scrape_pages"
     },
     {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "core/pipeline.py",
-      "source_location": "line 140",
+      "source_location": "line 133",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "core_pipeline_run_pipeline",
-      "target": "agents_extractor_extract_entities"
+      "target": "agents_scraper_scrape_pages"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "api/limiter.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "api_limiter_rationale_1",
+      "target": "api_limiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "api/routes.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "api_routes",
+      "target": "api_limiter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "main",
+      "target": "api_limiter",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -4019,17 +4805,6 @@
     },
     {
       "relation": "references",
-      "context": "return_type",
-      "confidence": "EXTRACTED",
-      "source_file": "api/routes.py",
-      "source_location": "L93",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "api_routes_build_settings_from_headers",
-      "target": "api_routes_py_settings"
-    },
-    {
-      "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "api/routes.py",
@@ -4039,12 +4814,23 @@
       "target": "config_settings"
     },
     {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "api/routes.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "api_routes_build_settings_from_headers",
+      "target": "settings",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "api/routes.py",
-      "source_location": "L92",
+      "source_location": "L96",
       "weight": 1.0,
-      "source": "api_routes_rationale_92",
+      "source": "api_routes_rationale_96",
       "target": "api_routes_build_settings_from_headers",
       "confidence_score": 1.0
     },
@@ -4114,49 +4900,19 @@
       "relation": "uses",
       "confidence": "INFERRED",
       "source_file": "api/routes.py",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "api_routes_py_settings",
-      "target": "config_settings"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "api/routes.py",
-      "source_location": "L26",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "api_routes_py_settings",
-      "target": "core_models_pipelineresult"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "api/routes.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "api_routes_py_settings",
-      "target": "providers_base_basellmprovider"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "api/routes.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "api_routes_py_settings",
-      "target": "providers_base_basesearchprovider"
+      "source": "settings",
+      "target": "config_settings",
+      "confidence_score": 0.5
     },
     {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "api/routes.py",
-      "source_location": "L139",
+      "source_location": "L144",
       "weight": 1.0,
-      "source": "api_routes_rationale_139",
+      "source": "api_routes_rationale_144",
       "target": "api_routes_search",
       "confidence_score": 1.0
     },
@@ -4259,11 +5015,22 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "api/routes.py",
-      "source_location": "L235",
+      "source_location": "L245",
       "weight": 1.0,
-      "source": "api_routes_rationale_235",
+      "source": "api_routes_rationale_245",
       "target": "api_routes_get_server_config",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "api/routes.py",
+      "source_location": "L260",
+      "weight": 1.0,
+      "source": "api_routes_delete_cache",
+      "target": "config_get_settings"
     },
     {
       "relation": "calls",
@@ -4280,9 +5047,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "api/routes.py",
-      "source_location": "L247",
+      "source_location": "L259",
       "weight": 1.0,
-      "source": "api_routes_rationale_247",
+      "source": "api_routes_rationale_259",
       "target": "api_routes_delete_cache",
       "confidence_score": 1.0
     },
@@ -4356,9 +5123,9 @@
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "api/routes.py",
-      "source_location": "L257",
+      "source_location": "L272",
       "weight": 1.0,
-      "source": "api_routes_rationale_257",
+      "source": "api_routes_rationale_272",
       "target": "api_routes_get_providers",
       "confidence_score": 1.0
     },
@@ -4441,9 +5208,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L16",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "basesearchprovider",
-      "target": "config_settings",
-      "confidence_score": 0.5
+      "target": "config_settings"
     },
     {
       "relation": "references",
@@ -4590,6 +5357,530 @@
       "confidence_score": 1.0,
       "source": "main",
       "target": "config_configure_logging"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L114",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main",
+      "target": "main_health"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main",
+      "target": "main_security_headers"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L131",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main",
+      "target": "main_serve_frontend"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_rationale_1",
+      "target": "main"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "main_security_headers",
+      "target": "main_py_request"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "main.py",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "main_rationale_138",
+      "target": "main_serve_frontend",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "agents_extractor_build_entities"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "agents_extractor_extract_entities"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "agents_extractor_extract_from_page"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "agents_extractor_is_valid_value"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L115",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "agents_extractor_parse_llm_json"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "core_models"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "core_models_cellvalue"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "core_models_entity"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "core_models_queryanalysis"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "core_models_scrapedpage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "providers_base"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor",
+      "target": "providers_base_basellmprovider"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_1",
+      "target": "agents_extractor"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "core/pipeline.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "core_pipeline",
+      "target": "agents_extractor"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "line 172",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_build_entities",
+      "target": "agents_extractor_is_valid_value"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_105",
+      "target": "agents_extractor_is_valid_value"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "line 206",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_from_page",
+      "target": "agents_extractor_parse_llm_json"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "agents/extractor.py",
+      "source_location": "line 115",
+      "weight": 0.85,
+      "source": "agents_extractor_parse_llm_json",
+      "target": "agents_query_analyzer_parse_llm_json"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L116",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_116",
+      "target": "agents_extractor_parse_llm_json"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "agents/validator.py",
+      "source_location": "line 60",
+      "weight": 0.75,
+      "source": "agents_validator_parse_valid_names",
+      "target": "agents_extractor_parse_llm_json"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "line 170",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_build_entities",
+      "target": "core_models_cellvalue"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_build_entities",
+      "target": "core_models_entity"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_build_entities",
+      "target": "entity"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "line 207",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_from_page",
+      "target": "agents_extractor_build_entities"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L146",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_146",
+      "target": "agents_extractor_build_entities"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "entity"
+    },
+    {
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_from_page",
+      "target": "entity"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "line 241",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "agents_extractor_extract_from_page"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_from_page",
+      "target": "agents_extractor_py_basellmprovider"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L184",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_from_page",
+      "target": "queryanalysis"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L189",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_189",
+      "target": "agents_extractor_extract_from_page"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "queryanalysis"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "agents_extractor_py_basellmprovider"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "agents_extractor_py_basellmprovider",
+      "target": "core_models_cellvalue"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "agents_extractor_py_basellmprovider",
+      "target": "core_models_entity"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "agents_extractor_py_basellmprovider",
+      "target": "core_models_queryanalysis"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L24",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "agents_extractor_py_basellmprovider",
+      "target": "core_models_scrapedpage"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L25",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "agents_extractor_py_basellmprovider",
+      "target": "providers_base_basellmprovider"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/extractor.py",
+      "source_location": "line 24",
+      "weight": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "core_models_entity"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/extractor.py",
+      "source_location": "line 24",
+      "weight": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "core_models_queryanalysis"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "agents/extractor.py",
+      "source_location": "line 24",
+      "weight": 1.0,
+      "source": "agents_extractor_extract_entities",
+      "target": "core_models_scrapedpage"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "agents/extractor.py",
+      "source_location": "L226",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "agents_extractor_rationale_226",
+      "target": "agents_extractor_extract_entities"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "core/pipeline.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "core_pipeline",
+      "target": "agents_extractor_extract_entities"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "core/pipeline.py",
+      "source_location": "line 140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "core_pipeline_run_pipeline",
+      "target": "agents_extractor_extract_entities"
     },
     {
       "relation": "imports_from",
@@ -4792,77 +6083,6 @@
       "target": "hooks_usesession_usesession"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L114",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main",
-      "target": "main_health"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main",
-      "target": "main_security_headers"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main",
-      "target": "main_serve_frontend"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_rationale_1",
-      "target": "main"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.95,
-      "source_file": "main.py",
-      "source_location": "77-85",
-      "weight": 0.95,
-      "source": "main_security_headers",
-      "target": "concept_key_security"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_security_headers",
-      "target": "main_py_request"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "main.py",
-      "source_location": "L132",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "main_rationale_132",
-      "target": "main_serve_frontend"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -4880,9 +6100,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "providers_factory",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "imports_from",
@@ -5027,9 +6247,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "providers_factory_build_llm",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "references",
@@ -5158,9 +6378,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L31",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "providers_factory_py_settings",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 0.5
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "uses",
@@ -5262,9 +6482,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L31",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "providers_factory_py_basellmprovider",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 0.5
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "uses",
@@ -5317,26 +6537,6 @@
       "target": "search_tavily_tavilyprovider"
     },
     {
-      "relation": "rationale_for",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": "518-520",
-      "weight": 0.85,
-      "source": "concept_dynamic_schema",
-      "target": "providers_factory_get_query_analyzer_llm"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "192-202",
-      "weight": 1.0,
-      "source": "concept_perstep_llm",
-      "target": "providers_factory_get_query_analyzer_llm"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5359,16 +6559,6 @@
       "target": "providers_factory_get_query_analyzer_llm"
     },
     {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "192-202",
-      "weight": 1.0,
-      "source": "concept_perstep_llm",
-      "target": "providers_factory_get_extraction_llm"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5389,16 +6579,6 @@
       "confidence_score": 1.0,
       "source": "core_pipeline_run_pipeline",
       "target": "providers_factory_get_extraction_llm"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "192-202",
-      "weight": 1.0,
-      "source": "concept_perstep_llm",
-      "target": "providers_factory_get_validator_llm"
     },
     {
       "relation": "imports",
@@ -5429,9 +6609,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "providers_factory_get_search_provider",
-      "target": "basesearchprovider",
-      "confidence_score": 1.0
+      "target": "basesearchprovider"
     },
     {
       "relation": "calls",
@@ -5472,9 +6652,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L31",
       "weight": 0.8,
+      "confidence_score": 0.5,
       "source": "basesearchprovider",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 0.5
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "inherits",
@@ -5512,9 +6692,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider",
-      "target": "llm_litellm_provider_litellmprovider",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider"
     },
     {
       "relation": "imports_from",
@@ -5523,9 +6703,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider",
-      "target": "providers_base",
-      "confidence_score": 1.0
+      "target": "providers_base"
     },
     {
       "relation": "rationale_for",
@@ -5533,9 +6713,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_rationale_1",
-      "target": "llm_litellm_provider",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider"
     },
     {
       "relation": "inherits",
@@ -5543,9 +6723,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_litellmprovider",
-      "target": "basellmprovider",
-      "confidence_score": 1.0
+      "target": "basellmprovider"
     },
     {
       "relation": "method",
@@ -5553,9 +6733,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_litellmprovider",
-      "target": "llm_litellm_provider_litellmprovider_complete",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider_complete"
     },
     {
       "relation": "method",
@@ -5563,9 +6743,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_litellmprovider",
-      "target": "llm_litellm_provider_litellmprovider_init",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider_init"
     },
     {
       "relation": "method",
@@ -5573,9 +6753,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_litellmprovider",
-      "target": "llm_litellm_provider_litellmprovider_model_name",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider_model_name"
     },
     {
       "relation": "method",
@@ -5583,9 +6763,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "llm_litellm_provider_litellmprovider",
-      "target": "llm_litellm_provider_litellmprovider_provider_name",
-      "confidence_score": 1.0
+      "target": "llm_litellm_provider_litellmprovider_provider_name"
     },
     {
       "relation": "contains",
@@ -6090,383 +7270,6 @@
       "confidence_score": 0.5,
       "source": "agents_query_analyzer_py_basellmprovider",
       "target": "providers_base_basellmprovider"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L66",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "agents_scraper_extract_text"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "agents_scraper_extract_title"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L39",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "agents_scraper_is_blocked"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "agents_scraper_scrape_one"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "agents_scraper_scrape_pages"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "core_models"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper",
-      "target": "core_models_searchresult"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_1",
-      "target": "agents_scraper"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "core/pipeline.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "core_pipeline",
-      "target": "agents_scraper"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_40",
-      "target": "agents_scraper_is_blocked"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "line 100",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "agents_scraper_is_blocked"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_67",
-      "target": "agents_scraper_extract_text"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "line 119",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "agents_scraper_extract_text"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L85",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_85",
-      "target": "agents_scraper_extract_title"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "line 120",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "agents_scraper_extract_title"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L96",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_96",
-      "target": "agents_scraper_scrape_one"
-    },
-    {
-      "relation": "references",
-      "context": "return_type",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "agents_scraper_py_scrapedpage"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "agents_scraper_py_searchresult"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L91",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "asyncclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L126",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_one",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "line 166",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "agents_scraper_scrape_one"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L165",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "asyncclient"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "asyncclient",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "asyncclient",
-      "target": "core_models_searchresult"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_scraper_py_searchresult",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_scraper_py_searchresult",
-      "target": "core_models_searchresult"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "agents_scraper_py_searchresult"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_scraper_py_scrapedpage",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L28",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "agents_scraper_py_scrapedpage",
-      "target": "core_models_searchresult"
-    },
-    {
-      "relation": "references",
-      "context": "generic_arg",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "agents_scraper_py_scrapedpage"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "agents/scraper.py",
-      "source_location": "L148",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "agents_scraper_rationale_148",
-      "target": "agents_scraper_scrape_pages"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "agents/scraper.py",
-      "source_location": "line 27",
-      "weight": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "core_models_scrapedpage"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "agents/scraper.py",
-      "source_location": "line 27",
-      "weight": 1.0,
-      "source": "agents_scraper_scrape_pages",
-      "target": "core_models_searchresult"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "core/pipeline.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "core_pipeline",
-      "target": "agents_scraper_scrape_pages"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "core/pipeline.py",
-      "source_location": "line 133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "core_pipeline_run_pipeline",
-      "target": "agents_scraper_scrape_pages"
     },
     {
       "relation": "contains",
@@ -8196,16 +8999,6 @@
       "target": "providers_base"
     },
     {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "180-188",
-      "weight": 1.0,
-      "source": "concept_provider_pattern",
-      "target": "providers_base_basesearchprovider"
-    },
-    {
       "relation": "inherits",
       "confidence": "EXTRACTED",
       "source_file": "providers/base.py",
@@ -8378,16 +9171,6 @@
       "confidence_score": 1.0,
       "source": "providers_base_rationale_34",
       "target": "providers_base_basesearchprovider_provider_name"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "180-188",
-      "weight": 1.0,
-      "source": "concept_provider_pattern",
-      "target": "providers_base_basellmprovider"
     },
     {
       "relation": "method",
@@ -8673,16 +9456,6 @@
       "target": "search_tavily"
     },
     {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "README.md",
-      "source_location": "522-524",
-      "weight": 0.75,
-      "source": "concept_cell_traceability",
-      "target": "search_tavily_tavilyprovider"
-    },
-    {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "providers/search/tavily.py",
@@ -8782,16 +9555,6 @@
       "weight": 1.0,
       "source": "frontend_indexhtml",
       "target": "src_main_app_entry"
-    },
-    {
-      "relation": "references",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "README.md",
-      "source_location": "1-575",
-      "weight": 0.85,
-      "source": "readme_narada",
-      "target": "challenge_spec"
     },
     {
       "relation": "references",
@@ -8902,5 +9665,5 @@
       "weight": 1.0
     }
   ],
-  "built_at_commit": "1caa3ca9f6265a721f8a0837d1d0b3de3357e268"
+  "built_at_commit": "b5a149628e6fffaae55a34a62d1117c1f3faf169"
 }
