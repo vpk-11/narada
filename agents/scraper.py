@@ -20,7 +20,10 @@ Key design decisions:
 """
 
 import asyncio
+import ipaddress
 import logging
+import re
+from urllib.parse import urlparse
 
 import httpx
 from bs4 import BeautifulSoup
@@ -36,9 +39,35 @@ _BLOCKED_DOMAINS = {
     "crunchbase.com/unicorn-company-list",  # generic multi-sector list
 }
 
+_BLOCKED_HOSTS = frozenset({"localhost", "metadata.google.internal"})
+_PRIVATE_HOST_RE = re.compile(r'\.(local|internal|localdomain)$', re.IGNORECASE)
+
+
 def _is_blocked(url: str) -> bool:
     """Return True if the URL matches a known low-quality source."""
     return any(blocked in url for blocked in _BLOCKED_DOMAINS)
+
+
+def _is_ssrf_risk(url: str) -> bool:
+    """
+    Return True if the URL targets a private/loopback/link-local address.
+    Guards against redirect-based SSRF from search provider results.
+    Only catches IP-literal hostnames and known internal TLDs; DNS rebinding
+    is not in scope for this threat model.
+    """
+    try:
+        host = urlparse(url).hostname or ""
+        if not host:
+            return True
+        if host in _BLOCKED_HOSTS or _PRIVATE_HOST_RE.search(host):
+            return True
+        try:
+            addr = ipaddress.ip_address(host)
+            return addr.is_private or addr.is_loopback or addr.is_link_local
+        except ValueError:
+            return False
+    except Exception:
+        return True
 
 # Max characters of page content to pass to the LLM.
 # Most useful content is in the first ~6000 chars.
@@ -99,6 +128,10 @@ async def _scrape_one(
     """
     if _is_blocked(result.url):
         logger.info(f"[Scraper] Skipping blocked domain: {result.url[:70]}")
+        return None
+
+    if _is_ssrf_risk(result.url):
+        logger.warning(f"[Scraper] Skipping private/internal URL: {result.url[:70]}")
         return None
 
     try:

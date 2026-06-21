@@ -16,3 +16,4 @@ dependencies:
       - lxml==5.2.2
       - python-dotenv==1.0.1
       - litellm>=1.40.0
+      - slowapi>=0.1.9

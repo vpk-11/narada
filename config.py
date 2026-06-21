@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     # has not provided their own keys (production only).
     fallback_allow: bool = False
 
+    # Optional admin key for DELETE /api/cache. When set, the x-admin-key
+    # header must match. Leave empty to allow unauthenticated cache clears.
+    cache_admin_key: str = ""
+
     # ── Logging ───────────────────────────────────────────────────────────── #
     log_level: str = "INFO"
 
