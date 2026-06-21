@@ -179,27 +179,30 @@ Query
 
 Every LLM and search dependency sits behind an abstract interface. The pipeline never imports a concrete provider directly. Swapping providers means changing one line in `.env`.
 
+LLM routing goes through a single `LiteLLMProvider` that supports any LiteLLM-compatible backend. The model string prefix determines which API key and base URL are used.
+
 ```
-BaseLLMProvider         BaseSearchProvider
-    ollama                  tavily
-    groq                    brave
-    openai                  duckduckgo
-    anthropic
+BaseLLMProvider             BaseSearchProvider
+    LiteLLMProvider             tavily
+      groq/...                  brave
+      openai/...                duckduckgo
+      anthropic/...
+      ollama/...
 ```
 
 ### Per-Step LLM Configuration
 
-Each pipeline step can use a different LLM provider and model. All steps fall back to `LLM_PROVIDER` if not explicitly configured.
+Each pipeline step can use a different model. All steps fall back to `LLM_MODEL` if not explicitly configured.
 
 ```
-Step 1 (Query Analyzer)  QUERY_ANALYZER_LLM_PROVIDER  falls back to  LLM_PROVIDER
-Step 4 (Extractor)       EXTRACTION_LLM_PROVIDER       falls back to  LLM_PROVIDER
-Step 6 (Validator)       VALIDATOR_LLM_PROVIDER         falls back to  LLM_PROVIDER
+Step 1 (Query Analyzer)  QUERY_ANALYZER_MODEL  falls back to  LLM_MODEL
+Step 4 (Extractor)       EXTRACTION_MODEL       falls back to  LLM_MODEL
+Step 6 (Validator)       VALIDATOR_MODEL        falls back to  LLM_MODEL
 ```
 
-Per-step model overrides work for all providers (Groq, OpenAI, Anthropic, Ollama). If you assign a different model to each step, each step receives its own model name independently - they do not interfere.
+Per-step overrides use the same `provider/model-name` format. Assign a lightweight model for query analysis and a larger one for extraction if needed.
 
-The sidebar's **Per Step** mode configures this at runtime by sending separate `x-query-analyzer-model`, `x-extractor-model`, and `x-validator-model` headers.
+The sidebar's **Per Step** mode configures this at runtime by sending separate `x-query-analyzer-model`, `x-extractor-model`, and `x-validator-model` headers, each carrying a full LiteLLM model string.
 
 ### API Key Security
 
@@ -245,8 +248,8 @@ narada/
 │
 ├── providers/
 │   ├── base.py                    Abstract contracts
-│   ├── factory.py                 Per-step provider resolution (all 4 providers)
-│   ├── llm/                       ollama, groq, openai, anthropic
+│   ├── factory.py                 Per-step provider resolution
+│   ├── llm/litellm_provider.py    Single LLM provider (wraps LiteLLM)
 │   └── search/                    tavily, brave, duckduckgo
 │
 ├── agents/
@@ -311,8 +314,8 @@ uvicorn main:app --reload
 
 ```bash
 cd frontend
-npm install
-npm run dev
+pnpm install
+pnpm dev
 # Opens at http://localhost:5173
 ```
 
@@ -326,44 +329,36 @@ http://localhost:8000/docs
 
 ## Environment Variables
 
+Model strings use LiteLLM format: `provider/model-name` (e.g. `groq/llama-3.3-70b-versatile`).
+
 ```bash
-# Provider selection
-LLM_PROVIDER=groq             # ollama | groq | openai | anthropic
+# LLM - full LiteLLM model string
+LLM_MODEL=groq/llama-3.3-70b-versatile
+
+# Search provider
 SEARCH_PROVIDER=tavily        # tavily | brave | duckduckgo
 
-# Per-step LLM overrides (empty = use LLM_PROVIDER for that step)
-QUERY_ANALYZER_LLM_PROVIDER=
-EXTRACTION_LLM_PROVIDER=
-VALIDATOR_LLM_PROVIDER=
+# Per-step LLM overrides (empty = fall back to LLM_MODEL for that step)
+QUERY_ANALYZER_MODEL=
+EXTRACTION_MODEL=
+VALIDATOR_MODEL=
 
 # Ollama (local dev only)
 OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=qwen3:4b
-QUERY_ANALYZER_OLLAMA_MODEL=
-EXTRACTION_OLLAMA_MODEL=
-VALIDATOR_OLLAMA_MODEL=
 
-# Groq - free: 14,400 requests/day
+# API Keys
 GROQ_API_KEY=gsk_...
-GROQ_MODEL=llama-3.3-70b-versatile
-
-# OpenAI (optional)
 OPENAI_API_KEY=sk-...
-OPENAI_MODEL=gpt-4o-mini
-
-# Anthropic (optional)
 ANTHROPIC_API_KEY=sk-ant-...
-ANTHROPIC_MODEL=claude-haiku-4-5-20251001
-
-# Tavily - free: 1000 searches/month
 TAVILY_API_KEY=tvly-...
-
-# Brave (optional)
 BRAVE_API_KEY=BSA_...
 
 # Fallback - allow frontend to use server Groq+Tavily keys when user has none
 # Only relevant for production. Set to true in Render dashboard to enable.
 FALLBACK_ALLOW=false
+
+# Cache admin key (optional) - when set, DELETE /api/cache requires x-admin-key header
+CACHE_ADMIN_KEY=
 
 # Pipeline tuning
 SEARCH_RESULTS_PER_QUERY=8
@@ -373,6 +368,12 @@ SCRAPE_TIMEOUT_SECONDS=10
 # Logging
 LOG_LEVEL=INFO
 ```
+
+LiteLLM model string examples:
+- `groq/llama-3.3-70b-versatile`
+- `openai/gpt-4o-mini`
+- `anthropic/claude-haiku-4-5-20251001`
+- `ollama/qwen3:4b`
 
 ---
 
@@ -401,15 +402,12 @@ x-tavily-api-key: tvly-...
 x-brave-api-key: BSA_...
 x-ollama-base-url: http://localhost:11434
 x-search-provider: tavily
-x-query-analyzer-provider: groq
-x-query-analyzer-model: llama-3.3-70b-versatile
-x-extractor-provider: groq
-x-extractor-model: llama-3.3-70b-versatile
-x-validator-provider: groq
-x-validator-model: llama-3.3-70b-versatile
+x-query-analyzer-model: groq/llama-3.3-70b-versatile
+x-extractor-model: groq/llama-3.3-70b-versatile
+x-validator-model: groq/llama-3.3-70b-versatile
 ```
 
-Omitting a header means the server uses its configured `.env` default for that setting.
+Model headers carry a full LiteLLM model string (`provider/model-name`). Omitting a header means the server uses its configured `.env` default for that setting.
 
 **Response:**
 ```json
@@ -555,11 +553,15 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 ### LLM provider
 
-1. Create `providers/llm/yourprovider.py` - implement `BaseLLMProvider`
-2. Do not raise in `__init__` on empty keys - raise in `complete()` instead
-3. Register in `providers/factory.py` in `_build_llm()` and `_get_step_model_override()`
-4. Add config fields to `config.py` (api_key, model, and per-step model overrides)
-5. Add the provider name to `NEEDS_KEY` in `frontend/src/App.jsx`
+LiteLLM supports hundreds of providers out of the box. Most require no code changes - just use the correct model string in `LLM_MODEL`:
+
+```bash
+LLM_MODEL=gemini/gemini-1.5-flash
+LLM_MODEL=mistral/mistral-large-latest
+LLM_MODEL=cohere/command-r
+```
+
+If the new provider needs its own API key field in `config.py`, add it there and wire it up in `providers/factory.py`'s `_build_llm()` prefix check. No new provider file needed.
 
 ### Search provider
 

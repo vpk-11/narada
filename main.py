@@ -21,7 +21,10 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
+from api.limiter import limiter
 from api.routes import router
 from config import configure_logging, get_settings
 
@@ -45,6 +48,9 @@ app = FastAPI(
     docs_url="/docs" if ENVIRONMENT != "production" else None,
     redoc_url=None,
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # --------------------------------------------------------------------------- #
 # CORS

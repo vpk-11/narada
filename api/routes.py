@@ -21,6 +21,7 @@ from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
+from api.limiter import limiter
 from config import Settings, get_settings
 from core.cache import clear_cache
 from core.models import PipelineResult
@@ -54,6 +55,9 @@ _H_VA_MODEL        = "x-validator-model"
 # --------------------------------------------------------------------------- #
 # Request / Response shapes
 # --------------------------------------------------------------------------- #
+
+_MAX_QUERY_LENGTH = 500
+
 
 class SearchRequest(BaseModel):
     query: str
@@ -135,7 +139,8 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
 # --------------------------------------------------------------------------- #
 
 @router.post("/search", response_model=SearchResponse)
-async def search(body: SearchRequest, request: Request) -> SearchResponse:
+@limiter.limit("10/minute")
+async def search(request: Request, body: SearchRequest) -> SearchResponse:
     """
     Run the Narada pipeline for a query.
 
@@ -146,6 +151,11 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
     query = body.query.strip()
     if not query:
         raise HTTPException(status_code=400, detail="query cannot be empty")
+    if len(query) > _MAX_QUERY_LENGTH:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Query must be {_MAX_QUERY_LENGTH} characters or fewer.",
+        )
 
     base_settings = get_settings()
 
@@ -162,12 +172,12 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
 
     except ValueError as e:
         # Config/validation errors (missing key, unknown provider) - safe to expose
-        logger.warning(f"[Routes] Config error for '{query}': {type(e).__name__}")
+        logger.warning(f"[Routes] Config error for '{query[:80]}': {type(e).__name__}")
         raise HTTPException(status_code=400, detail=str(e))
 
     except httpx.HTTPStatusError as e:
         status = e.response.status_code
-        logger.error(f"[Routes] HTTP {status} from external API for '{query}'")
+        logger.error(f"[Routes] HTTP {status} from external API for '{query[:80]}'")
         if status == 401:
             detail = (
                 "API key rejected (401 Unauthorized). "
@@ -194,7 +204,7 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
         raise HTTPException(status_code=502, detail=detail)
 
     except httpx.ConnectError:
-        logger.error(f"[Routes] Connection error for '{query}'")
+        logger.error(f"[Routes] Connection error for '{query[:80]}'")
         raise HTTPException(
             status_code=502,
             detail=(
@@ -205,7 +215,7 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
         )
 
     except httpx.TimeoutException:
-        logger.error(f"[Routes] Timeout for '{query}'")
+        logger.error(f"[Routes] Timeout for '{query[:80]}'")
         raise HTTPException(
             status_code=504,
             detail=(
@@ -216,7 +226,7 @@ async def search(body: SearchRequest, request: Request) -> SearchResponse:
 
     except Exception as e:
         # Log the error type only - never log the full message (may contain key material)
-        logger.error(f"[Routes] Pipeline failed for '{query}': {type(e).__name__}")
+        logger.error(f"[Routes] Pipeline failed for '{query[:80]}': {type(e).__name__}")
         raise HTTPException(
             status_code=500,
             detail=(
@@ -243,8 +253,13 @@ async def get_server_config() -> ServerConfig:
 
 
 @router.delete("/cache", response_model=CacheClearResponse)
-async def delete_cache() -> CacheClearResponse:
-    """Clear all cached pipeline results."""
+async def delete_cache(
+    x_admin_key: str | None = Header(default=None, alias="x-admin-key"),
+) -> CacheClearResponse:
+    """Clear all cached pipeline results. Requires x-admin-key header when CACHE_ADMIN_KEY is set."""
+    settings = get_settings()
+    if settings.cache_admin_key and x_admin_key != settings.cache_admin_key:
+        raise HTTPException(status_code=403, detail="Valid x-admin-key header required.")
     deleted = clear_cache()
     return CacheClearResponse(
         deleted=deleted,
