@@ -1,5 +1,8 @@
 # Narada
 
+<!-- version: v1.1.0 -->
+![Version](https://img.shields.io/badge/version-v1.1.0-blue)
+
 You type a research question. Narada searches the web, reads the relevant pages, and hands you back a structured table with every cell linked to the exact URL it came from.
 
 No copy-pasting across tabs. No manual summarising. Just ask, and get a sourced, structured answer.
@@ -569,6 +572,13 @@ If the new provider needs its own API key field in `config.py`, add it there and
 2. Do not raise in `__init__` on empty keys - raise in `search()` instead
 3. Register in `providers/factory.py` in `get_search_provider()`
 4. Add config fields to `config.py`
+
+---
+
+## Changelog
+
+- **v1.1.0** (2026-07-08) — Migrated all LLM providers to a single LiteLLM-backed provider (`provider/model-name` format), replacing separate per-provider client classes. Security hardening pass on error logging and CSP headers.
+- **v1.0.0** (initial) — 7-step pipeline (query analyzer, search, scraper, extractor, aggregator, validator, cache), per-request API keys via headers, provider factory pattern, React frontend with sessionStorage key persistence.
 
 ---
 
