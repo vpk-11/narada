@@ -16,6 +16,7 @@ reasons about its own output quality and takes corrective action instead
 of just running once and returning whatever it found.
 """
 
+import asyncio
 import logging
 
 from agents.aggregator import aggregate_entities
@@ -138,10 +139,16 @@ async def run_gap_filling_round(
     if not queries:
         return entities, 0
 
+    # Follow-up queries are independent — fire them concurrently rather than
+    # one at a time, same as the first-pass search in core/pipeline.py.
+    query_results = await asyncio.gather(
+        *(search.search(q, n_results=n_results) for q in queries)
+    )
+
     new_results: list[SearchResult] = []
     seen_this_round: set[str] = set()
-    for q in queries:
-        for r in await search.search(q, n_results=n_results):
+    for results in query_results:
+        for r in results:
             if r.url and r.url not in visited_urls and r.url not in seen_this_round:
                 seen_this_round.add(r.url)
                 new_results.append(r)
