@@ -8,13 +8,11 @@
   "6": "App Config and Security",
   "7": "Community 7",
   "8": "Cache Layer",
-  "9": "Frontend App Shell",
   "10": "Core Pipeline Orchestration",
   "11": "Search Provider Implementations",
   "12": "Data Models",
   "13": "CI and Deployment",
   "14": "Factory and Provider Resolution",
-  "15": "Community 15",
   "16": "Frontend Hooks",
   "17": "Entry Points",
   "18": "Community 18",
@@ -28,5 +26,6 @@
   "26": "Community 26",
   "27": "Community 27",
   "28": "Community 28",
-  "29": "Community 29"
+  "29": "Community 29",
+  "31": "Community 31"
 }
