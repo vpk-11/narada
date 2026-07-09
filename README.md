@@ -1,7 +1,7 @@
 # Narada
 
-<!-- version: v1.2.0 -->
-![Version](https://img.shields.io/badge/version-v1.2.0-blue)
+<!-- version: v2.0.0 -->
+![Version](https://img.shields.io/badge/version-v2.0.0-blue)
 
 You type a research question. Narada searches the web, reads the relevant pages, and hands you back a structured table with every cell linked to the exact URL it came from.
 
@@ -699,6 +699,7 @@ If the new provider needs its own API key field in `config.py`, add it there and
 ---
 
 ## Changelog
+- **v2.0.0** (2026-07-09) — major bump
 - **v1.2.0** (2026-07-08) — minor bump
 
 - **v2.0.0** (2026-07-08) — Architecture rework: added an agentic gap-filling re-search loop, confidence-scored and quote-backed cell provenance, fuzzy entity matching, chunked (non-truncating) extraction, automatic search-provider failover, shared LLM JSON repair, partial-success error reporting, and a pytest suite.
