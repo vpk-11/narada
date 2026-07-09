@@ -263,6 +263,28 @@ that query rather than aborting the whole run. DuckDuckGo needs no API key,
 so it's always available as a last resort. Not triggered if DuckDuckGo is
 already the configured provider.
 
+### JSON-LD Pre-Extraction
+
+Many business/product pages already embed clean structured data for Google's
+search snippets (a `<script type="application/ld+json">` block with the
+company name, founding date, address, etc.). `core/json_ld.py` parses these
+blocks and maps fields onto whichever requested attribute names look like
+they're asking for the same fact (e.g. `foundingDate` → an attribute named
+`founded` or `established`). Cells built this way get `confidence=1.0` since
+it's structured data the page author published, not an LLM inference — they
+win merge conflicts against an LLM-extracted value for the same attribute.
+This runs before the chunked LLM extraction on every page, not instead of
+it: pages with no JSON-LD, or JSON-LD missing the requested attributes,
+still go through the normal LLM path.
+
+### Retry with Backoff on Transient LLM Errors
+
+`providers/llm/litellm_provider.py` retries rate limits, timeouts, and
+provider-side outages (`RateLimitError`, `Timeout`, `APIConnectionError`,
+`ServiceUnavailableError`, `InternalServerError`) up to 3 times with
+exponential backoff capped at 10s. Auth and bad-request errors are not
+retried — retrying a 401 five times just delays the same failure.
+
 ### API Key Security
 
 Keys are sent from the browser as custom request headers (`x-groq-api-key`, `x-tavily-api-key`, etc.) rather than in the request body. Headers are excluded from server access logs by default.
@@ -306,6 +328,7 @@ narada/
 │   ├── agentic_loop.py            Gap-ratio computation, follow-up search + merge
 │   ├── chunking.py                Paragraph/sentence-boundary chunking with overlap
 │   ├── llm_json.py                Shared JSON parsing + repair for LLM output
+│   ├── json_ld.py                 schema.org JSON-LD pre-extraction before LLM
 │   └── cache.py                   Disk cache (.cache/)
 │
 ├── providers/
