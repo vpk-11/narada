@@ -12,6 +12,25 @@ function SourceChip({ url }) {
   )
 }
 
+function confidenceTier(confidence) {
+  if (confidence >= 0.8) return 'high'
+  if (confidence >= 0.5) return 'mid'
+  return 'low'
+}
+
+function Confidence({ value }) {
+  if (value == null) return null
+  const pct = Math.round(value * 100)
+  return (
+    <span
+      className={`dc-confidence dc-confidence-${confidenceTier(value)}`}
+      title={`Extraction confidence: ${pct}%`}
+    >
+      {pct}%
+    </span>
+  )
+}
+
 function Detail({ entity, attributes, cols }) {
   return (
     <tr className="detail-row">
@@ -24,7 +43,14 @@ function Detail({ entity, attributes, cols }) {
                 <div className="detail-card" key={attr}>
                   <div className="dc-key">{attr.replace(/_/g, ' ')}</div>
                   {cell
-                    ? <><div className="dc-val">{cell.value}</div><SourceChip url={cell.source_url} /></>
+                    ? <>
+                        <div className="dc-val">{cell.value}</div>
+                        {cell.source_quote && <div className="dc-quote">"{cell.source_quote}"</div>}
+                        <div className="dc-footer">
+                          <SourceChip url={cell.source_url} />
+                          <Confidence value={cell.confidence} />
+                        </div>
+                      </>
                     : <div className="dc-nil">not found</div>
                   }
                 </div>

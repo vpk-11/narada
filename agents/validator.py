@@ -12,10 +12,9 @@ This catches noise that slips through extraction:
 - Companies from completely different sectors
 """
 
-import json
 import logging
-import re
 
+from core.llm_json import parse_llm_json
 from core.models import Entity, QueryAnalysis
 from providers.base import BaseLLMProvider
 
@@ -59,18 +58,18 @@ JSON only.
 
 def _parse_valid_names(raw: str) -> list[str]:
     """Parse the list of valid entity names from LLM output."""
-    cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
-    cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip().rstrip("```").strip()
-
     try:
-        parsed = json.loads(cleaned)
-        names = parsed.get("valid_names", [])
-        if isinstance(names, list):
-            return [str(n).strip() for n in names if str(n).strip()]
+        parsed = parse_llm_json(raw)
+    except ValueError as e:
+        logger.error(f"[Validator] JSON parse error: {e}")
         return []
-    except json.JSONDecodeError as e:
-        logger.error(f"[Validator] JSON parse error: {e}\nRaw:\n{raw[:300]}")
+
+    if not isinstance(parsed, dict):
         return []
+    names = parsed.get("valid_names", [])
+    if isinstance(names, list):
+        return [str(n).strip() for n in names if str(n).strip()]
+    return []
 
 
 def _normalize(name: str) -> str:

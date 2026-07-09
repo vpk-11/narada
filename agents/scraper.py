@@ -28,6 +28,7 @@ from urllib.parse import urlparse
 import httpx
 from bs4 import BeautifulSoup
 
+from core.json_ld import parse_json_ld_blocks
 from core.models import ScrapedPage, SearchResult
 
 logger = logging.getLogger(__name__)
@@ -69,10 +70,10 @@ def _is_ssrf_risk(url: str) -> bool:
     except Exception:
         return True
 
-# Max characters of page content to pass to the LLM.
-# Most useful content is in the first ~6000 chars.
-# Raising this improves recall but increases LLM latency and cost.
-_MAX_CONTENT_CHARS = 6000
+# Max characters of page content kept per page. The extractor chunks this
+# into multiple LLM calls (see agents/extractor.py), so this cap just bounds
+# memory/cache size, not extraction recall the way it used to.
+_MAX_CONTENT_CHARS = 10000
 
 # Tags that carry no useful content — strip before extracting text
 _NOISE_TAGS = [
@@ -160,6 +161,7 @@ async def _scrape_one(
             url=result.url,
             title=title,
             content=text[:_MAX_CONTENT_CHARS],
+            json_ld=parse_json_ld_blocks(html),
         )
 
     except httpx.TimeoutException:

@@ -358,9 +358,23 @@ export default function App() {
                 <span className="meta-sep">.</span>
                 <span className="tag tag-neutral">{meta.pages_scraped} pages</span>
                 <span className="tag tag-neutral">{meta.duration_seconds}s</span>
+                {meta.search_iterations > 1 && (
+                  <span
+                    className="tag tag-accent"
+                    title={`Ran ${meta.search_iterations} search rounds to fill gaps in the table`}
+                  >
+                    {meta.search_iterations} rounds
+                  </span>
+                )}
                 <span className="meta-push" />
                 <span className="meta-model">{meta.llm_provider} / {meta.llm_model}</span>
               </div>
+              {result.errors && result.errors.length > 0 && (
+                <div className="soft-warning">
+                  <span className="soft-warning-title">Partial result</span>
+                  <span className="soft-warning-msg">{result.errors.join(' · ')}</span>
+                </div>
+              )}
               {result.entities.length === 0 ? (
                 <div className="empty-state">
                   <div className="empty-icon">
