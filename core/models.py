@@ -25,6 +25,7 @@ class ScrapedPage(BaseModel):
     url: str
     title: str
     content: str  # HTML stripped — plain text only
+    json_ld: list[dict] = []  # parsed schema.org blocks, if any — see core/json_ld.py
 
 
 # --------------------------------------------------------------------------- #

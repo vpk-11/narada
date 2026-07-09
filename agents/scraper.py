@@ -28,6 +28,7 @@ from urllib.parse import urlparse
 import httpx
 from bs4 import BeautifulSoup
 
+from core.json_ld import parse_json_ld_blocks
 from core.models import ScrapedPage, SearchResult
 
 logger = logging.getLogger(__name__)
@@ -160,6 +161,7 @@ async def _scrape_one(
             url=result.url,
             title=title,
             content=text[:_MAX_CONTENT_CHARS],
+            json_ld=parse_json_ld_blocks(html),
         )
 
     except httpx.TimeoutException:

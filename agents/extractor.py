@@ -23,6 +23,7 @@ Key design decisions:
 import logging
 
 from core.chunking import chunk_text
+from core.json_ld import build_entities as build_entities_from_json_ld
 from core.llm_json import parse_llm_json
 from core.models import CellValue, Entity, QueryAnalysis, ScrapedPage
 from providers.base import BaseLLMProvider
@@ -270,22 +271,29 @@ async def _extract_from_page(
     llm: BaseLLMProvider,
 ) -> list[Entity]:
     """
-    Extract entities from a page, chunk by chunk. A page longer than one
-    chunk yields multiple LLM calls; entities from all chunks are pooled
-    here and deduplicated later by the aggregator.
+    Extract entities from a page: structured data first, then chunk by chunk
+    through the LLM. A page longer than one chunk yields multiple LLM calls;
+    entities from all sources are pooled here and deduplicated later by the
+    aggregator, which prefers the JSON-LD cells (confidence=1.0) over any
+    conflicting LLM-extracted value for the same attribute.
     """
+    entities: list[Entity] = []
+
+    if page.json_ld:
+        entities.extend(build_entities_from_json_ld(page.json_ld, page.url, analysis.attributes))
+
     chunks = chunk_text(
         page.content,
         max_chars=_CHUNK_MAX_CHARS,
         overlap_chars=_CHUNK_OVERLAP_CHARS,
     )[:_MAX_CHUNKS_PER_PAGE]
 
-    entities: list[Entity] = []
     for chunk in chunks:
         entities.extend(await _extract_from_chunk(chunk, page.url, analysis, llm))
 
     logger.info(
-        f"[Extractor] {page.url[:70]} -> {len(entities)} entities from {len(chunks)} chunk(s)"
+        f"[Extractor] {page.url[:70]} -> {len(entities)} entities "
+        f"({len(page.json_ld)} JSON-LD block(s), {len(chunks)} chunk(s))"
     )
     return entities
 
