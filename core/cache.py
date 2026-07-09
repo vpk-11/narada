@@ -30,8 +30,10 @@ def _cache_key(query: str, llm_provider: str, llm_model: str, search_provider: s
     """
     Generate a unique cache key from query + provider config.
     Different providers = different cache entries for the same query.
+    Query is lowercased so "Pizza in Seattle" and "pizza in seattle" hit
+    the same entry instead of running the full pipeline twice.
     """
-    raw = f"{query}|{llm_provider}|{llm_model}|{search_provider}"
+    raw = f"{query.lower()}|{llm_provider}|{llm_model}|{search_provider}"
     return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
