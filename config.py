@@ -45,6 +45,11 @@ class Settings(BaseSettings):
     search_results_per_query: int = 8
     max_pages_to_scrape: int = 6
     scrape_timeout_seconds: int = 10
+    # Hard cap on pipeline runs executing at once, server-wide. Protects the
+    # server's own configured keys from an unthrottled pile of concurrent
+    # requests — separate from the per-IP rate limit in api/routes.py, which
+    # only throttles one client, not total server load.
+    max_concurrent_pipeline_runs: int = 5
 
     # ── Agentic gap-filling ───────────────────────────────────────────────── #
     # After validation, if more than this fraction of cells are empty, the

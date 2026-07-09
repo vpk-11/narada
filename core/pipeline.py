@@ -21,6 +21,7 @@ Pipeline steps:
   8. Cache write
 """
 
+import asyncio
 import logging
 import time
 
@@ -89,6 +90,21 @@ async def _run_searches(
     return all_results, errors
 
 
+_pipeline_semaphore: asyncio.Semaphore | None = None
+
+
+def _get_pipeline_semaphore(max_concurrent: int) -> asyncio.Semaphore:
+    """
+    Lazily create the module-level semaphore that caps concurrent pipeline
+    runs server-wide. Lazy because asyncio.Semaphore must be created inside
+    a running event loop; module import time isn't guaranteed to have one.
+    """
+    global _pipeline_semaphore
+    if _pipeline_semaphore is None:
+        _pipeline_semaphore = asyncio.Semaphore(max_concurrent)
+    return _pipeline_semaphore
+
+
 async def run_pipeline(
     query: str,
     settings: Settings,
@@ -98,8 +114,12 @@ async def run_pipeline(
     """
     Run the full Narada pipeline for a given query.
 
-    Provider selection is handled entirely by the factory using settings.
-    Each step gets its own LLM — all fall back to LLM_PROVIDER if not configured.
+    A cache hit returns immediately without consuming a concurrency slot.
+    Everything past the cache check runs under a server-wide semaphore so a
+    burst of concurrent requests can't all fire simultaneously against the
+    server's own configured LLM/search keys — this is separate from the
+    per-IP rate limit in api/routes.py, which throttles one client but not
+    total server load.
 
     Args:
         query: raw user input
@@ -126,6 +146,31 @@ async def run_pipeline(
             logger.info(f"[Pipeline] Cache HIT for '{query}'")
             return cached
 
+    semaphore = _get_pipeline_semaphore(settings.max_concurrent_pipeline_runs)
+    async with semaphore:
+        return await _run_pipeline_uncached(
+            query=query,
+            settings=settings,
+            search=search,
+            use_cache=use_cache,
+            start=start,
+            query_analyzer_llm=query_analyzer_llm,
+            extraction_llm=extraction_llm,
+            validator_llm=validator_llm,
+        )
+
+
+async def _run_pipeline_uncached(
+    query: str,
+    settings: Settings,
+    search: BaseSearchProvider,
+    use_cache: bool,
+    start: float,
+    query_analyzer_llm,
+    extraction_llm,
+    validator_llm,
+) -> PipelineResult:
+    """Steps 2-8, run under the concurrency semaphore. See run_pipeline for step 1."""
     logger.info(f"[Pipeline] Starting fresh run for '{query}'")
     logger.info(
         f"[Pipeline] Providers — "
