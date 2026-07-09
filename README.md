@@ -1,7 +1,7 @@
 # Narada
 
-<!-- version: v1.1.0 -->
-![Version](https://img.shields.io/badge/version-v1.1.0-blue)
+<!-- version: v2.0.0 -->
+![Version](https://img.shields.io/badge/version-v2.0.0-blue)
 
 You type a research question. Narada searches the web, reads the relevant pages, and hands you back a structured table with every cell linked to the exact URL it came from.
 
@@ -154,23 +154,25 @@ The server has its own API keys configured in `.env` (or Render dashboard secret
 
 ## How It Works
 
-The pipeline runs 7 steps:
+The pipeline runs 7 steps, plus a conditional gap-filling loop:
 
 ```
 Query
   1. Query Analyzer    LLM determines entity type, dynamic column schema, targeted search queries
-  2. Search            Runs 2-3 search queries, deduplicates URLs
+  2. Search            Runs 2-3 search queries, deduplicates URLs (auto-fallback to DuckDuckGo on provider failure)
   3. Scraper           Fetches and cleans all pages concurrently (async)
-  4. Extractor         LLM reads each page, pulls structured entity data (sequential)
-  5. Aggregator        Deduplicates entities, merges attributes across sources
+  4. Extractor         LLM reads each page in chunks, pulls structured entity data (sequential)
+  5. Aggregator        Deduplicates entities (fuzzy name match), merges attributes by confidence
   6. Validator         LLM filters out noise entities that do not match the query
-  7. Cache             Writes result to disk (local dev only)
+  7. Gap-fill (0-2x)   If too many cells are empty, generates follow-up searches and re-runs 2-4
+  8. Cache             Writes result to disk (local dev only)
 ```
 
 **What makes this different from just asking an LLM:**
 - Schema is dynamic per query. "AI startups" gets different columns than "pizza places"
-- Entities found across multiple sources get merged into one row
-- Every cell value carries a `source_url`. Full traceability at the cell level
+- The pipeline checks its own output and re-searches to fill gaps, capped at a couple of rounds
+- Entities found across multiple sources get merged into one row, fuzzy-matched on name
+- Every cell value carries a `source_url`, `source_quote`, and `confidence` score - full traceability, not just a link
 - Post-extraction validation filters noise (investors, legacy companies, off-topic entities)
 - Per-step LLM configuration - each pipeline step can use a different model
 
@@ -206,6 +208,60 @@ Step 6 (Validator)       VALIDATOR_MODEL        falls back to  LLM_MODEL
 Per-step overrides use the same `provider/model-name` format. Assign a lightweight model for query analysis and a larger one for extraction if needed.
 
 The sidebar's **Per Step** mode configures this at runtime by sending separate `x-query-analyzer-model`, `x-extractor-model`, and `x-validator-model` headers, each carrying a full LiteLLM model string.
+
+### Agentic Gap-Filling
+
+After validation, `core/agentic_loop.py` computes a **gap ratio**: the
+fraction of (entity, attribute) cells with no value at all. If it exceeds
+`AGENT_GAP_THRESHOLD` (default 0.5), the pipeline:
+
+1. Identifies the 5 entities with the most missing attributes
+2. Asks the LLM to generate 1-3 targeted follow-up search queries for those gaps
+3. Searches, scrapes, and extracts from new pages only (URLs already visited are skipped)
+4. Merges the new entities back in via the same fuzzy aggregator
+
+This repeats until the gap ratio recovers, a round finds no new pages, or
+`AGENT_MAX_ITERATIONS` (default 2) is hit. Gap-query generation fails closed
+— if the LLM call errors, the loop just stops rather than crashing the run.
+`PipelineMetadata.search_iterations` and `.gap_ratio` report how many rounds
+ran and how complete the final table is.
+
+### Chunked Extraction
+
+Pages are split into chunks (`core/chunking.py`) instead of truncated. Text
+is split on paragraph boundaries first; a paragraph that itself exceeds the
+chunk size falls back to sentence-boundary splitting. Each chunk after the
+first carries a trailing overlap from the previous one, so a fact split
+across a chunk boundary isn't lost to either side. Capped at 3 chunks per
+page to bound LLM calls on long pages.
+
+### Fuzzy Matching and Confidence Resolution
+
+`agents/aggregator.py` merges entities whose normalized names match exactly
+or score above a similarity threshold (0.75, via stdlib `difflib`) — this
+catches punctuation/suffix drift across sources ("Abridge, Inc." vs
+"Abridge Inc") that exact matching misses. When two sources provide the same
+attribute for the same entity, the merge prefers the non-empty value, then
+the one with higher extraction `confidence`. Equal confidence keeps the
+existing value.
+
+### JSON Repair
+
+Every LLM-calling agent asks for JSON-only output, but models still
+occasionally wrap it in markdown fences or prepend a stray sentence despite
+the instruction. `core/llm_json.py` centralizes cleanup (strip `<think>`
+blocks and code fences) plus a bracket-slice recovery pass that finds the
+first `{`/`[` and matching last `}`/`]` and retries parsing on that slice —
+shared across the query analyzer, extractor, and validator instead of each
+agent hand-rolling its own parser.
+
+### Automatic Search Failover
+
+If the configured search provider fails on a query (bad key, outage, rate
+limit), `core/pipeline.py`'s `_run_searches` falls back to DuckDuckGo for
+that query rather than aborting the whole run. DuckDuckGo needs no API key,
+so it's always available as a last resort. Not triggered if DuckDuckGo is
+already the configured provider.
 
 ### API Key Security
 
@@ -246,7 +302,10 @@ narada/
 │
 ├── core/
 │   ├── models.py                  All Pydantic data shapes
-│   ├── pipeline.py                Orchestrates all steps
+│   ├── pipeline.py                Orchestrates all steps + gap-fill loop
+│   ├── agentic_loop.py            Gap-ratio computation, follow-up search + merge
+│   ├── chunking.py                Paragraph/sentence-boundary chunking with overlap
+│   ├── llm_json.py                Shared JSON parsing + repair for LLM output
 │   └── cache.py                   Disk cache (.cache/)
 │
 ├── providers/
@@ -258,11 +317,13 @@ narada/
 ├── agents/
 │   ├── query_analyzer.py          Step 1
 │   ├── scraper.py                 Step 3
-│   ├── extractor.py               Step 4
-│   ├── aggregator.py              Step 5
+│   ├── extractor.py               Step 4 - chunked, confidence-scored
+│   ├── aggregator.py              Step 5 - fuzzy match, confidence-based merge
 │   └── validator.py               Step 6
 │
 ├── api/routes.py                  REST API (search, cache, providers, server-config)
+│
+├── tests/                         pytest - aggregator, chunking, extractor, validator, gap-fill
 │
 └── frontend/
     └── src/
@@ -328,6 +389,13 @@ pnpm dev
 http://localhost:8000/docs
 ```
 
+### 7. Run tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
 ---
 
 ## Environment Variables
@@ -367,6 +435,10 @@ CACHE_ADMIN_KEY=
 SEARCH_RESULTS_PER_QUERY=8
 MAX_PAGES_TO_SCRAPE=6
 SCRAPE_TIMEOUT_SECONDS=10
+
+# Agentic gap-filling - re-search when too many cells are empty after validation
+AGENT_GAP_THRESHOLD=0.5      # 0.0-1.0, fraction of empty cells that triggers a re-search round
+AGENT_MAX_ITERATIONS=2       # hard cap on gap-fill rounds, 1 = disabled
 
 # Logging
 LOG_LEVEL=INFO
@@ -423,8 +495,18 @@ Model headers carry a full LiteLLM model string (`provider/model-name`). Omittin
       {
         "name": "Abridge",
         "attributes": {
-          "founded": { "value": "2018", "source_url": "https://techcrunch.com/..." },
-          "funding_raised": { "value": "$250 million", "source_url": "https://fiercehealthcare.com/..." }
+          "founded": {
+            "value": "2018",
+            "source_url": "https://techcrunch.com/...",
+            "source_quote": "Abridge was founded in 2018 by Shiv Rao",
+            "confidence": 0.95
+          },
+          "funding_raised": {
+            "value": "$250 million",
+            "source_url": "https://fiercehealthcare.com/...",
+            "source_quote": "raised a $250 million Series D",
+            "confidence": 0.9
+          }
         }
       }
     ],
@@ -433,11 +515,16 @@ Model headers carry a full LiteLLM model string (`provider/model-name`). Omittin
       "llm_provider": "groq",
       "llm_model": "llama-3.3-70b-versatile",
       "pages_scraped": 5,
-      "duration_seconds": 13.6
-    }
+      "duration_seconds": 13.6,
+      "search_iterations": 1,
+      "gap_ratio": 0.12
+    },
+    "errors": []
   }
 }
 ```
+
+`search_iterations` is 1 unless the gap-filling loop ran (see [Agentic Gap-Filling](#agentic-gap-filling)). `errors` lists non-fatal issues encountered during the run (e.g. a search-provider fallback) — a run with errors can still return usable results.
 
 ### DELETE /api/cache
 
@@ -536,6 +623,14 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 **No server-side key storage.** The deployed app has no secrets of its own by default. Users supply their own keys. Optionally, server operators can configure fallback keys for users who do not have their own.
 
+**Agentic gap-fill over a fixed pipeline.** A linear 7-step pipeline that never checks its own output quality isn't meaningfully different from asking an LLM once. Computing a gap ratio and re-searching for specific missing attributes is what makes the system reason about its output rather than just produce it - at the cost of up to 2x the search/scrape/extract work on sparse queries, which is why it's capped and only triggers above a threshold.
+
+**Chunking over truncation.** A flat character cutoff silently drops whatever's past it - a founding date at character 4000 of a long article never reached the model. Paragraph/sentence-boundary chunking with overlap costs more LLM calls per long page, but recovers content that was previously just gone.
+
+**Confidence as the merge tie-breaker, not length.** "Longer value wins" rewards verbose hallucination as much as correctness. Confidence is the model's own signal about a specific extraction, so using it to resolve conflicts is a more honest tie-breaker even though it depends on the model being reasonably calibrated.
+
+**Fuzzy name matching via stdlib `difflib`, not a new dependency.** `SequenceMatcher` is slower than a C-optimized fuzzy-matching library at scale, but at the entity counts this pipeline produces (dozens, not thousands) the difference is not measurable, and it avoids adding a dependency for a problem the standard library already solves.
+
 ---
 
 ## Known Limitations
@@ -549,6 +644,10 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 **Free tier cold starts.** The Render free tier sleeps after 15 minutes of inactivity. First request after sleep takes about 30 seconds. UptimeRobot keeps it warm.
 
 **Per-step model isolation.** When using Per Step mode with different providers across steps, the model name for each step is tracked independently. When using the same provider across multiple steps, each step still receives its own model override and they do not interfere.
+
+**Gap-fill adds latency on sparse queries.** A query that triggers the full 2-iteration gap-fill loop roughly doubles the search/scrape/extract work, and therefore the wall-clock time, of a query that doesn't. This is a deliberate completeness-vs-speed tradeoff, tunable via `AGENT_GAP_THRESHOLD` and `AGENT_MAX_ITERATIONS`.
+
+**No anonymous free tier yet.** The live demo currently requires the visitor's own API keys (or `FALLBACK_ALLOW` for a single request). A rate-limited free tier using server keys is scoped in `TODO.md` but not implemented.
 
 ---
 
@@ -577,6 +676,7 @@ If the new provider needs its own API key field in `config.py`, add it there and
 
 ## Changelog
 
+- **v2.0.0** (2026-07-08) — Architecture rework: added an agentic gap-filling re-search loop, confidence-scored and quote-backed cell provenance, fuzzy entity matching, chunked (non-truncating) extraction, automatic search-provider failover, shared LLM JSON repair, partial-success error reporting, and a pytest suite.
 - **v1.1.0** (2026-07-08) — Migrated all LLM providers to a single LiteLLM-backed provider (`provider/model-name` format), replacing separate per-provider client classes. Security hardening pass on error logging and CSP headers.
 - **v1.0.0** (initial) — 7-step pipeline (query analyzer, search, scraper, extractor, aggregator, validator, cache), per-request API keys via headers, provider factory pattern, React frontend with sessionStorage key persistence.
 
