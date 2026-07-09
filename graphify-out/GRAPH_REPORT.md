@@ -1,16 +1,16 @@
 # Graph Report - narada  (2026-07-09)
 
 ## Corpus Check
-- 30 files · ~15,381 words
+- 41 files · ~21,078 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 281 nodes · 533 edges · 20 communities (14 shown, 6 thin omitted)
+- 280 nodes · 533 edges · 19 communities (14 shown, 5 thin omitted)
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 46 edges (avg confidence: 0.58)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3df61400`
+- Built from commit: `213a10bf`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -28,7 +28,6 @@
 - [[_COMMUNITY_Data Models|Data Models]]
 - [[_COMMUNITY_Community 18|Community 18]]
 - [[_COMMUNITY_Community 21|Community 21]]
-- [[_COMMUNITY_Community 22|Community 22]]
 - [[_COMMUNITY_Community 24|Community 24]]
 - [[_COMMUNITY_Community 31|Community 31]]
 
@@ -67,7 +66,7 @@
 - **All search providers implement BaseSearchProvider and are instantiated by get_search_provider** —  [EXTRACTED 1.00]
 - **Per-step factory functions all call _build_llm and _get_step_model_override to resolve provider+model** —  [EXTRACTED 1.00]
 
-## Communities (20 total, 6 thin omitted)
+## Communities (19 total, 5 thin omitted)
 
 ### Community 0 - "Agent Logic Layer"
 Cohesion: 0.29
@@ -110,9 +109,9 @@ Cohesion: 0.33
 Nodes (5): Agentic Search Challenge, Guidelines, How we'll evaluate, Minimum Requirements, Submission
 
 ## Knowledge Gaps
-- **70 isolated node(s):** `name`, `private`, `version`, `type`, `packageManager` (+65 more)
+- **69 isolated node(s):** `name`, `private`, `version`, `type`, `packageManager` (+64 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_

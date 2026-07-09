@@ -108,9 +108,9 @@
       "source_file": "agents/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_init",
       "community": 13,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "agents_init"
     },
     {
       "label": "aggregator.py",
@@ -118,9 +118,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_aggregator",
       "community": 7,
-      "norm_label": "aggregator.py"
+      "norm_label": "aggregator.py",
+      "id": "agents_aggregator"
     },
     {
       "label": "_normalize_name()",
@@ -128,9 +128,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "agents_aggregator_normalize_name",
       "community": 7,
-      "norm_label": "_normalize_name()"
+      "norm_label": "_normalize_name()",
+      "id": "agents_aggregator_normalize_name"
     },
     {
       "label": "_merge_attributes()",
@@ -138,9 +138,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "agents_aggregator_merge_attributes",
       "community": 7,
-      "norm_label": "_merge_attributes()"
+      "norm_label": "_merge_attributes()",
+      "id": "agents_aggregator_merge_attributes"
     },
     {
       "label": "aggregate_entities()",
@@ -148,9 +148,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L68",
       "_origin": "ast",
-      "id": "agents_aggregator_aggregate_entities",
       "community": 7,
-      "norm_label": "aggregate_entities()"
+      "norm_label": "aggregate_entities()",
+      "id": "agents_aggregator_aggregate_entities"
     },
     {
       "label": "agents/aggregator.py  Step 5 of the Narada pipeline.  Takes the flat list of ent",
@@ -158,9 +158,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_aggregator_rationale_1",
       "community": 7,
-      "norm_label": "agents/aggregator.py  step 5 of the narada pipeline.  takes the flat list of ent"
+      "norm_label": "agents/aggregator.py  step 5 of the narada pipeline.  takes the flat list of ent",
+      "id": "agents_aggregator_rationale_1"
     },
     {
       "label": "Normalize an entity name for deduplication comparison.     Lowercases, strips pu",
@@ -168,9 +168,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "agents_aggregator_rationale_30",
       "community": 7,
-      "norm_label": "normalize an entity name for deduplication comparison.     lowercases, strips pu"
+      "norm_label": "normalize an entity name for deduplication comparison.     lowercases, strips pu",
+      "id": "agents_aggregator_rationale_30"
     },
     {
       "label": "Merge two attribute dicts for the same entity.      Strategy per attribute:",
@@ -178,9 +178,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "agents_aggregator_rationale_45",
       "community": 7,
-      "norm_label": "merge two attribute dicts for the same entity.      strategy per attribute:"
+      "norm_label": "merge two attribute dicts for the same entity.      strategy per attribute:",
+      "id": "agents_aggregator_rationale_45"
     },
     {
       "label": "Deduplicate and merge a list of entities extracted across multiple pages.      T",
@@ -188,9 +188,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L69",
       "_origin": "ast",
-      "id": "agents_aggregator_rationale_69",
       "community": 7,
-      "norm_label": "deduplicate and merge a list of entities extracted across multiple pages.      t"
+      "norm_label": "deduplicate and merge a list of entities extracted across multiple pages.      t",
+      "id": "agents_aggregator_rationale_69"
     },
     {
       "label": "extractor.py",
@@ -198,9 +198,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_extractor",
       "community": 7,
-      "norm_label": "extractor.py"
+      "norm_label": "extractor.py",
+      "id": "agents_extractor"
     },
     {
       "label": "_is_valid_value()",
@@ -208,9 +208,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L104",
       "_origin": "ast",
-      "id": "agents_extractor_is_valid_value",
       "community": 7,
-      "norm_label": "_is_valid_value()"
+      "norm_label": "_is_valid_value()",
+      "id": "agents_extractor_is_valid_value"
     },
     {
       "label": "_parse_llm_json()",
@@ -218,9 +218,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L115",
       "_origin": "ast",
-      "id": "agents_extractor_parse_llm_json",
       "community": 7,
-      "norm_label": "_parse_llm_json()"
+      "norm_label": "_parse_llm_json()",
+      "id": "agents_extractor_parse_llm_json"
     },
     {
       "label": "_build_entities()",
@@ -228,9 +228,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "agents_extractor_build_entities",
       "community": 7,
-      "norm_label": "_build_entities()"
+      "norm_label": "_build_entities()",
+      "id": "agents_extractor_build_entities"
     },
     {
       "label": "_extract_from_page()",
@@ -238,9 +238,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L184",
       "_origin": "ast",
-      "id": "agents_extractor_extract_from_page",
       "community": 7,
-      "norm_label": "_extract_from_page()"
+      "norm_label": "_extract_from_page()",
+      "id": "agents_extractor_extract_from_page"
     },
     {
       "label": "extract_entities()",
@@ -248,9 +248,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L220",
       "_origin": "ast",
-      "id": "agents_extractor_extract_entities",
       "community": 7,
-      "norm_label": "extract_entities()"
+      "norm_label": "extract_entities()",
+      "id": "agents_extractor_extract_entities"
     },
     {
       "label": "agents/extractor.py  Step 4 of the Narada pipeline.  For each page, sends conten",
@@ -258,9 +258,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_1",
       "community": 7,
-      "norm_label": "agents/extractor.py  step 4 of the narada pipeline.  for each page, sends conten"
+      "norm_label": "agents/extractor.py  step 4 of the narada pipeline.  for each page, sends conten",
+      "id": "agents_extractor_rationale_1"
     },
     {
       "label": "Return False for junk values the model writes when it can't find something.",
@@ -268,9 +268,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L105",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_105",
       "community": 7,
-      "norm_label": "return false for junk values the model writes when it can't find something."
+      "norm_label": "return false for junk values the model writes when it can't find something.",
+      "id": "agents_extractor_rationale_105"
     },
     {
       "label": "Parse JSON from LLM output.     Handles {\"entities\":[...]} and bare [...] respon",
@@ -278,9 +278,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L116",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_116",
       "community": 7,
-      "norm_label": "parse json from llm output.     handles {\"entities\":[...]} and bare [...] respon"
+      "norm_label": "parse json from llm output.     handles {\"entities\":[...]} and bare [...] respon",
+      "id": "agents_extractor_rationale_116"
     },
     {
       "label": "Convert parsed LLM JSON into Entity objects.     Attaches source_url to every Ce",
@@ -288,9 +288,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L146",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_146",
       "community": 7,
-      "norm_label": "convert parsed llm json into entity objects.     attaches source_url to every ce"
+      "norm_label": "convert parsed llm json into entity objects.     attaches source_url to every ce",
+      "id": "agents_extractor_rationale_146"
     },
     {
       "label": "Extract entities from a single page. Returns empty list on failure.",
@@ -298,9 +298,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L189",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_189",
       "community": 7,
-      "norm_label": "extract entities from a single page. returns empty list on failure."
+      "norm_label": "extract entities from a single page. returns empty list on failure.",
+      "id": "agents_extractor_rationale_189"
     },
     {
       "label": "Extract entities from all pages sequentially.     Sequential because Ollama hand",
@@ -308,9 +308,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L226",
       "_origin": "ast",
-      "id": "agents_extractor_rationale_226",
       "community": 7,
-      "norm_label": "extract entities from all pages sequentially.     sequential because ollama hand"
+      "norm_label": "extract entities from all pages sequentially.     sequential because ollama hand",
+      "id": "agents_extractor_rationale_226"
     },
     {
       "label": "query_analyzer.py",
@@ -318,9 +318,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_query_analyzer",
       "community": 7,
-      "norm_label": "query_analyzer.py"
+      "norm_label": "query_analyzer.py",
+      "id": "agents_query_analyzer"
     },
     {
       "label": "_parse_llm_json()",
@@ -328,9 +328,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L92",
       "_origin": "ast",
-      "id": "agents_query_analyzer_parse_llm_json",
       "community": 7,
-      "norm_label": "_parse_llm_json()"
+      "norm_label": "_parse_llm_json()",
+      "id": "agents_query_analyzer_parse_llm_json"
     },
     {
       "label": "_validate_analysis()",
@@ -338,9 +338,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "agents_query_analyzer_validate_analysis",
       "community": 7,
-      "norm_label": "_validate_analysis()"
+      "norm_label": "_validate_analysis()",
+      "id": "agents_query_analyzer_validate_analysis"
     },
     {
       "label": "analyze_query()",
@@ -348,9 +348,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L132",
       "_origin": "ast",
-      "id": "agents_query_analyzer_analyze_query",
       "community": 7,
-      "norm_label": "analyze_query()"
+      "norm_label": "analyze_query()",
+      "id": "agents_query_analyzer_analyze_query"
     },
     {
       "label": "agents/query_analyzer.py  Step 1 of the Narada pipeline.  Takes the raw user que",
@@ -358,9 +358,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_query_analyzer_rationale_1",
       "community": 7,
-      "norm_label": "agents/query_analyzer.py  step 1 of the narada pipeline.  takes the raw user que"
+      "norm_label": "agents/query_analyzer.py  step 1 of the narada pipeline.  takes the raw user que",
+      "id": "agents_query_analyzer_rationale_1"
     },
     {
       "label": "Parse JSON from LLM output.     Strips Qwen3 <think> blocks and markdown fences",
@@ -368,9 +368,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "agents_query_analyzer_rationale_93",
       "community": 7,
-      "norm_label": "parse json from llm output.     strips qwen3 <think> blocks and markdown fences"
+      "norm_label": "parse json from llm output.     strips qwen3 <think> blocks and markdown fences",
+      "id": "agents_query_analyzer_rationale_93"
     },
     {
       "label": "Validate parsed JSON against the QueryAnalysis schema.     Raises ValueError wit",
@@ -378,9 +378,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L108",
       "_origin": "ast",
-      "id": "agents_query_analyzer_rationale_108",
       "community": 7,
-      "norm_label": "validate parsed json against the queryanalysis schema.     raises valueerror wit"
+      "norm_label": "validate parsed json against the queryanalysis schema.     raises valueerror wit",
+      "id": "agents_query_analyzer_rationale_108"
     },
     {
       "label": "Analyze a user query and produce a structured research plan.      Args:",
@@ -388,9 +388,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L133",
       "_origin": "ast",
-      "id": "agents_query_analyzer_rationale_133",
       "community": 7,
-      "norm_label": "analyze a user query and produce a structured research plan.      args:"
+      "norm_label": "analyze a user query and produce a structured research plan.      args:",
+      "id": "agents_query_analyzer_rationale_133"
     },
     {
       "label": "scraper.py",
@@ -398,9 +398,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_scraper",
       "community": 1,
-      "norm_label": "scraper.py"
+      "norm_label": "scraper.py",
+      "id": "agents_scraper"
     },
     {
       "label": "_is_blocked()",
@@ -408,9 +408,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L46",
       "_origin": "ast",
-      "id": "agents_scraper_is_blocked",
       "community": 1,
-      "norm_label": "_is_blocked()"
+      "norm_label": "_is_blocked()",
+      "id": "agents_scraper_is_blocked"
     },
     {
       "label": "_is_ssrf_risk()",
@@ -418,9 +418,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "agents_scraper_is_ssrf_risk",
       "community": 1,
-      "norm_label": "_is_ssrf_risk()"
+      "norm_label": "_is_ssrf_risk()",
+      "id": "agents_scraper_is_ssrf_risk"
     },
     {
       "label": "_extract_text()",
@@ -428,9 +428,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "agents_scraper_extract_text",
       "community": 1,
-      "norm_label": "_extract_text()"
+      "norm_label": "_extract_text()",
+      "id": "agents_scraper_extract_text"
     },
     {
       "label": "_extract_title()",
@@ -438,9 +438,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "agents_scraper_extract_title",
       "community": 1,
-      "norm_label": "_extract_title()"
+      "norm_label": "_extract_title()",
+      "id": "agents_scraper_extract_title"
     },
     {
       "label": "_scrape_one()",
@@ -448,9 +448,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L120",
       "_origin": "ast",
-      "id": "agents_scraper_scrape_one",
       "community": 1,
-      "norm_label": "_scrape_one()"
+      "norm_label": "_scrape_one()",
+      "id": "agents_scraper_scrape_one"
     },
     {
       "label": "AsyncClient",
@@ -459,9 +459,9 @@
       "source_location": "",
       "origin_file": "/Users/vpk/Library/CloudStorage/OneDrive-Personal/Documents/Development/narada/agents/scraper.py",
       "_origin": "ast",
-      "id": "asyncclient",
       "community": 1,
-      "norm_label": "asyncclient"
+      "norm_label": "asyncclient",
+      "id": "asyncclient"
     },
     {
       "label": "scrape_pages()",
@@ -469,9 +469,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L176",
       "_origin": "ast",
-      "id": "agents_scraper_scrape_pages",
       "community": 1,
-      "norm_label": "scrape_pages()"
+      "norm_label": "scrape_pages()",
+      "id": "agents_scraper_scrape_pages"
     },
     {
       "label": "agents/scraper.py  Step 3 of the Narada pipeline.  Takes a list of URLs from the",
@@ -479,9 +479,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_1",
       "community": 1,
-      "norm_label": "agents/scraper.py  step 3 of the narada pipeline.  takes a list of urls from the"
+      "norm_label": "agents/scraper.py  step 3 of the narada pipeline.  takes a list of urls from the",
+      "id": "agents_scraper_rationale_1"
     },
     {
       "label": "Return True if the URL matches a known low-quality source.",
@@ -489,9 +489,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L47",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_47",
       "community": 1,
-      "norm_label": "return true if the url matches a known low-quality source."
+      "norm_label": "return true if the url matches a known low-quality source.",
+      "id": "agents_scraper_rationale_47"
     },
     {
       "label": "Return True if the URL targets a private/loopback/link-local address.     Guards",
@@ -499,9 +499,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_52",
       "community": 1,
-      "norm_label": "return true if the url targets a private/loopback/link-local address.     guards"
+      "norm_label": "return true if the url targets a private/loopback/link-local address.     guards",
+      "id": "agents_scraper_rationale_52"
     },
     {
       "label": "Strip HTML and return clean plain text.     Removes noise tags first, then extra",
@@ -509,9 +509,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L96",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_96",
       "community": 1,
-      "norm_label": "strip html and return clean plain text.     removes noise tags first, then extra"
+      "norm_label": "strip html and return clean plain text.     removes noise tags first, then extra",
+      "id": "agents_scraper_rationale_96"
     },
     {
       "label": "Extract page title from HTML. Returns empty string if not found.",
@@ -519,9 +519,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_114",
       "community": 1,
-      "norm_label": "extract page title from html. returns empty string if not found."
+      "norm_label": "extract page title from html. returns empty string if not found.",
+      "id": "agents_scraper_rationale_114"
     },
     {
       "label": "Fetch and parse a single URL.     Returns None on any failure \u2014 caller decides w",
@@ -529,9 +529,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L125",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_125",
       "community": 1,
-      "norm_label": "fetch and parse a single url.     returns none on any failure \u2014 caller decides w"
+      "norm_label": "fetch and parse a single url.     returns none on any failure \u2014 caller decides w",
+      "id": "agents_scraper_rationale_125"
     },
     {
       "label": "Scrape a list of search results concurrently.     Returns only successfully scra",
@@ -539,9 +539,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L181",
       "_origin": "ast",
-      "id": "agents_scraper_rationale_181",
       "community": 1,
-      "norm_label": "scrape a list of search results concurrently.     returns only successfully scra"
+      "norm_label": "scrape a list of search results concurrently.     returns only successfully scra",
+      "id": "agents_scraper_rationale_181"
     },
     {
       "label": "validator.py",
@@ -549,9 +549,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_validator",
       "community": 7,
-      "norm_label": "validator.py"
+      "norm_label": "validator.py",
+      "id": "agents_validator"
     },
     {
       "label": "_parse_valid_names()",
@@ -559,9 +559,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "agents_validator_parse_valid_names",
       "community": 7,
-      "norm_label": "_parse_valid_names()"
+      "norm_label": "_parse_valid_names()",
+      "id": "agents_validator_parse_valid_names"
     },
     {
       "label": "_normalize()",
@@ -569,9 +569,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "agents_validator_normalize",
       "community": 7,
-      "norm_label": "_normalize()"
+      "norm_label": "_normalize()",
+      "id": "agents_validator_normalize"
     },
     {
       "label": "validate_entities()",
@@ -579,9 +579,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L80",
       "_origin": "ast",
-      "id": "agents_validator_validate_entities",
       "community": 7,
-      "norm_label": "validate_entities()"
+      "norm_label": "validate_entities()",
+      "id": "agents_validator_validate_entities"
     },
     {
       "label": "agents/validator.py  Post-aggregation validation step.  After extraction and ded",
@@ -589,9 +589,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_validator_rationale_1",
       "community": 7,
-      "norm_label": "agents/validator.py  post-aggregation validation step.  after extraction and ded"
+      "norm_label": "agents/validator.py  post-aggregation validation step.  after extraction and ded",
+      "id": "agents_validator_rationale_1"
     },
     {
       "label": "Parse the list of valid entity names from LLM output.",
@@ -599,9 +599,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "agents_validator_rationale_61",
       "community": 7,
-      "norm_label": "parse the list of valid entity names from llm output."
+      "norm_label": "parse the list of valid entity names from llm output.",
+      "id": "agents_validator_rationale_61"
     },
     {
       "label": "Filter entities to only those that genuinely match the original query.     Uses",
@@ -609,9 +609,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L85",
       "_origin": "ast",
-      "id": "agents_validator_rationale_85",
       "community": 7,
-      "norm_label": "filter entities to only those that genuinely match the original query.     uses"
+      "norm_label": "filter entities to only those that genuinely match the original query.     uses",
+      "id": "agents_validator_rationale_85"
     },
     {
       "label": "__init__.py",
@@ -619,9 +619,9 @@
       "source_file": "api/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "api_init",
       "community": 14,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "api_init"
     },
     {
       "label": "limiter.py",
@@ -629,9 +629,9 @@
       "source_file": "api/limiter.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "api_limiter",
       "community": 2,
-      "norm_label": "limiter.py"
+      "norm_label": "limiter.py",
+      "id": "api_limiter"
     },
     {
       "label": "api/limiter.py  Shared rate limiter instance. Imported by main.py (to register o",
@@ -639,9 +639,9 @@
       "source_file": "api/limiter.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "api_limiter_rationale_1",
       "community": 2,
-      "norm_label": "api/limiter.py  shared rate limiter instance. imported by main.py (to register o"
+      "norm_label": "api/limiter.py  shared rate limiter instance. imported by main.py (to register o",
+      "id": "api_limiter_rationale_1"
     },
     {
       "label": "routes.py",
@@ -649,9 +649,9 @@
       "source_file": "api/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "api_routes",
       "community": 3,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "api_routes"
     },
     {
       "label": "SearchRequest",
@@ -659,9 +659,9 @@
       "source_file": "api/routes.py",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "api_routes_searchrequest",
       "community": 3,
-      "norm_label": "searchrequest"
+      "norm_label": "searchrequest",
+      "id": "api_routes_searchrequest"
     },
     {
       "label": "BaseModel",
@@ -669,9 +669,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "basemodel",
       "community": 3,
-      "norm_label": "basemodel"
+      "norm_label": "basemodel",
+      "id": "basemodel"
     },
     {
       "label": "SearchResponse",
@@ -679,9 +679,9 @@
       "source_file": "api/routes.py",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "api_routes_searchresponse",
       "community": 3,
-      "norm_label": "searchresponse"
+      "norm_label": "searchresponse",
+      "id": "api_routes_searchresponse"
     },
     {
       "label": "CacheClearResponse",
@@ -689,9 +689,9 @@
       "source_file": "api/routes.py",
       "source_location": "L71",
       "_origin": "ast",
-      "id": "api_routes_cacheclearresponse",
       "community": 3,
-      "norm_label": "cacheclearresponse"
+      "norm_label": "cacheclearresponse",
+      "id": "api_routes_cacheclearresponse"
     },
     {
       "label": "ProviderInfo",
@@ -699,9 +699,9 @@
       "source_file": "api/routes.py",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "api_routes_providerinfo",
       "community": 3,
-      "norm_label": "providerinfo"
+      "norm_label": "providerinfo",
+      "id": "api_routes_providerinfo"
     },
     {
       "label": "ProvidersResponse",
@@ -709,9 +709,9 @@
       "source_file": "api/routes.py",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "api_routes_providersresponse",
       "community": 3,
-      "norm_label": "providersresponse"
+      "norm_label": "providersresponse",
+      "id": "api_routes_providersresponse"
     },
     {
       "label": "_build_settings_from_headers()",
@@ -719,9 +719,9 @@
       "source_file": "api/routes.py",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "api_routes_build_settings_from_headers",
       "community": 3,
-      "norm_label": "_build_settings_from_headers()"
+      "norm_label": "_build_settings_from_headers()",
+      "id": "api_routes_build_settings_from_headers"
     },
     {
       "label": "Request",
@@ -730,9 +730,9 @@
       "source_location": "",
       "origin_file": "/Users/vpk/Library/CloudStorage/OneDrive-Personal/Documents/Development/narada/api/routes.py",
       "_origin": "ast",
-      "id": "api_routes_py_request",
       "community": 3,
-      "norm_label": "request"
+      "norm_label": "request",
+      "id": "api_routes_py_request"
     },
     {
       "label": "search()",
@@ -740,9 +740,9 @@
       "source_file": "api/routes.py",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "api_routes_search",
       "community": 3,
-      "norm_label": "search()"
+      "norm_label": "search()",
+      "id": "api_routes_search"
     },
     {
       "label": "ServerConfig",
@@ -750,9 +750,9 @@
       "source_file": "api/routes.py",
       "source_location": "L239",
       "_origin": "ast",
-      "id": "api_routes_serverconfig",
       "community": 3,
-      "norm_label": "serverconfig"
+      "norm_label": "serverconfig",
+      "id": "api_routes_serverconfig"
     },
     {
       "label": "get_server_config()",
@@ -760,9 +760,9 @@
       "source_file": "api/routes.py",
       "source_location": "L244",
       "_origin": "ast",
-      "id": "api_routes_get_server_config",
       "community": 3,
-      "norm_label": "get_server_config()"
+      "norm_label": "get_server_config()",
+      "id": "api_routes_get_server_config"
     },
     {
       "label": "delete_cache()",
@@ -770,9 +770,9 @@
       "source_file": "api/routes.py",
       "source_location": "L256",
       "_origin": "ast",
-      "id": "api_routes_delete_cache",
       "community": 3,
-      "norm_label": "delete_cache()"
+      "norm_label": "delete_cache()",
+      "id": "api_routes_delete_cache"
     },
     {
       "label": "get_providers()",
@@ -780,9 +780,9 @@
       "source_file": "api/routes.py",
       "source_location": "L271",
       "_origin": "ast",
-      "id": "api_routes_get_providers",
       "community": 3,
-      "norm_label": "get_providers()"
+      "norm_label": "get_providers()",
+      "id": "api_routes_get_providers"
     },
     {
       "label": "api/routes.py  Narada API routes.  Security model: - User API keys are sent as c",
@@ -790,9 +790,9 @@
       "source_file": "api/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "api_routes_rationale_1",
       "community": 3,
-      "norm_label": "api/routes.py  narada api routes.  security model: - user api keys are sent as c"
+      "norm_label": "api/routes.py  narada api routes.  security model: - user api keys are sent as c",
+      "id": "api_routes_rationale_1"
     },
     {
       "label": "Build a Settings instance with per-request overrides from headers.      Only non",
@@ -800,9 +800,9 @@
       "source_file": "api/routes.py",
       "source_location": "L96",
       "_origin": "ast",
-      "id": "api_routes_rationale_96",
       "community": 3,
-      "norm_label": "build a settings instance with per-request overrides from headers.      only non"
+      "norm_label": "build a settings instance with per-request overrides from headers.      only non",
+      "id": "api_routes_rationale_96"
     },
     {
       "label": "Run the Narada pipeline for a query.      API keys are read from request headers",
@@ -810,9 +810,9 @@
       "source_file": "api/routes.py",
       "source_location": "L144",
       "_origin": "ast",
-      "id": "api_routes_rationale_144",
       "community": 3,
-      "norm_label": "run the narada pipeline for a query.      api keys are read from request headers"
+      "norm_label": "run the narada pipeline for a query.      api keys are read from request headers",
+      "id": "api_routes_rationale_144"
     },
     {
       "label": "Returns public server configuration flags for the frontend.     Currently expose",
@@ -820,9 +820,9 @@
       "source_file": "api/routes.py",
       "source_location": "L245",
       "_origin": "ast",
-      "id": "api_routes_rationale_245",
       "community": 3,
-      "norm_label": "returns public server configuration flags for the frontend.     currently expose"
+      "norm_label": "returns public server configuration flags for the frontend.     currently expose",
+      "id": "api_routes_rationale_245"
     },
     {
       "label": "Clear all cached pipeline results. Requires x-admin-key header when CACHE_ADMIN_",
@@ -830,9 +830,9 @@
       "source_file": "api/routes.py",
       "source_location": "L259",
       "_origin": "ast",
-      "id": "api_routes_rationale_259",
       "community": 3,
-      "norm_label": "clear all cached pipeline results. requires x-admin-key header when cache_admin_"
+      "norm_label": "clear all cached pipeline results. requires x-admin-key header when cache_admin_",
+      "id": "api_routes_rationale_259"
     },
     {
       "label": "Return active provider config per pipeline step.",
@@ -840,9 +840,9 @@
       "source_file": "api/routes.py",
       "source_location": "L272",
       "_origin": "ast",
-      "id": "api_routes_rationale_272",
       "community": 3,
-      "norm_label": "return active provider config per pipeline step."
+      "norm_label": "return active provider config per pipeline step.",
+      "id": "api_routes_rationale_272"
     },
     {
       "label": "config.py",
@@ -850,9 +850,9 @@
       "source_file": "config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "config",
       "community": 2,
-      "norm_label": "config.py"
+      "norm_label": "config.py",
+      "id": "config"
     },
     {
       "label": "Settings",
@@ -860,9 +860,9 @@
       "source_file": "config.py",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "config_settings",
       "community": 3,
-      "norm_label": "settings"
+      "norm_label": "settings",
+      "id": "config_settings"
     },
     {
       "label": "BaseSettings",
@@ -870,9 +870,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "basesettings",
       "community": 3,
-      "norm_label": "basesettings"
+      "norm_label": "basesettings",
+      "id": "basesettings"
     },
     {
       "label": "get_settings()",
@@ -880,9 +880,9 @@
       "source_file": "config.py",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "config_get_settings",
       "community": 3,
-      "norm_label": "get_settings()"
+      "norm_label": "get_settings()",
+      "id": "config_get_settings"
     },
     {
       "label": "configure_logging()",
@@ -890,9 +890,9 @@
       "source_file": "config.py",
       "source_location": "L71",
       "_origin": "ast",
-      "id": "config_configure_logging",
       "community": 2,
-      "norm_label": "configure_logging()"
+      "norm_label": "configure_logging()",
+      "id": "config_configure_logging"
     },
     {
       "label": "config.py  Single source of truth for all Narada settings. Every value is read f",
@@ -900,9 +900,9 @@
       "source_file": "config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "config_rationale_1",
       "community": 2,
-      "norm_label": "config.py  single source of truth for all narada settings. every value is read f"
+      "norm_label": "config.py  single source of truth for all narada settings. every value is read f",
+      "id": "config_rationale_1"
     },
     {
       "label": "__init__.py",
@@ -910,9 +910,9 @@
       "source_file": "core/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_init",
       "community": 16,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "core_init"
     },
     {
       "label": "cache.py",
@@ -920,9 +920,9 @@
       "source_file": "core/cache.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_cache",
       "community": 0,
-      "norm_label": "cache.py"
+      "norm_label": "cache.py",
+      "id": "core_cache"
     },
     {
       "label": "_cache_key()",
@@ -930,9 +930,9 @@
       "source_file": "core/cache.py",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "core_cache_cache_key",
       "community": 0,
-      "norm_label": "_cache_key()"
+      "norm_label": "_cache_key()",
+      "id": "core_cache_cache_key"
     },
     {
       "label": "_cache_path()",
@@ -940,9 +940,9 @@
       "source_file": "core/cache.py",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "core_cache_cache_path",
       "community": 0,
-      "norm_label": "_cache_path()"
+      "norm_label": "_cache_path()",
+      "id": "core_cache_cache_path"
     },
     {
       "label": "Path",
@@ -951,9 +951,9 @@
       "source_location": "",
       "origin_file": "/Users/vpk/Library/CloudStorage/OneDrive-Personal/Documents/Development/narada/core/cache.py",
       "_origin": "ast",
-      "id": "path",
       "community": 0,
-      "norm_label": "path"
+      "norm_label": "path",
+      "id": "path"
     },
     {
       "label": "get_cached()",
@@ -961,9 +961,9 @@
       "source_file": "core/cache.py",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "core_cache_get_cached",
       "community": 0,
-      "norm_label": "get_cached()"
+      "norm_label": "get_cached()",
+      "id": "core_cache_get_cached"
     },
     {
       "label": "set_cached()",
@@ -971,9 +971,9 @@
       "source_file": "core/cache.py",
       "source_location": "L68",
       "_origin": "ast",
-      "id": "core_cache_set_cached",
       "community": 0,
-      "norm_label": "set_cached()"
+      "norm_label": "set_cached()",
+      "id": "core_cache_set_cached"
     },
     {
       "label": "clear_cache()",
@@ -981,9 +981,9 @@
       "source_file": "core/cache.py",
       "source_location": "L90",
       "_origin": "ast",
-      "id": "core_cache_clear_cache",
       "community": 3,
-      "norm_label": "clear_cache()"
+      "norm_label": "clear_cache()",
+      "id": "core_cache_clear_cache"
     },
     {
       "label": "core/cache.py  Simple disk-based cache for pipeline results. Keyed on a hash of",
@@ -991,9 +991,9 @@
       "source_file": "core/cache.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_cache_rationale_1",
       "community": 0,
-      "norm_label": "core/cache.py  simple disk-based cache for pipeline results. keyed on a hash of"
+      "norm_label": "core/cache.py  simple disk-based cache for pipeline results. keyed on a hash of",
+      "id": "core_cache_rationale_1"
     },
     {
       "label": "Generate a unique cache key from query + provider config.     Different provider",
@@ -1001,9 +1001,9 @@
       "source_file": "core/cache.py",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "core_cache_rationale_30",
       "community": 0,
-      "norm_label": "generate a unique cache key from query + provider config.     different provider"
+      "norm_label": "generate a unique cache key from query + provider config.     different provider",
+      "id": "core_cache_rationale_30"
     },
     {
       "label": "Return a cached PipelineResult if one exists for this query + config.     Return",
@@ -1011,9 +1011,9 @@
       "source_file": "core/cache.py",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "core_cache_rationale_48",
       "community": 0,
-      "norm_label": "return a cached pipelineresult if one exists for this query + config.     return"
+      "norm_label": "return a cached pipelineresult if one exists for this query + config.     return",
+      "id": "core_cache_rationale_48"
     },
     {
       "label": "Write a PipelineResult to disk cache.     Silently skips on any write error \u2014 ca",
@@ -1021,9 +1021,9 @@
       "source_file": "core/cache.py",
       "source_location": "L75",
       "_origin": "ast",
-      "id": "core_cache_rationale_75",
       "community": 0,
-      "norm_label": "write a pipelineresult to disk cache.     silently skips on any write error \u2014 ca"
+      "norm_label": "write a pipelineresult to disk cache.     silently skips on any write error \u2014 ca",
+      "id": "core_cache_rationale_75"
     },
     {
       "label": "Delete all cache entries. Returns number of files deleted.     Called via the DE",
@@ -1031,9 +1031,9 @@
       "source_file": "core/cache.py",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "core_cache_rationale_91",
       "community": 3,
-      "norm_label": "delete all cache entries. returns number of files deleted.     called via the de"
+      "norm_label": "delete all cache entries. returns number of files deleted.     called via the de",
+      "id": "core_cache_rationale_91"
     },
     {
       "label": "models.py",
@@ -1041,9 +1041,9 @@
       "source_file": "core/models.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_models",
       "community": 7,
-      "norm_label": "models.py"
+      "norm_label": "models.py",
+      "id": "core_models"
     },
     {
       "label": "SearchResult",
@@ -1051,9 +1051,9 @@
       "source_file": "core/models.py",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "core_models_searchresult",
       "community": 6,
-      "norm_label": "searchresult"
+      "norm_label": "searchresult",
+      "id": "core_models_searchresult"
     },
     {
       "label": "ScrapedPage",
@@ -1061,9 +1061,9 @@
       "source_file": "core/models.py",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "core_models_scrapedpage",
       "community": 1,
-      "norm_label": "scrapedpage"
+      "norm_label": "scrapedpage",
+      "id": "core_models_scrapedpage"
     },
     {
       "label": "CellValue",
@@ -1071,9 +1071,9 @@
       "source_file": "core/models.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "core_models_cellvalue",
       "community": 7,
-      "norm_label": "cellvalue"
+      "norm_label": "cellvalue",
+      "id": "core_models_cellvalue"
     },
     {
       "label": "Entity",
@@ -1081,9 +1081,9 @@
       "source_file": "core/models.py",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "core_models_entity",
       "community": 7,
-      "norm_label": "entity"
+      "norm_label": "entity",
+      "id": "core_models_entity"
     },
     {
       "label": "QueryAnalysis",
@@ -1091,9 +1091,9 @@
       "source_file": "core/models.py",
       "source_location": "L57",
       "_origin": "ast",
-      "id": "core_models_queryanalysis",
       "community": 7,
-      "norm_label": "queryanalysis"
+      "norm_label": "queryanalysis",
+      "id": "core_models_queryanalysis"
     },
     {
       "label": "PipelineMetadata",
@@ -1101,9 +1101,9 @@
       "source_file": "core/models.py",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "core_models_pipelinemetadata",
       "community": 3,
-      "norm_label": "pipelinemetadata"
+      "norm_label": "pipelinemetadata",
+      "id": "core_models_pipelinemetadata"
     },
     {
       "label": "PipelineResult",
@@ -1111,9 +1111,9 @@
       "source_file": "core/models.py",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "core_models_pipelineresult",
       "community": 3,
-      "norm_label": "pipelineresult"
+      "norm_label": "pipelineresult",
+      "id": "core_models_pipelineresult"
     },
     {
       "label": "core/models.py  All shared data shapes for the Narada pipeline. Interfaces are d",
@@ -1121,9 +1121,9 @@
       "source_file": "core/models.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_models_rationale_1",
       "community": 7,
-      "norm_label": "core/models.py  all shared data shapes for the narada pipeline. interfaces are d"
+      "norm_label": "core/models.py  all shared data shapes for the narada pipeline. interfaces are d",
+      "id": "core_models_rationale_1"
     },
     {
       "label": "A single result returned by the search provider.",
@@ -1131,9 +1131,9 @@
       "source_file": "core/models.py",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "core_models_rationale_17",
       "community": 6,
-      "norm_label": "a single result returned by the search provider."
+      "norm_label": "a single result returned by the search provider.",
+      "id": "core_models_rationale_17"
     },
     {
       "label": "Cleaned plain-text content scraped from a URL.",
@@ -1141,9 +1141,9 @@
       "source_file": "core/models.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "core_models_rationale_24",
       "community": 1,
-      "norm_label": "cleaned plain-text content scraped from a url."
+      "norm_label": "cleaned plain-text content scraped from a url.",
+      "id": "core_models_rationale_24"
     },
     {
       "label": "A single attribute value for an entity.     source_url makes every cell in the o",
@@ -1151,9 +1151,9 @@
       "source_file": "core/models.py",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "core_models_rationale_35",
       "community": 7,
-      "norm_label": "a single attribute value for an entity.     source_url makes every cell in the o"
+      "norm_label": "a single attribute value for an entity.     source_url makes every cell in the o",
+      "id": "core_models_rationale_35"
     },
     {
       "label": "A discovered entity \u2014 a company, restaurant, tool, person, etc.     attributes m",
@@ -1161,9 +1161,9 @@
       "source_file": "core/models.py",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "core_models_rationale_45",
       "community": 7,
-      "norm_label": "a discovered entity \u2014 a company, restaurant, tool, person, etc.     attributes m"
+      "norm_label": "a discovered entity \u2014 a company, restaurant, tool, person, etc.     attributes m",
+      "id": "core_models_rationale_45"
     },
     {
       "label": "Output from the query analyzer agent.     Produced before any search or scraping",
@@ -1171,9 +1171,9 @@
       "source_file": "core/models.py",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "core_models_rationale_58",
       "community": 7,
-      "norm_label": "output from the query analyzer agent.     produced before any search or scraping"
+      "norm_label": "output from the query analyzer agent.     produced before any search or scraping",
+      "id": "core_models_rationale_58"
     },
     {
       "label": "Diagnostic info attached to every pipeline run.",
@@ -1181,9 +1181,9 @@
       "source_file": "core/models.py",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "core_models_rationale_73",
       "community": 3,
-      "norm_label": "diagnostic info attached to every pipeline run."
+      "norm_label": "diagnostic info attached to every pipeline run.",
+      "id": "core_models_rationale_73"
     },
     {
       "label": "Final output of a full Narada pipeline run.     Returned by the API and consumed",
@@ -1191,9 +1191,9 @@
       "source_file": "core/models.py",
       "source_location": "L82",
       "_origin": "ast",
-      "id": "core_models_rationale_82",
       "community": 3,
-      "norm_label": "final output of a full narada pipeline run.     returned by the api and consumed"
+      "norm_label": "final output of a full narada pipeline run.     returned by the api and consumed",
+      "id": "core_models_rationale_82"
     },
     {
       "label": "pipeline.py",
@@ -1201,9 +1201,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_pipeline",
       "community": 7,
-      "norm_label": "pipeline.py"
+      "norm_label": "pipeline.py",
+      "id": "core_pipeline"
     },
     {
       "label": "_run_searches()",
@@ -1211,9 +1211,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "core_pipeline_run_searches",
       "community": 6,
-      "norm_label": "_run_searches()"
+      "norm_label": "_run_searches()",
+      "id": "core_pipeline_run_searches"
     },
     {
       "label": "run_pipeline()",
@@ -1221,9 +1221,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "core_pipeline_run_pipeline",
       "community": 3,
-      "norm_label": "run_pipeline()"
+      "norm_label": "run_pipeline()",
+      "id": "core_pipeline_run_pipeline"
     },
     {
       "label": "core/pipeline.py  The Narada pipeline orchestrator.  Each step uses its own conf",
@@ -1231,9 +1231,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "core_pipeline_rationale_1",
       "community": 7,
-      "norm_label": "core/pipeline.py  the narada pipeline orchestrator.  each step uses its own conf"
+      "norm_label": "core/pipeline.py  the narada pipeline orchestrator.  each step uses its own conf",
+      "id": "core_pipeline_rationale_1"
     },
     {
       "label": "Run all search queries and return deduplicated results.",
@@ -1241,9 +1241,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L46",
       "_origin": "ast",
-      "id": "core_pipeline_rationale_46",
       "community": 6,
-      "norm_label": "run all search queries and return deduplicated results."
+      "norm_label": "run all search queries and return deduplicated results.",
+      "id": "core_pipeline_rationale_46"
     },
     {
       "label": "Run the full Narada pipeline for a given query.      Provider selection is handl",
@@ -1251,9 +1251,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "core_pipeline_rationale_67",
       "community": 3,
-      "norm_label": "run the full narada pipeline for a given query.      provider selection is handl"
+      "norm_label": "run the full narada pipeline for a given query.      provider selection is handl",
+      "id": "core_pipeline_rationale_67"
     },
     {
       "label": "package.json",
@@ -1261,9 +1261,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "frontend_package",
       "community": 5,
-      "norm_label": "package.json"
+      "norm_label": "package.json",
+      "id": "frontend_package"
     },
     {
       "label": "name",
@@ -1271,9 +1271,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "frontend_package_name",
       "community": 5,
-      "norm_label": "name"
+      "norm_label": "name",
+      "id": "frontend_package_name"
     },
     {
       "label": "private",
@@ -1281,9 +1281,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "frontend_package_private",
       "community": 5,
-      "norm_label": "private"
+      "norm_label": "private",
+      "id": "frontend_package_private"
     },
     {
       "label": "version",
@@ -1291,9 +1291,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "frontend_package_version",
       "community": 5,
-      "norm_label": "version"
+      "norm_label": "version",
+      "id": "frontend_package_version"
     },
     {
       "label": "type",
@@ -1301,9 +1301,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "frontend_package_type",
       "community": 5,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "frontend_package_type"
     },
     {
       "label": "packageManager",
@@ -1311,9 +1311,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "frontend_package_packagemanager",
       "community": 5,
-      "norm_label": "packagemanager"
+      "norm_label": "packagemanager",
+      "id": "frontend_package_packagemanager"
     },
     {
       "label": "scripts",
@@ -1321,9 +1321,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "frontend_package_scripts",
       "community": 5,
-      "norm_label": "scripts"
+      "norm_label": "scripts",
+      "id": "frontend_package_scripts"
     },
     {
       "label": "dev",
@@ -1331,9 +1331,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "frontend_package_scripts_dev",
       "community": 5,
-      "norm_label": "dev"
+      "norm_label": "dev",
+      "id": "frontend_package_scripts_dev"
     },
     {
       "label": "build",
@@ -1341,9 +1341,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "frontend_package_scripts_build",
       "community": 5,
-      "norm_label": "build"
+      "norm_label": "build",
+      "id": "frontend_package_scripts_build"
     },
     {
       "label": "preview",
@@ -1351,9 +1351,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "frontend_package_scripts_preview",
       "community": 5,
-      "norm_label": "preview"
+      "norm_label": "preview",
+      "id": "frontend_package_scripts_preview"
     },
     {
       "label": "dependencies",
@@ -1361,9 +1361,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "frontend_package_dependencies",
       "community": 5,
-      "norm_label": "dependencies"
+      "norm_label": "dependencies",
+      "id": "frontend_package_dependencies"
     },
     {
       "label": "react",
@@ -1371,9 +1371,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "frontend_package_dependencies_react",
       "community": 5,
-      "norm_label": "react"
+      "norm_label": "react",
+      "id": "frontend_package_dependencies_react"
     },
     {
       "label": "react-dom",
@@ -1381,9 +1381,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "frontend_package_dependencies_react_dom",
       "community": 5,
-      "norm_label": "react-dom"
+      "norm_label": "react-dom",
+      "id": "frontend_package_dependencies_react_dom"
     },
     {
       "label": "devDependencies",
@@ -1391,9 +1391,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "frontend_package_devdependencies",
       "community": 5,
-      "norm_label": "devdependencies"
+      "norm_label": "devdependencies",
+      "id": "frontend_package_devdependencies"
     },
     {
       "label": "@types/react",
@@ -1401,9 +1401,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "frontend_package_devdependencies_types_react",
       "community": 5,
-      "norm_label": "@types/react"
+      "norm_label": "@types/react",
+      "id": "frontend_package_devdependencies_types_react"
     },
     {
       "label": "@types/react-dom",
@@ -1411,9 +1411,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "frontend_package_devdependencies_types_react_dom",
       "community": 5,
-      "norm_label": "@types/react-dom"
+      "norm_label": "@types/react-dom",
+      "id": "frontend_package_devdependencies_types_react_dom"
     },
     {
       "label": "@vitejs/plugin-react",
@@ -1421,9 +1421,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "frontend_package_devdependencies_vitejs_plugin_react",
       "community": 5,
-      "norm_label": "@vitejs/plugin-react"
+      "norm_label": "@vitejs/plugin-react",
+      "id": "frontend_package_devdependencies_vitejs_plugin_react"
     },
     {
       "label": "vite",
@@ -1431,9 +1431,9 @@
       "source_file": "frontend/package.json",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "frontend_package_devdependencies_vite",
       "community": 5,
-      "norm_label": "vite"
+      "norm_label": "vite",
+      "id": "frontend_package_devdependencies_vite"
     },
     {
       "label": "App.jsx",
@@ -1441,9 +1441,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app",
       "community": 4,
-      "norm_label": "app.jsx"
+      "norm_label": "app.jsx",
+      "id": "src_app"
     },
     {
       "label": "IS_LOCAL",
@@ -1451,9 +1451,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "src_app_is_local",
       "community": 4,
-      "norm_label": "is_local"
+      "norm_label": "is_local",
+      "id": "src_app_is_local"
     },
     {
       "label": "isEffectiveLocal()",
@@ -1461,9 +1461,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "src_app_iseffectivelocal",
       "community": 4,
-      "norm_label": "iseffectivelocal()"
+      "norm_label": "iseffectivelocal()",
+      "id": "src_app_iseffectivelocal"
     },
     {
       "label": "NEEDS_KEY",
@@ -1471,9 +1471,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "src_app_needs_key",
       "community": 4,
-      "norm_label": "needs_key"
+      "norm_label": "needs_key",
+      "id": "src_app_needs_key"
     },
     {
       "label": "getSidebarKey()",
@@ -1481,9 +1481,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "src_app_getsidebarkey",
       "community": 4,
-      "norm_label": "getsidebarkey()"
+      "norm_label": "getsidebarkey()",
+      "id": "src_app_getsidebarkey"
     },
     {
       "label": "hasSidebarKey()",
@@ -1491,9 +1491,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "src_app_hassidebarkey",
       "community": 4,
-      "norm_label": "hassidebarkey()"
+      "norm_label": "hassidebarkey()",
+      "id": "src_app_hassidebarkey"
     },
     {
       "label": "getSelectedLlmProvider()",
@@ -1501,9 +1501,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "src_app_getselectedllmprovider",
       "community": 4,
-      "norm_label": "getselectedllmprovider()"
+      "norm_label": "getselectedllmprovider()",
+      "id": "src_app_getselectedllmprovider"
     },
     {
       "label": "buildHeaders()",
@@ -1511,9 +1511,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "src_app_buildheaders",
       "community": 4,
-      "norm_label": "buildheaders()"
+      "norm_label": "buildheaders()",
+      "id": "src_app_buildheaders"
     },
     {
       "label": "STEPS",
@@ -1521,9 +1521,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "src_app_steps",
       "community": 4,
-      "norm_label": "steps"
+      "norm_label": "steps",
+      "id": "src_app_steps"
     },
     {
       "label": "App()",
@@ -1531,9 +1531,9 @@
       "source_file": "frontend/src/App.jsx",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "src_app_app",
       "community": 4,
-      "norm_label": "app()"
+      "norm_label": "app()",
+      "id": "src_app_app"
     },
     {
       "label": "ResultsTable.jsx",
@@ -1541,9 +1541,9 @@
       "source_file": "frontend/src/components/ResultsTable.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_resultstable",
       "community": 4,
-      "norm_label": "resultstable.jsx"
+      "norm_label": "resultstable.jsx",
+      "id": "components_resultstable"
     },
     {
       "label": "SourceChip()",
@@ -1551,9 +1551,9 @@
       "source_file": "frontend/src/components/ResultsTable.jsx",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "components_resultstable_sourcechip",
       "community": 4,
-      "norm_label": "sourcechip()"
+      "norm_label": "sourcechip()",
+      "id": "components_resultstable_sourcechip"
     },
     {
       "label": "Detail()",
@@ -1561,9 +1561,9 @@
       "source_file": "frontend/src/components/ResultsTable.jsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "components_resultstable_detail",
       "community": 4,
-      "norm_label": "detail()"
+      "norm_label": "detail()",
+      "id": "components_resultstable_detail"
     },
     {
       "label": "ResultsTable()",
@@ -1571,9 +1571,9 @@
       "source_file": "frontend/src/components/ResultsTable.jsx",
       "source_location": "L40",
       "_origin": "ast",
-      "id": "components_resultstable_resultstable",
       "community": 4,
-      "norm_label": "resultstable()"
+      "norm_label": "resultstable()",
+      "id": "components_resultstable_resultstable"
     },
     {
       "label": "Sidebar.jsx",
@@ -1581,9 +1581,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_sidebar",
       "community": 4,
-      "norm_label": "sidebar.jsx"
+      "norm_label": "sidebar.jsx",
+      "id": "components_sidebar"
     },
     {
       "label": "IS_LOCAL",
@@ -1591,9 +1591,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "components_sidebar_is_local",
       "community": 4,
-      "norm_label": "is_local"
+      "norm_label": "is_local",
+      "id": "components_sidebar_is_local"
     },
     {
       "label": "DEFAULT_MODELS",
@@ -1601,9 +1601,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "components_sidebar_default_models",
       "community": 4,
-      "norm_label": "default_models"
+      "norm_label": "default_models",
+      "id": "components_sidebar_default_models"
     },
     {
       "label": "SEARCH_PROVIDERS",
@@ -1611,9 +1611,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "components_sidebar_search_providers",
       "community": 4,
-      "norm_label": "search_providers"
+      "norm_label": "search_providers",
+      "id": "components_sidebar_search_providers"
     },
     {
       "label": "STEPS",
@@ -1621,9 +1621,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "components_sidebar_steps",
       "community": 4,
-      "norm_label": "steps"
+      "norm_label": "steps",
+      "id": "components_sidebar_steps"
     },
     {
       "label": "DEFAULT_CONFIG",
@@ -1631,9 +1631,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "components_sidebar_default_config",
       "community": 4,
-      "norm_label": "default_config"
+      "norm_label": "default_config",
+      "id": "components_sidebar_default_config"
     },
     {
       "label": "LogoMark()",
@@ -1641,9 +1641,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "components_sidebar_logomark",
       "community": 4,
-      "norm_label": "logomark()"
+      "norm_label": "logomark()",
+      "id": "components_sidebar_logomark"
     },
     {
       "label": "Sidebar()",
@@ -1651,9 +1651,9 @@
       "source_file": "frontend/src/components/Sidebar.jsx",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "components_sidebar_sidebar",
       "community": 4,
-      "norm_label": "sidebar()"
+      "norm_label": "sidebar()",
+      "id": "components_sidebar_sidebar"
     },
     {
       "label": "useSession.js",
@@ -1661,9 +1661,9 @@
       "source_file": "frontend/src/hooks/useSession.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "hooks_usesession",
       "community": 4,
-      "norm_label": "usesession.js"
+      "norm_label": "usesession.js",
+      "id": "hooks_usesession"
     },
     {
       "label": "useSession()",
@@ -1671,9 +1671,9 @@
       "source_file": "frontend/src/hooks/useSession.js",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "hooks_usesession_usesession",
       "community": 4,
-      "norm_label": "usesession()"
+      "norm_label": "usesession()",
+      "id": "hooks_usesession_usesession"
     },
     {
       "label": "main.jsx",
@@ -1681,9 +1681,9 @@
       "source_file": "frontend/src/main.jsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_main",
       "community": 4,
-      "norm_label": "main.jsx"
+      "norm_label": "main.jsx",
+      "id": "src_main"
     },
     {
       "label": "vite.config.js",
@@ -1691,9 +1691,9 @@
       "source_file": "frontend/vite.config.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "frontend_vite_config",
       "community": 17,
-      "norm_label": "vite.config.js"
+      "norm_label": "vite.config.js",
+      "id": "frontend_vite_config"
     },
     {
       "label": "main.py",
@@ -1701,9 +1701,9 @@
       "source_file": "main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "main",
       "community": 2,
-      "norm_label": "main.py"
+      "norm_label": "main.py",
+      "id": "main"
     },
     {
       "label": "security_headers()",
@@ -1711,9 +1711,9 @@
       "source_file": "main.py",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "main_security_headers",
       "community": 2,
-      "norm_label": "security_headers()"
+      "norm_label": "security_headers()",
+      "id": "main_security_headers"
     },
     {
       "label": "Request",
@@ -1722,9 +1722,9 @@
       "source_location": "",
       "origin_file": "/Users/vpk/Library/CloudStorage/OneDrive-Personal/Documents/Development/narada/main.py",
       "_origin": "ast",
-      "id": "main_py_request",
       "community": 2,
-      "norm_label": "request"
+      "norm_label": "request",
+      "id": "main_py_request"
     },
     {
       "label": "health()",
@@ -1732,9 +1732,9 @@
       "source_file": "main.py",
       "source_location": "L120",
       "_origin": "ast",
-      "id": "main_health",
       "community": 2,
-      "norm_label": "health()"
+      "norm_label": "health()",
+      "id": "main_health"
     },
     {
       "label": "serve_frontend()",
@@ -1742,9 +1742,9 @@
       "source_file": "main.py",
       "source_location": "L137",
       "_origin": "ast",
-      "id": "main_serve_frontend",
       "community": 2,
-      "norm_label": "serve_frontend()"
+      "norm_label": "serve_frontend()",
+      "id": "main_serve_frontend"
     },
     {
       "label": "main.py  Narada \u2014 FastAPI entry point.  In production, serves the React frontend",
@@ -1752,9 +1752,9 @@
       "source_file": "main.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "main_rationale_1",
       "community": 2,
-      "norm_label": "main.py  narada \u2014 fastapi entry point.  in production, serves the react frontend"
+      "norm_label": "main.py  narada \u2014 fastapi entry point.  in production, serves the react frontend",
+      "id": "main_rationale_1"
     },
     {
       "label": "Catch-all route that serves the React app for any non-API path.         React Ro",
@@ -1762,9 +1762,9 @@
       "source_file": "main.py",
       "source_location": "L138",
       "_origin": "ast",
-      "id": "main_rationale_138",
       "community": 2,
-      "norm_label": "catch-all route that serves the react app for any non-api path.         react ro"
+      "norm_label": "catch-all route that serves the react app for any non-api path.         react ro",
+      "id": "main_rationale_138"
     },
     {
       "label": "base.py",
@@ -1772,9 +1772,9 @@
       "source_file": "providers/base.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_base",
       "community": 6,
-      "norm_label": "base.py"
+      "norm_label": "base.py",
+      "id": "providers_base"
     },
     {
       "label": "BaseSearchProvider",
@@ -1782,9 +1782,9 @@
       "source_file": "providers/base.py",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "providers_base_basesearchprovider",
       "community": 6,
-      "norm_label": "basesearchprovider"
+      "norm_label": "basesearchprovider",
+      "id": "providers_base_basesearchprovider"
     },
     {
       "label": "ABC",
@@ -1792,9 +1792,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "abc",
       "community": 6,
-      "norm_label": "abc"
+      "norm_label": "abc",
+      "id": "abc"
     },
     {
       "label": ".search()",
@@ -1802,9 +1802,9 @@
       "source_file": "providers/base.py",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "providers_base_basesearchprovider_search",
       "community": 6,
-      "norm_label": ".search()"
+      "norm_label": ".search()",
+      "id": "providers_base_basesearchprovider_search"
     },
     {
       "label": ".provider_name()",
@@ -1812,9 +1812,9 @@
       "source_file": "providers/base.py",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "providers_base_basesearchprovider_provider_name",
       "community": 6,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "providers_base_basesearchprovider_provider_name"
     },
     {
       "label": "BaseLLMProvider",
@@ -1822,9 +1822,9 @@
       "source_file": "providers/base.py",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "providers_base_basellmprovider",
       "community": 3,
-      "norm_label": "basellmprovider"
+      "norm_label": "basellmprovider",
+      "id": "providers_base_basellmprovider"
     },
     {
       "label": ".complete()",
@@ -1832,9 +1832,9 @@
       "source_file": "providers/base.py",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "providers_base_basellmprovider_complete",
       "community": 3,
-      "norm_label": ".complete()"
+      "norm_label": ".complete()",
+      "id": "providers_base_basellmprovider_complete"
     },
     {
       "label": ".provider_name()",
@@ -1842,9 +1842,9 @@
       "source_file": "providers/base.py",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "providers_base_basellmprovider_provider_name",
       "community": 3,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "providers_base_basellmprovider_provider_name"
     },
     {
       "label": ".model_name()",
@@ -1852,9 +1852,9 @@
       "source_file": "providers/base.py",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "providers_base_basellmprovider_model_name",
       "community": 3,
-      "norm_label": ".model_name()"
+      "norm_label": ".model_name()",
+      "id": "providers_base_basellmprovider_model_name"
     },
     {
       "label": "providers/base.py  Abstract base classes for all Narada providers. The pipeline",
@@ -1862,9 +1862,9 @@
       "source_file": "providers/base.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_base_rationale_1",
       "community": 6,
-      "norm_label": "providers/base.py  abstract base classes for all narada providers. the pipeline"
+      "norm_label": "providers/base.py  abstract base classes for all narada providers. the pipeline",
+      "id": "providers_base_rationale_1"
     },
     {
       "label": "Contract every search provider must fulfill.",
@@ -1872,9 +1872,9 @@
       "source_file": "providers/base.py",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "providers_base_rationale_15",
       "community": 6,
-      "norm_label": "contract every search provider must fulfill."
+      "norm_label": "contract every search provider must fulfill.",
+      "id": "providers_base_rationale_15"
     },
     {
       "label": "Run a search and return results.          Args:             query: search string",
@@ -1882,9 +1882,9 @@
       "source_file": "providers/base.py",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "providers_base_rationale_19",
       "community": 6,
-      "norm_label": "run a search and return results.          args:             query: search string"
+      "norm_label": "run a search and return results.          args:             query: search string",
+      "id": "providers_base_rationale_19"
     },
     {
       "label": "Identifier used in metadata and logs. e.g. 'duckduckgo",
@@ -1892,9 +1892,9 @@
       "source_file": "providers/base.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "providers_base_rationale_34",
       "community": 6,
-      "norm_label": "identifier used in metadata and logs. e.g. 'duckduckgo"
+      "norm_label": "identifier used in metadata and logs. e.g. 'duckduckgo",
+      "id": "providers_base_rationale_34"
     },
     {
       "label": "Contract every LLM provider must fulfill.",
@@ -1902,9 +1902,9 @@
       "source_file": "providers/base.py",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "providers_base_rationale_39",
       "community": 3,
-      "norm_label": "contract every llm provider must fulfill."
+      "norm_label": "contract every llm provider must fulfill.",
+      "id": "providers_base_rationale_39"
     },
     {
       "label": "Send a prompt and return the full model response.          Args:             pro",
@@ -1912,9 +1912,9 @@
       "source_file": "providers/base.py",
       "source_location": "L43",
       "_origin": "ast",
-      "id": "providers_base_rationale_43",
       "community": 3,
-      "norm_label": "send a prompt and return the full model response.          args:             pro"
+      "norm_label": "send a prompt and return the full model response.          args:             pro",
+      "id": "providers_base_rationale_43"
     },
     {
       "label": "e.g. 'ollama', 'openai', 'anthropic",
@@ -1922,9 +1922,9 @@
       "source_file": "providers/base.py",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "providers_base_rationale_59",
       "community": 3,
-      "norm_label": "e.g. 'ollama', 'openai', 'anthropic"
+      "norm_label": "e.g. 'ollama', 'openai', 'anthropic",
+      "id": "providers_base_rationale_59"
     },
     {
       "label": "e.g. 'qwen3:4b', 'gpt-4o-mini",
@@ -1932,9 +1932,9 @@
       "source_file": "providers/base.py",
       "source_location": "L65",
       "_origin": "ast",
-      "id": "providers_base_rationale_65",
       "community": 3,
-      "norm_label": "e.g. 'qwen3:4b', 'gpt-4o-mini"
+      "norm_label": "e.g. 'qwen3:4b', 'gpt-4o-mini",
+      "id": "providers_base_rationale_65"
     },
     {
       "label": "factory.py",
@@ -1942,9 +1942,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_factory",
       "community": 3,
-      "norm_label": "factory.py"
+      "norm_label": "factory.py",
+      "id": "providers_factory"
     },
     {
       "label": "_build_llm()",
@@ -1952,9 +1952,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "providers_factory_build_llm",
       "community": 3,
-      "norm_label": "_build_llm()"
+      "norm_label": "_build_llm()",
+      "id": "providers_factory_build_llm"
     },
     {
       "label": "get_llm_provider()",
@@ -1962,9 +1962,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L50",
       "_origin": "ast",
-      "id": "providers_factory_get_llm_provider",
       "community": 3,
-      "norm_label": "get_llm_provider()"
+      "norm_label": "get_llm_provider()",
+      "id": "providers_factory_get_llm_provider"
     },
     {
       "label": "get_query_analyzer_llm()",
@@ -1972,9 +1972,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "providers_factory_get_query_analyzer_llm",
       "community": 3,
-      "norm_label": "get_query_analyzer_llm()"
+      "norm_label": "get_query_analyzer_llm()",
+      "id": "providers_factory_get_query_analyzer_llm"
     },
     {
       "label": "get_extraction_llm()",
@@ -1982,9 +1982,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "providers_factory_get_extraction_llm",
       "community": 3,
-      "norm_label": "get_extraction_llm()"
+      "norm_label": "get_extraction_llm()",
+      "id": "providers_factory_get_extraction_llm"
     },
     {
       "label": "get_validator_llm()",
@@ -1992,9 +1992,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "providers_factory_get_validator_llm",
       "community": 3,
-      "norm_label": "get_validator_llm()"
+      "norm_label": "get_validator_llm()",
+      "id": "providers_factory_get_validator_llm"
     },
     {
       "label": "get_search_provider()",
@@ -2002,9 +2002,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "providers_factory_get_search_provider",
       "community": 6,
-      "norm_label": "get_search_provider()"
+      "norm_label": "get_search_provider()",
+      "id": "providers_factory_get_search_provider"
     },
     {
       "label": "providers/factory.py  Builds provider instances from settings.  LLM resolution o",
@@ -2012,9 +2012,9 @@
       "source_file": "providers/factory.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "providers_factory_rationale_1",
       "community": 3,
-      "norm_label": "providers/factory.py  builds provider instances from settings.  llm resolution o"
+      "norm_label": "providers/factory.py  builds provider instances from settings.  llm resolution o",
+      "id": "providers_factory_rationale_1"
     },
     {
       "label": "litellm_provider.py",
@@ -2022,9 +2022,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "llm_litellm_provider",
       "community": 31,
-      "norm_label": "litellm_provider.py"
+      "norm_label": "litellm_provider.py",
+      "id": "llm_litellm_provider"
     },
     {
       "label": "LiteLLMProvider",
@@ -2032,9 +2032,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider",
       "community": 31,
-      "norm_label": "litellmprovider"
+      "norm_label": "litellmprovider",
+      "id": "llm_litellm_provider_litellmprovider"
     },
     {
       "label": ".__init__()",
@@ -2042,9 +2042,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_init",
       "community": 31,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "llm_litellm_provider_litellmprovider_init"
     },
     {
       "label": ".provider_name()",
@@ -2052,9 +2052,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_provider_name",
       "community": 31,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "llm_litellm_provider_litellmprovider_provider_name"
     },
     {
       "label": ".model_name()",
@@ -2062,9 +2062,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_model_name",
       "community": 31,
-      "norm_label": ".model_name()"
+      "norm_label": ".model_name()",
+      "id": "llm_litellm_provider_litellmprovider_model_name"
     },
     {
       "label": ".complete()",
@@ -2072,9 +2072,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "llm_litellm_provider_litellmprovider_complete",
       "community": 31,
-      "norm_label": ".complete()"
+      "norm_label": ".complete()",
+      "id": "llm_litellm_provider_litellmprovider_complete"
     },
     {
       "label": "providers/llm/litellm_provider.py  Single LLM provider backed by LiteLLM. Suppor",
@@ -2082,9 +2082,9 @@
       "source_file": "providers/llm/litellm_provider.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "llm_litellm_provider_rationale_1",
       "community": 31,
-      "norm_label": "providers/llm/litellm_provider.py  single llm provider backed by litellm. suppor"
+      "norm_label": "providers/llm/litellm_provider.py  single llm provider backed by litellm. suppor",
+      "id": "llm_litellm_provider_rationale_1"
     },
     {
       "label": "brave.py",
@@ -2092,9 +2092,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_brave",
       "community": 6,
-      "norm_label": "brave.py"
+      "norm_label": "brave.py",
+      "id": "search_brave"
     },
     {
       "label": "BraveProvider",
@@ -2102,9 +2102,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "search_brave_braveprovider",
       "community": 6,
-      "norm_label": "braveprovider"
+      "norm_label": "braveprovider",
+      "id": "search_brave_braveprovider"
     },
     {
       "label": ".__init__()",
@@ -2112,9 +2112,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "search_brave_braveprovider_init",
       "community": 6,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "search_brave_braveprovider_init"
     },
     {
       "label": ".provider_name()",
@@ -2122,9 +2122,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "search_brave_braveprovider_provider_name",
       "community": 6,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "search_brave_braveprovider_provider_name"
     },
     {
       "label": ".search()",
@@ -2132,9 +2132,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "search_brave_braveprovider_search",
       "community": 6,
-      "norm_label": ".search()"
+      "norm_label": ".search()",
+      "id": "search_brave_braveprovider_search"
     },
     {
       "label": "providers/search/brave.py  Brave Search provider. Clean results, no tracking, bu",
@@ -2142,9 +2142,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_brave_rationale_1",
       "community": 6,
-      "norm_label": "providers/search/brave.py  brave search provider. clean results, no tracking, bu"
+      "norm_label": "providers/search/brave.py  brave search provider. clean results, no tracking, bu",
+      "id": "search_brave_rationale_1"
     },
     {
       "label": "Search via Brave Search API and return structured results.         Uses the web",
@@ -2152,9 +2152,9 @@
       "source_file": "providers/search/brave.py",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "search_brave_rationale_35",
       "community": 6,
-      "norm_label": "search via brave search api and return structured results.         uses the web"
+      "norm_label": "search via brave search api and return structured results.         uses the web",
+      "id": "search_brave_rationale_35"
     },
     {
       "label": "duckduckgo.py",
@@ -2162,9 +2162,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_duckduckgo",
       "community": 6,
-      "norm_label": "duckduckgo.py"
+      "norm_label": "duckduckgo.py",
+      "id": "search_duckduckgo"
     },
     {
       "label": "_run_ddg_search()",
@@ -2172,9 +2172,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "search_duckduckgo_run_ddg_search",
       "community": 6,
-      "norm_label": "_run_ddg_search()"
+      "norm_label": "_run_ddg_search()",
+      "id": "search_duckduckgo_run_ddg_search"
     },
     {
       "label": "DuckDuckGoProvider",
@@ -2182,9 +2182,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L71",
       "_origin": "ast",
-      "id": "search_duckduckgo_duckduckgoprovider",
       "community": 6,
-      "norm_label": "duckduckgoprovider"
+      "norm_label": "duckduckgoprovider",
+      "id": "search_duckduckgo_duckduckgoprovider"
     },
     {
       "label": ".provider_name()",
@@ -2192,9 +2192,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "search_duckduckgo_duckduckgoprovider_provider_name",
       "community": 6,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "search_duckduckgo_duckduckgoprovider_provider_name"
     },
     {
       "label": ".search()",
@@ -2202,9 +2202,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "search_duckduckgo_duckduckgoprovider_search",
       "community": 6,
-      "norm_label": ".search()"
+      "norm_label": ".search()",
+      "id": "search_duckduckgo_duckduckgoprovider_search"
     },
     {
       "label": "providers/search/duckduckgo.py  DuckDuckGo search provider. No API key. No accou",
@@ -2212,9 +2212,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_duckduckgo_rationale_1",
       "community": 6,
-      "norm_label": "providers/search/duckduckgo.py  duckduckgo search provider. no api key. no accou"
+      "norm_label": "providers/search/duckduckgo.py  duckduckgo search provider. no api key. no accou",
+      "id": "search_duckduckgo_rationale_1"
     },
     {
       "label": "Synchronous DDG search with retry, exponential backoff, and jitter.     Fresh DD",
@@ -2222,9 +2222,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "search_duckduckgo_rationale_33",
       "community": 6,
-      "norm_label": "synchronous ddg search with retry, exponential backoff, and jitter.     fresh dd"
+      "norm_label": "synchronous ddg search with retry, exponential backoff, and jitter.     fresh dd",
+      "id": "search_duckduckgo_rationale_33"
     },
     {
       "label": "Search DuckDuckGo. Runs synchronous DDGS in a thread.",
@@ -2232,9 +2232,9 @@
       "source_file": "providers/search/duckduckgo.py",
       "source_location": "L78",
       "_origin": "ast",
-      "id": "search_duckduckgo_rationale_78",
       "community": 6,
-      "norm_label": "search duckduckgo. runs synchronous ddgs in a thread."
+      "norm_label": "search duckduckgo. runs synchronous ddgs in a thread.",
+      "id": "search_duckduckgo_rationale_78"
     },
     {
       "label": "tavily.py",
@@ -2242,9 +2242,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_tavily",
       "community": 6,
-      "norm_label": "tavily.py"
+      "norm_label": "tavily.py",
+      "id": "search_tavily"
     },
     {
       "label": "TavilyProvider",
@@ -2252,9 +2252,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "search_tavily_tavilyprovider",
       "community": 6,
-      "norm_label": "tavilyprovider"
+      "norm_label": "tavilyprovider",
+      "id": "search_tavily_tavilyprovider"
     },
     {
       "label": ".__init__()",
@@ -2262,9 +2262,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "search_tavily_tavilyprovider_init",
       "community": 6,
-      "norm_label": ".__init__()"
+      "norm_label": ".__init__()",
+      "id": "search_tavily_tavilyprovider_init"
     },
     {
       "label": ".provider_name()",
@@ -2272,9 +2272,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "search_tavily_tavilyprovider_provider_name",
       "community": 6,
-      "norm_label": ".provider_name()"
+      "norm_label": ".provider_name()",
+      "id": "search_tavily_tavilyprovider_provider_name"
     },
     {
       "label": ".search()",
@@ -2282,9 +2282,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "search_tavily_tavilyprovider_search",
       "community": 6,
-      "norm_label": ".search()"
+      "norm_label": ".search()",
+      "id": "search_tavily_tavilyprovider_search"
     },
     {
       "label": "providers/search/tavily.py  Tavily search provider. Built specifically for AI ag",
@@ -2292,9 +2292,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "search_tavily_rationale_1",
       "community": 6,
-      "norm_label": "providers/search/tavily.py  tavily search provider. built specifically for ai ag"
+      "norm_label": "providers/search/tavily.py  tavily search provider. built specifically for ai ag",
+      "id": "search_tavily_rationale_1"
     },
     {
       "label": "Search via Tavily API.          search_depth=\"advanced\" returns richer content s",
@@ -2302,9 +2302,9 @@
       "source_file": "providers/search/tavily.py",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "search_tavily_rationale_39",
       "community": 6,
-      "norm_label": "search via tavily api.          search_depth=\"advanced\" returns richer content s"
+      "norm_label": "search via tavily api.          search_depth=\"advanced\" returns richer content s",
+      "id": "search_tavily_rationale_39"
     },
     {
       "label": "README.md",
@@ -2312,9 +2312,9 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme",
       "community": 11,
-      "norm_label": "readme.md"
+      "norm_label": "readme.md",
+      "id": "readme"
     },
     {
       "label": "Narada",
@@ -2322,9 +2322,9 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_narada",
       "community": 11,
-      "norm_label": "narada"
+      "norm_label": "narada",
+      "id": "readme_narada"
     },
     {
       "label": "Using the App",
@@ -2332,9 +2332,9 @@
       "source_file": "README.md",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "readme_using_the_app",
       "community": 11,
-      "norm_label": "using the app"
+      "norm_label": "using the app",
+      "id": "readme_using_the_app"
     },
     {
       "label": "What you need",
@@ -2342,9 +2342,9 @@
       "source_file": "README.md",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "readme_what_you_need",
       "community": 11,
-      "norm_label": "what you need"
+      "norm_label": "what you need",
+      "id": "readme_what_you_need"
     },
     {
       "label": "Step 1 - Get your API keys",
@@ -2352,9 +2352,9 @@
       "source_file": "README.md",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "readme_step_1_get_your_api_keys",
       "community": 11,
-      "norm_label": "step 1 - get your api keys"
+      "norm_label": "step 1 - get your api keys",
+      "id": "readme_step_1_get_your_api_keys"
     },
     {
       "label": "Step 2 - Configure the sidebar",
@@ -2362,9 +2362,9 @@
       "source_file": "README.md",
       "source_location": "L49",
       "_origin": "ast",
-      "id": "readme_step_2_configure_the_sidebar",
       "community": 11,
-      "norm_label": "step 2 - configure the sidebar"
+      "norm_label": "step 2 - configure the sidebar",
+      "id": "readme_step_2_configure_the_sidebar"
     },
     {
       "label": "Step 3 - Run a query",
@@ -2372,9 +2372,9 @@
       "source_file": "README.md",
       "source_location": "L81",
       "_origin": "ast",
-      "id": "readme_step_3_run_a_query",
       "community": 11,
-      "norm_label": "step 3 - run a query"
+      "norm_label": "step 3 - run a query",
+      "id": "readme_step_3_run_a_query"
     },
     {
       "label": "Reading the results",
@@ -2382,9 +2382,9 @@
       "source_file": "README.md",
       "source_location": "L97",
       "_origin": "ast",
-      "id": "readme_reading_the_results",
       "community": 11,
-      "norm_label": "reading the results"
+      "norm_label": "reading the results",
+      "id": "readme_reading_the_results"
     },
     {
       "label": "Tips",
@@ -2392,9 +2392,9 @@
       "source_file": "README.md",
       "source_location": "L104",
       "_origin": "ast",
-      "id": "readme_tips",
       "community": 11,
-      "norm_label": "tips"
+      "norm_label": "tips",
+      "id": "readme_tips"
     },
     {
       "label": "Local vs Production Behaviour",
@@ -2402,9 +2402,9 @@
       "source_file": "README.md",
       "source_location": "L112",
       "_origin": "ast",
-      "id": "readme_local_vs_production_behaviour",
       "community": 11,
-      "norm_label": "local vs production behaviour"
+      "norm_label": "local vs production behaviour",
+      "id": "readme_local_vs_production_behaviour"
     },
     {
       "label": "Local dev mode",
@@ -2412,9 +2412,9 @@
       "source_file": "README.md",
       "source_location": "L116",
       "_origin": "ast",
-      "id": "readme_local_dev_mode",
       "community": 11,
-      "norm_label": "local dev mode"
+      "norm_label": "local dev mode",
+      "id": "readme_local_dev_mode"
     },
     {
       "label": "Production mode",
@@ -2422,9 +2422,9 @@
       "source_file": "README.md",
       "source_location": "L122",
       "_origin": "ast",
-      "id": "readme_production_mode",
       "community": 11,
-      "norm_label": "production mode"
+      "norm_label": "production mode",
+      "id": "readme_production_mode"
     },
     {
       "label": "Dev sim-prod toggle (local only)",
@@ -2432,9 +2432,9 @@
       "source_file": "README.md",
       "source_location": "L131",
       "_origin": "ast",
-      "id": "readme_dev_sim_prod_toggle_local_only",
       "community": 11,
-      "norm_label": "dev sim-prod toggle (local only)"
+      "norm_label": "dev sim-prod toggle (local only)",
+      "id": "readme_dev_sim_prod_toggle_local_only"
     },
     {
       "label": "Key Fallback Behaviour",
@@ -2442,9 +2442,9 @@
       "source_file": "README.md",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "readme_key_fallback_behaviour",
       "community": 11,
-      "norm_label": "key fallback behaviour"
+      "norm_label": "key fallback behaviour",
+      "id": "readme_key_fallback_behaviour"
     },
     {
       "label": "How It Works",
@@ -2452,9 +2452,9 @@
       "source_file": "README.md",
       "source_location": "L155",
       "_origin": "ast",
-      "id": "readme_how_it_works",
       "community": 11,
-      "norm_label": "how it works"
+      "norm_label": "how it works",
+      "id": "readme_how_it_works"
     },
     {
       "label": "Architecture",
@@ -2462,9 +2462,9 @@
       "source_file": "README.md",
       "source_location": "L179",
       "_origin": "ast",
-      "id": "readme_architecture",
       "community": 11,
-      "norm_label": "architecture"
+      "norm_label": "architecture",
+      "id": "readme_architecture"
     },
     {
       "label": "Provider Pattern",
@@ -2472,9 +2472,9 @@
       "source_file": "README.md",
       "source_location": "L181",
       "_origin": "ast",
-      "id": "readme_provider_pattern",
       "community": 11,
-      "norm_label": "provider pattern"
+      "norm_label": "provider pattern",
+      "id": "readme_provider_pattern"
     },
     {
       "label": "Per-Step LLM Configuration",
@@ -2482,9 +2482,9 @@
       "source_file": "README.md",
       "source_location": "L196",
       "_origin": "ast",
-      "id": "readme_per_step_llm_configuration",
       "community": 11,
-      "norm_label": "per-step llm configuration"
+      "norm_label": "per-step llm configuration",
+      "id": "readme_per_step_llm_configuration"
     },
     {
       "label": "API Key Security",
@@ -2492,9 +2492,9 @@
       "source_file": "README.md",
       "source_location": "L210",
       "_origin": "ast",
-      "id": "readme_api_key_security",
       "community": 11,
-      "norm_label": "api key security"
+      "norm_label": "api key security",
+      "id": "readme_api_key_security"
     },
     {
       "label": "Error Handling",
@@ -2502,9 +2502,9 @@
       "source_file": "README.md",
       "source_location": "L220",
       "_origin": "ast",
-      "id": "readme_error_handling",
       "community": 11,
-      "norm_label": "error handling"
+      "norm_label": "error handling",
+      "id": "readme_error_handling"
     },
     {
       "label": "Project Structure",
@@ -2512,9 +2512,9 @@
       "source_file": "README.md",
       "source_location": "L233",
       "_origin": "ast",
-      "id": "readme_project_structure",
       "community": 11,
-      "norm_label": "project structure"
+      "norm_label": "project structure",
+      "id": "readme_project_structure"
     },
     {
       "label": "Setup",
@@ -2522,9 +2522,9 @@
       "source_file": "README.md",
       "source_location": "L279",
       "_origin": "ast",
-      "id": "readme_setup",
       "community": 11,
-      "norm_label": "setup"
+      "norm_label": "setup",
+      "id": "readme_setup"
     },
     {
       "label": "Prerequisites",
@@ -2532,9 +2532,9 @@
       "source_file": "README.md",
       "source_location": "L281",
       "_origin": "ast",
-      "id": "readme_prerequisites",
       "community": 11,
-      "norm_label": "prerequisites"
+      "norm_label": "prerequisites",
+      "id": "readme_prerequisites"
     },
     {
       "label": "1. Create the Conda environment",
@@ -2542,9 +2542,9 @@
       "source_file": "README.md",
       "source_location": "L288",
       "_origin": "ast",
-      "id": "readme_1_create_the_conda_environment",
       "community": 11,
-      "norm_label": "1. create the conda environment"
+      "norm_label": "1. create the conda environment",
+      "id": "readme_1_create_the_conda_environment"
     },
     {
       "label": "2. Configure environment variables",
@@ -2552,9 +2552,9 @@
       "source_file": "README.md",
       "source_location": "L295",
       "_origin": "ast",
-      "id": "readme_2_configure_environment_variables",
       "community": 11,
-      "norm_label": "2. configure environment variables"
+      "norm_label": "2. configure environment variables",
+      "id": "readme_2_configure_environment_variables"
     },
     {
       "label": "3. Pull Ollama models (only if using Ollama)",
@@ -2562,9 +2562,9 @@
       "source_file": "README.md",
       "source_location": "L303",
       "_origin": "ast",
-      "id": "readme_3_pull_ollama_models_only_if_using_ollama",
       "community": 11,
-      "norm_label": "3. pull ollama models (only if using ollama)"
+      "norm_label": "3. pull ollama models (only if using ollama)",
+      "id": "readme_3_pull_ollama_models_only_if_using_ollama"
     },
     {
       "label": "4. Start the server",
@@ -2572,9 +2572,9 @@
       "source_file": "README.md",
       "source_location": "L310",
       "_origin": "ast",
-      "id": "readme_4_start_the_server",
       "community": 11,
-      "norm_label": "4. start the server"
+      "norm_label": "4. start the server",
+      "id": "readme_4_start_the_server"
     },
     {
       "label": "5. Start the frontend (separate terminal)",
@@ -2582,9 +2582,9 @@
       "source_file": "README.md",
       "source_location": "L316",
       "_origin": "ast",
-      "id": "readme_5_start_the_frontend_separate_terminal",
       "community": 11,
-      "norm_label": "5. start the frontend (separate terminal)"
+      "norm_label": "5. start the frontend (separate terminal)",
+      "id": "readme_5_start_the_frontend_separate_terminal"
     },
     {
       "label": "6. Open Swagger docs",
@@ -2592,9 +2592,9 @@
       "source_file": "README.md",
       "source_location": "L325",
       "_origin": "ast",
-      "id": "readme_6_open_swagger_docs",
       "community": 11,
-      "norm_label": "6. open swagger docs"
+      "norm_label": "6. open swagger docs",
+      "id": "readme_6_open_swagger_docs"
     },
     {
       "label": "Environment Variables",
@@ -2602,9 +2602,9 @@
       "source_file": "README.md",
       "source_location": "L333",
       "_origin": "ast",
-      "id": "readme_environment_variables",
       "community": 11,
-      "norm_label": "environment variables"
+      "norm_label": "environment variables",
+      "id": "readme_environment_variables"
     },
     {
       "label": "API Reference",
@@ -2612,9 +2612,9 @@
       "source_file": "README.md",
       "source_location": "L383",
       "_origin": "ast",
-      "id": "readme_api_reference",
       "community": 11,
-      "norm_label": "api reference"
+      "norm_label": "api reference",
+      "id": "readme_api_reference"
     },
     {
       "label": "POST /api/search",
@@ -2622,9 +2622,9 @@
       "source_file": "README.md",
       "source_location": "L387",
       "_origin": "ast",
-      "id": "readme_post_api_search",
       "community": 11,
-      "norm_label": "post /api/search"
+      "norm_label": "post /api/search",
+      "id": "readme_post_api_search"
     },
     {
       "label": "DELETE /api/cache",
@@ -2632,9 +2632,9 @@
       "source_file": "README.md",
       "source_location": "L442",
       "_origin": "ast",
-      "id": "readme_delete_api_cache",
       "community": 11,
-      "norm_label": "delete /api/cache"
+      "norm_label": "delete /api/cache",
+      "id": "readme_delete_api_cache"
     },
     {
       "label": "GET /api/providers",
@@ -2642,9 +2642,9 @@
       "source_file": "README.md",
       "source_location": "L446",
       "_origin": "ast",
-      "id": "readme_get_api_providers",
       "community": 11,
-      "norm_label": "get /api/providers"
+      "norm_label": "get /api/providers",
+      "id": "readme_get_api_providers"
     },
     {
       "label": "GET /api/server-config",
@@ -2652,9 +2652,9 @@
       "source_file": "README.md",
       "source_location": "L450",
       "_origin": "ast",
-      "id": "readme_get_api_server_config",
       "community": 11,
-      "norm_label": "get /api/server-config"
+      "norm_label": "get /api/server-config",
+      "id": "readme_get_api_server_config"
     },
     {
       "label": "GET /health",
@@ -2662,9 +2662,9 @@
       "source_file": "README.md",
       "source_location": "L458",
       "_origin": "ast",
-      "id": "readme_get_health",
       "community": 11,
-      "norm_label": "get /health"
+      "norm_label": "get /health",
+      "id": "readme_get_health"
     },
     {
       "label": "Deployment on Render (Free)",
@@ -2672,9 +2672,9 @@
       "source_file": "README.md",
       "source_location": "L464",
       "_origin": "ast",
-      "id": "readme_deployment_on_render_free",
       "community": 11,
-      "norm_label": "deployment on render (free)"
+      "norm_label": "deployment on render (free)",
+      "id": "readme_deployment_on_render_free"
     },
     {
       "label": "Prerequisites",
@@ -2682,9 +2682,9 @@
       "source_file": "README.md",
       "source_location": "L466",
       "_origin": "ast",
-      "id": "readme_prerequisites_466",
       "community": 11,
-      "norm_label": "prerequisites"
+      "norm_label": "prerequisites",
+      "id": "readme_prerequisites_466"
     },
     {
       "label": "Steps",
@@ -2692,9 +2692,9 @@
       "source_file": "README.md",
       "source_location": "L473",
       "_origin": "ast",
-      "id": "readme_steps",
       "community": 11,
-      "norm_label": "steps"
+      "norm_label": "steps",
+      "id": "readme_steps"
     },
     {
       "label": "Auto-deploy",
@@ -2702,9 +2702,9 @@
       "source_file": "README.md",
       "source_location": "L511",
       "_origin": "ast",
-      "id": "readme_auto_deploy",
       "community": 11,
-      "norm_label": "auto-deploy"
+      "norm_label": "auto-deploy",
+      "id": "readme_auto_deploy"
     },
     {
       "label": "Design Decisions",
@@ -2712,9 +2712,9 @@
       "source_file": "README.md",
       "source_location": "L517",
       "_origin": "ast",
-      "id": "readme_design_decisions",
       "community": 11,
-      "norm_label": "design decisions"
+      "norm_label": "design decisions",
+      "id": "readme_design_decisions"
     },
     {
       "label": "Known Limitations",
@@ -2722,9 +2722,9 @@
       "source_file": "README.md",
       "source_location": "L541",
       "_origin": "ast",
-      "id": "readme_known_limitations",
       "community": 11,
-      "norm_label": "known limitations"
+      "norm_label": "known limitations",
+      "id": "readme_known_limitations"
     },
     {
       "label": "Adding a New Provider",
@@ -2732,9 +2732,9 @@
       "source_file": "README.md",
       "source_location": "L555",
       "_origin": "ast",
-      "id": "readme_adding_a_new_provider",
       "community": 11,
-      "norm_label": "adding a new provider"
+      "norm_label": "adding a new provider",
+      "id": "readme_adding_a_new_provider"
     },
     {
       "label": "LLM provider",
@@ -2742,9 +2742,9 @@
       "source_file": "README.md",
       "source_location": "L557",
       "_origin": "ast",
-      "id": "readme_llm_provider",
       "community": 11,
-      "norm_label": "llm provider"
+      "norm_label": "llm provider",
+      "id": "readme_llm_provider"
     },
     {
       "label": "Search provider",
@@ -2752,9 +2752,9 @@
       "source_file": "README.md",
       "source_location": "L569",
       "_origin": "ast",
-      "id": "readme_search_provider",
       "community": 11,
-      "norm_label": "search provider"
+      "norm_label": "search provider",
+      "id": "readme_search_provider"
     },
     {
       "label": "Changelog",
@@ -2762,9 +2762,9 @@
       "source_file": "README.md",
       "source_location": "L578",
       "_origin": "ast",
-      "id": "readme_changelog",
       "community": 11,
-      "norm_label": "changelog"
+      "norm_label": "changelog",
+      "id": "readme_changelog"
     },
     {
       "label": "challenge.md",
@@ -2772,9 +2772,9 @@
       "source_file": "challenge.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "challenge",
       "community": 24,
-      "norm_label": "challenge.md"
+      "norm_label": "challenge.md",
+      "id": "challenge"
     },
     {
       "label": "Agentic Search Challenge",
@@ -2782,9 +2782,9 @@
       "source_file": "challenge.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "challenge_agentic_search_challenge",
       "community": 24,
-      "norm_label": "agentic search challenge"
+      "norm_label": "agentic search challenge",
+      "id": "challenge_agentic_search_challenge"
     },
     {
       "label": "Minimum Requirements",
@@ -2792,9 +2792,9 @@
       "source_file": "challenge.md",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "challenge_minimum_requirements",
       "community": 24,
-      "norm_label": "minimum requirements"
+      "norm_label": "minimum requirements",
+      "id": "challenge_minimum_requirements"
     },
     {
       "label": "Guidelines",
@@ -2802,9 +2802,9 @@
       "source_file": "challenge.md",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "challenge_guidelines",
       "community": 24,
-      "norm_label": "guidelines"
+      "norm_label": "guidelines",
+      "id": "challenge_guidelines"
     },
     {
       "label": "How we'll evaluate",
@@ -2812,9 +2812,9 @@
       "source_file": "challenge.md",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "challenge_how_we_ll_evaluate",
       "community": 24,
-      "norm_label": "how we'll evaluate"
+      "norm_label": "how we'll evaluate",
+      "id": "challenge_how_we_ll_evaluate"
     },
     {
       "label": "Submission",
@@ -2822,9 +2822,9 @@
       "source_file": "challenge.md",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "challenge_submission",
       "community": 24,
-      "norm_label": "submission"
+      "norm_label": "submission",
+      "id": "challenge_submission"
     },
     {
       "label": "Sidebar",
@@ -2877,19 +2877,6 @@
       "community": 21,
       "norm_label": "vite.config.js (dev proxy /api -> :8000)",
       "id": "frontend_viteconfig_proxy"
-    },
-    {
-      "label": "build-frontend.yaml (GitHub Actions CI)",
-      "file_type": "code",
-      "source_file": ".github/workflows/build-frontend.yaml",
-      "source_location": "1-44",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 22,
-      "norm_label": "build-frontend.yaml (github actions ci)",
-      "id": "workflows_buildfrontend_ci"
     },
     {
       "label": "challenge.md (agentic search challenge spec)",
@@ -3046,9 +3033,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_aggregator_rationale_30",
-      "target": "agents_aggregator_normalize_name",
-      "confidence_score": 1.0
+      "target": "agents_aggregator_normalize_name"
     },
     {
       "relation": "calls",
@@ -3078,9 +3065,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_aggregator_rationale_45",
-      "target": "agents_aggregator_merge_attributes",
-      "confidence_score": 1.0
+      "target": "agents_aggregator_merge_attributes"
     },
     {
       "relation": "references",
@@ -3099,9 +3086,9 @@
       "source_file": "agents/aggregator.py",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_aggregator_rationale_69",
-      "target": "agents_aggregator_aggregate_entities",
-      "confidence_score": 1.0
+      "target": "agents_aggregator_aggregate_entities"
     },
     {
       "relation": "imports",
@@ -3290,9 +3277,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L105",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_rationale_105",
-      "target": "agents_extractor_is_valid_value",
-      "confidence_score": 1.0
+      "target": "agents_extractor_is_valid_value"
     },
     {
       "relation": "calls",
@@ -3321,9 +3308,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_rationale_116",
-      "target": "agents_extractor_parse_llm_json",
-      "confidence_score": 1.0
+      "target": "agents_extractor_parse_llm_json"
     },
     {
       "relation": "semantically_similar_to",
@@ -3374,9 +3361,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L146",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_rationale_146",
-      "target": "agents_extractor_build_entities",
-      "confidence_score": 1.0
+      "target": "agents_extractor_build_entities"
     },
     {
       "relation": "calls",
@@ -3439,9 +3426,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L189",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_rationale_189",
-      "target": "agents_extractor_extract_from_page",
-      "confidence_score": 1.0
+      "target": "agents_extractor_extract_from_page"
     },
     {
       "relation": "references",
@@ -3493,9 +3480,9 @@
       "source_file": "agents/extractor.py",
       "source_location": "L226",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_extractor_rationale_226",
-      "target": "agents_extractor_extract_entities",
-      "confidence_score": 1.0
+      "target": "agents_extractor_extract_entities"
     },
     {
       "relation": "imports",
@@ -3631,9 +3618,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_query_analyzer_rationale_93",
-      "target": "agents_query_analyzer_parse_llm_json",
-      "confidence_score": 1.0
+      "target": "agents_query_analyzer_parse_llm_json"
     },
     {
       "relation": "calls",
@@ -3652,9 +3639,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L108",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_query_analyzer_rationale_108",
-      "target": "agents_query_analyzer_validate_analysis",
-      "confidence_score": 1.0
+      "target": "agents_query_analyzer_validate_analysis"
     },
     {
       "relation": "references",
@@ -3695,9 +3682,9 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L133",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_query_analyzer_rationale_133",
-      "target": "agents_query_analyzer_analyze_query",
-      "confidence_score": 1.0
+      "target": "agents_query_analyzer_analyze_query"
     },
     {
       "relation": "imports",
@@ -3841,9 +3828,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_47",
-      "target": "agents_scraper_is_blocked",
-      "confidence_score": 1.0
+      "target": "agents_scraper_is_blocked"
     },
     {
       "relation": "calls",
@@ -3862,9 +3849,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_52",
-      "target": "agents_scraper_is_ssrf_risk",
-      "confidence_score": 1.0
+      "target": "agents_scraper_is_ssrf_risk"
     },
     {
       "relation": "calls",
@@ -3883,9 +3870,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_96",
-      "target": "agents_scraper_extract_text",
-      "confidence_score": 1.0
+      "target": "agents_scraper_extract_text"
     },
     {
       "relation": "calls",
@@ -3904,9 +3891,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_114",
-      "target": "agents_scraper_extract_title",
-      "confidence_score": 1.0
+      "target": "agents_scraper_extract_title"
     },
     {
       "relation": "calls",
@@ -3925,9 +3912,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L125",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_125",
-      "target": "agents_scraper_scrape_one",
-      "confidence_score": 1.0
+      "target": "agents_scraper_scrape_one"
     },
     {
       "relation": "references",
@@ -4010,9 +3997,9 @@
       "source_file": "agents/scraper.py",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_scraper_rationale_181",
-      "target": "agents_scraper_scrape_pages",
-      "confidence_score": 1.0
+      "target": "agents_scraper_scrape_pages"
     },
     {
       "relation": "references",
@@ -4170,9 +4157,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_validator_rationale_61",
-      "target": "agents_validator_parse_valid_names",
-      "confidence_score": 1.0
+      "target": "agents_validator_parse_valid_names"
     },
     {
       "relation": "calls",
@@ -4202,9 +4189,9 @@
       "source_file": "agents/validator.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "agents_validator_rationale_85",
-      "target": "agents_validator_validate_entities",
-      "confidence_score": 1.0
+      "target": "agents_validator_validate_entities"
     },
     {
       "relation": "references",
@@ -5735,9 +5722,9 @@
       "source_file": "core/cache.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_cache_rationale_48",
-      "target": "core_cache_get_cached",
-      "confidence_score": 1.0
+      "target": "core_cache_get_cached"
     },
     {
       "relation": "imports",
@@ -5767,9 +5754,9 @@
       "source_file": "core/cache.py",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_cache_rationale_75",
-      "target": "core_cache_set_cached",
-      "confidence_score": 1.0
+      "target": "core_cache_set_cached"
     },
     {
       "relation": "references",
@@ -5810,9 +5797,9 @@
       "source_file": "core/cache.py",
       "source_location": "L91",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_cache_rationale_91",
-      "target": "core_cache_clear_cache",
-      "confidence_score": 1.0
+      "target": "core_cache_clear_cache"
     },
     {
       "relation": "contains",
@@ -6156,9 +6143,9 @@
       "source_file": "core/models.py",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_models_rationale_35",
-      "target": "core_models_cellvalue",
-      "confidence_score": 1.0
+      "target": "core_models_cellvalue"
     },
     {
       "relation": "references",
@@ -6176,9 +6163,9 @@
       "source_file": "core/models.py",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_models_rationale_45",
-      "target": "core_models_entity",
-      "confidence_score": 1.0
+      "target": "core_models_entity"
     },
     {
       "relation": "rationale_for",
@@ -6186,9 +6173,9 @@
       "source_file": "core/models.py",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_models_rationale_58",
-      "target": "core_models_queryanalysis",
-      "confidence_score": 1.0
+      "target": "core_models_queryanalysis"
     },
     {
       "relation": "references",
@@ -6206,9 +6193,9 @@
       "source_file": "core/models.py",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_models_rationale_73",
-      "target": "core_models_pipelinemetadata",
-      "confidence_score": 1.0
+      "target": "core_models_pipelinemetadata"
     },
     {
       "relation": "imports",
@@ -6238,9 +6225,9 @@
       "source_file": "core/models.py",
       "source_location": "L82",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_models_rationale_82",
-      "target": "core_models_pipelineresult",
-      "confidence_score": 1.0
+      "target": "core_models_pipelineresult"
     },
     {
       "relation": "imports",
@@ -6377,9 +6364,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_pipeline_rationale_46",
-      "target": "core_pipeline_run_searches",
-      "confidence_score": 1.0
+      "target": "core_pipeline_run_searches"
     },
     {
       "relation": "calls",
@@ -6420,9 +6407,9 @@
       "source_file": "core/pipeline.py",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "core_pipeline_rationale_67",
-      "target": "core_pipeline_run_pipeline",
-      "confidence_score": 1.0
+      "target": "core_pipeline_run_pipeline"
     },
     {
       "relation": "references",
@@ -8391,9 +8378,9 @@
       "source_file": "README.md",
       "source_location": "L466",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "readme_deployment_on_render_free",
-      "target": "readme_prerequisites_466",
-      "confidence_score": 1.0
+      "target": "readme_prerequisites_466"
     },
     {
       "relation": "contains",
@@ -8604,5 +8591,5 @@
       "weight": 1.0
     }
   ],
-  "built_at_commit": "3df614001f12bbfe29ecbc6810b99e219fee5e1b"
+  "built_at_commit": "213a10bf5b2860a5b90c5aea476c38e91cb8a447"
 }
