@@ -25,6 +25,7 @@ class ScrapedPage(BaseModel):
     url: str
     title: str
     content: str  # HTML stripped — plain text only
+    json_ld: list[dict] = []  # parsed schema.org blocks, if any — see core/json_ld.py
 
 
 # --------------------------------------------------------------------------- #
@@ -35,10 +36,16 @@ class CellValue(BaseModel):
     """
     A single attribute value for an entity.
     source_url makes every cell in the output table traceable
-    back to the exact page it came from.
+    back to the exact page it came from. source_quote is the exact
+    sentence/phrase the value was pulled from — lets a user verify
+    the claim without re-reading the whole page. confidence is the
+    model's own certainty in [0, 1], used by the aggregator to break
+    ties when two sources disagree on the same attribute.
     """
     value: str
     source_url: str
+    source_quote: str = ""
+    confidence: float = 0.5
 
 
 class Entity(BaseModel):
@@ -76,6 +83,8 @@ class PipelineMetadata(BaseModel):
     llm_model: str
     pages_scraped: int
     duration_seconds: float
+    search_iterations: int = 1  # 1 = no agentic re-search needed, >1 = gap-filling rounds ran
+    gap_ratio: float = 0.0      # fraction of empty cells in the final table
 
 
 class PipelineResult(BaseModel):
@@ -88,3 +97,4 @@ class PipelineResult(BaseModel):
     attributes: list[str]     # ordered column names
     entities: list[Entity]    # rows in the output table
     metadata: PipelineMetadata
+    errors: list[str] = []    # non-fatal issues encountered during the run (partial results still returned)

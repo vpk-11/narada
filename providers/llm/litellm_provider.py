@@ -9,8 +9,10 @@ Supports any provider LiteLLM supports via a model string like:
   ollama/qwen3:4b
 """
 
+import asyncio
 import logging
 
+import litellm
 from litellm import acompletion
 
 from providers.base import BaseLLMProvider
@@ -19,6 +21,20 @@ logger = logging.getLogger(__name__)
 
 _TIMEOUT_SECONDS = 120
 _OLLAMA_PREFIXES = ("ollama", "ollama_chat")
+
+# Transient failures worth a retry — rate limits, timeouts, and provider-side
+# outages. Auth/bad-request errors are not retried; retrying a 401 five times
+# just delays the same failure.
+_RETRYABLE_ERRORS = (
+    litellm.RateLimitError,
+    litellm.Timeout,
+    litellm.APIConnectionError,
+    litellm.ServiceUnavailableError,
+    litellm.InternalServerError,
+)
+_MAX_RETRIES = 3
+_BACKOFF_BASE_SECONDS = 1.0
+_BACKOFF_CAP_SECONDS = 10.0
 
 
 class LiteLLMProvider(BaseLLMProvider):
@@ -60,16 +76,30 @@ class LiteLLMProvider(BaseLLMProvider):
         if "num_ctx" in kwargs and prefix in _OLLAMA_PREFIXES:
             extra["num_ctx"] = kwargs["num_ctx"]
 
-        try:
-            response = await acompletion(
-                model=self._model,
-                messages=messages,
-                temperature=0.1,
-                **extra,
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            logger.error(
-                f"[LiteLLM] Completion failed for '{self._model}': {type(e).__name__}"
-            )
-            raise
+        for attempt in range(1, _MAX_RETRIES + 1):
+            try:
+                response = await acompletion(
+                    model=self._model,
+                    messages=messages,
+                    temperature=0.1,
+                    **extra,
+                )
+                return response.choices[0].message.content
+            except _RETRYABLE_ERRORS as e:
+                if attempt >= _MAX_RETRIES:
+                    logger.error(
+                        f"[LiteLLM] Completion failed for '{self._model}' "
+                        f"after {_MAX_RETRIES} attempts: {type(e).__name__}"
+                    )
+                    raise
+                wait = min(_BACKOFF_BASE_SECONDS * (2 ** (attempt - 1)), _BACKOFF_CAP_SECONDS)
+                logger.warning(
+                    f"[LiteLLM] {type(e).__name__} on attempt {attempt}/{_MAX_RETRIES} "
+                    f"for '{self._model}' — retrying in {wait:.1f}s"
+                )
+                await asyncio.sleep(wait)
+            except Exception as e:
+                logger.error(
+                    f"[LiteLLM] Completion failed for '{self._model}': {type(e).__name__}"
+                )
+                raise

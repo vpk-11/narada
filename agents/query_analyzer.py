@@ -13,10 +13,9 @@ is searched or scraped:
 This is what makes the output schema dynamic and the search targeted.
 """
 
-import json
 import logging
-import re
 
+from core.llm_json import parse_llm_json
 from core.models import QueryAnalysis
 from providers.base import BaseLLMProvider
 
@@ -90,18 +89,15 @@ Query: "open source database tools"
 
 
 def _parse_llm_json(raw: str) -> dict:
-    """
-    Parse JSON from LLM output.
-    Strips Qwen3 <think> blocks and markdown fences before parsing.
-    """
-    cleaned = re.sub(r"<think>.*?</think>", "", raw, flags=re.DOTALL).strip()
-    cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip().rstrip("```").strip()
-
+    """Parse JSON from LLM output."""
     try:
-        return json.loads(cleaned)
-    except json.JSONDecodeError as e:
-        logger.error(f"[QueryAnalyzer] JSON parse failed: {e}\nRaw:\n{raw[:500]}")
-        raise ValueError(f"LLM returned invalid JSON: {e}") from e
+        parsed = parse_llm_json(raw)
+    except ValueError as e:
+        logger.error(f"[QueryAnalyzer] JSON parse failed: {e}")
+        raise
+    if not isinstance(parsed, dict):
+        raise ValueError("LLM response was valid JSON but not an object")
+    return parsed
 
 
 def _validate_analysis(data: dict, original_query: str) -> QueryAnalysis:
