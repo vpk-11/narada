@@ -46,6 +46,15 @@ class Settings(BaseSettings):
     max_pages_to_scrape: int = 6
     scrape_timeout_seconds: int = 10
 
+    # ── Agentic gap-filling ───────────────────────────────────────────────── #
+    # After validation, if more than this fraction of cells are empty, the
+    # pipeline generates follow-up search queries and runs another round.
+    agent_gap_threshold: float = 0.5
+    # Hard cap on gap-filling rounds. 1 = no re-search, the loop only ever
+    # runs the first pass. Each additional round costs a query-gen LLM call
+    # plus a full search+scrape+extract round.
+    agent_max_iterations: int = 2
+
     # Allow the frontend to use server-side keys as a fallback when the user
     # has not provided their own keys (production only).
     fallback_allow: bool = False
