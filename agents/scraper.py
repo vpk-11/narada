@@ -69,10 +69,10 @@ def _is_ssrf_risk(url: str) -> bool:
     except Exception:
         return True
 
-# Max characters of page content to pass to the LLM.
-# Most useful content is in the first ~6000 chars.
-# Raising this improves recall but increases LLM latency and cost.
-_MAX_CONTENT_CHARS = 6000
+# Max characters of page content kept per page. The extractor chunks this
+# into multiple LLM calls (see agents/extractor.py), so this cap just bounds
+# memory/cache size, not extraction recall the way it used to.
+_MAX_CONTENT_CHARS = 10000
 
 # Tags that carry no useful content — strip before extracting text
 _NOISE_TAGS = [
