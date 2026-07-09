@@ -435,6 +435,7 @@ CACHE_ADMIN_KEY=
 SEARCH_RESULTS_PER_QUERY=8
 MAX_PAGES_TO_SCRAPE=6
 SCRAPE_TIMEOUT_SECONDS=10
+MAX_CONCURRENT_PIPELINE_RUNS=5   # server-wide cap on simultaneous pipeline runs
 
 # Agentic gap-filling - re-search when too many cells are empty after validation
 AGENT_GAP_THRESHOLD=0.5      # 0.0-1.0, fraction of empty cells that triggers a re-search round
