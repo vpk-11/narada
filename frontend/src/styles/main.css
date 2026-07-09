@@ -545,8 +545,41 @@ td:first-child { padding: 16px 16px; }
   margin-bottom: 8px;
 }
 
-.dc-val { font-size: 16px; color: var(--text); line-height: 1.65; margin-bottom: 10px; }
+.dc-val { font-size: 16px; color: var(--text); line-height: 1.65; margin-bottom: 6px; }
 .dc-nil { color: var(--text-3); font-style: italic; font-size: 14.5px; }
+
+.dc-quote {
+  font-size: 13px;
+  color: var(--text-3);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.dc-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dc-confidence {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+
+.dc-confidence-high { background: var(--green-bg); color: var(--green); border-color: #4caf7d25; }
+.dc-confidence-mid  { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-border); }
+.dc-confidence-low  { background: var(--red-bg); color: var(--red); border-color: #e05c5c25; }
 
 .source-chip {
   display: inline-flex;
@@ -1064,6 +1097,22 @@ td:first-child { padding: 16px 16px; }
 .error-ico { color: var(--red); flex-shrink: 0; margin-top: 2px; }
 .error-title { font-size: 15.5px; font-weight: 500; color: var(--red); margin-bottom: 4px; }
 .error-msg { font-size: 14.5px; color: var(--text-2); font-family: var(--mono); }
+
+/* ── Soft warning (partial result, non-blocking) ── */
+.soft-warning {
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r);
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.soft-warning-title { font-size: 13.5px; font-weight: 500; color: var(--accent); flex-shrink: 0; }
+.soft-warning-msg { font-size: 13px; color: var(--text-3); font-family: var(--mono); }
 
 /* ── Environment badge ── */
 .env-badge-row {
