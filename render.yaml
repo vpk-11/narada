@@ -16,40 +16,33 @@ services:
       - key: LOG_LEVEL
         value: WARNING
 
-      # ── Default providers ──────────────────────────────────────────────────
-      # These are the server-side fallbacks used when the frontend does not
-      # supply a key or provider selection. Users can override both from the
-      # sidebar without touching these values.
-      - key: LLM_PROVIDER
-        value: groq
+      # ── Default LLM — full LiteLLM model string (provider/model-name) ───────
+      # Server-side fallback used when the frontend does not supply its own
+      # model / key. Users can override from the sidebar without touching this.
+      - key: LLM_MODEL
+        value: "groq/openai/gpt-oss-20b"
       - key: SEARCH_PROVIDER
         value: tavily
 
       # ── Groq (recommended default - free tier) ─────────────────────────────
-      - key: GROQ_MODEL
-        value: "llama-3.3-70b-versatile"
       - key: GROQ_API_KEY
-        sync: false   # set in Render dashboard under Environment -> Secret Files
+        sync: false   # set in Render dashboard under Environment (NOT Secret Files -- that mounts a file, does not set this env var)
 
       # ── Tavily (recommended default - free tier) ───────────────────────────
       - key: TAVILY_API_KEY
-        sync: false   # set in Render dashboard under Environment -> Secret Files
+        sync: false   # set in Render dashboard under Environment (NOT Secret Files -- that mounts a file, does not set this env var)
 
       # ── OpenAI (optional fallback) ─────────────────────────────────────────
-      - key: OPENAI_MODEL
-        value: "gpt-4o-mini"
       - key: OPENAI_API_KEY
-        sync: false   # optional - only set if you want OpenAI as a backend fallback
+        sync: false   # optional - only set if you want OpenAI as a backend fallback. Set under Environment, not Secret Files.
 
       # ── Anthropic (optional fallback) ──────────────────────────────────────
-      - key: ANTHROPIC_MODEL
-        value: "claude-haiku-4-5-20251001"
       - key: ANTHROPIC_API_KEY
-        sync: false   # optional - only set if you want Anthropic as a backend fallback
+        sync: false   # optional - only set if you want Anthropic as a backend fallback. Set under Environment, not Secret Files.
 
       # ── Brave Search (optional fallback) ───────────────────────────────────
       - key: BRAVE_API_KEY
-        sync: false   # optional - only set if you want Brave as a backend fallback
+        sync: false   # optional - only set if you want Brave as a backend fallback. Set under Environment, not Secret Files.
 
       # ── Fallback ───────────────────────────────────────────────────────────
       # Set to "true" to let users run with the server's Groq + Tavily keys
