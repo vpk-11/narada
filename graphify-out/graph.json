@@ -348,7 +348,7 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L132",
       "_origin": "ast",
-      "community": 7,
+      "community": 3,
       "norm_label": "analyze_query()",
       "id": "agents_query_analyzer_analyze_query"
     },
@@ -388,7 +388,7 @@
       "source_file": "agents/query_analyzer.py",
       "source_location": "L133",
       "_origin": "ast",
-      "community": 7,
+      "community": 3,
       "norm_label": "analyze a user query and produce a structured research plan.      args:",
       "id": "agents_query_analyzer_rationale_133"
     },
@@ -850,7 +850,7 @@
       "source_file": "config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "config.py",
       "id": "config"
     },
@@ -890,7 +890,7 @@
       "source_file": "config.py",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "configure_logging()",
       "id": "config_configure_logging"
     },
@@ -900,7 +900,7 @@
       "source_file": "config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 3,
       "norm_label": "config.py  single source of truth for all narada settings. every value is read f",
       "id": "config_rationale_1"
     },
@@ -981,7 +981,7 @@
       "source_file": "core/cache.py",
       "source_location": "L90",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "clear_cache()",
       "id": "core_cache_clear_cache"
     },
@@ -1031,7 +1031,7 @@
       "source_file": "core/cache.py",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 3,
+      "community": 0,
       "norm_label": "delete all cache entries. returns number of files deleted.     called via the de",
       "id": "core_cache_rationale_91"
     },
@@ -1201,7 +1201,7 @@
       "source_file": "core/pipeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 3,
       "norm_label": "pipeline.py",
       "id": "core_pipeline"
     },
@@ -1231,7 +1231,7 @@
       "source_file": "core/pipeline.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 7,
+      "community": 3,
       "norm_label": "core/pipeline.py  the narada pipeline orchestrator.  each step uses its own conf",
       "id": "core_pipeline_rationale_1"
     },
@@ -2892,19 +2892,6 @@
       "id": "challenge_spec"
     },
     {
-      "label": "render.yaml (Render deployment config)",
-      "file_type": "document",
-      "source_file": "render.yaml",
-      "source_location": "1-68",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 10,
-      "norm_label": "render.yaml (render deployment config)",
-      "id": "render_yaml_deploy"
-    },
-    {
       "label": "index.html (Vite entrypoint, DM Sans/DM Mono fonts)",
       "file_type": "code",
       "source_file": "frontend/index.html",
@@ -2916,19 +2903,6 @@
       "community": 12,
       "norm_label": "index.html (vite entrypoint, dm sans/dm mono fonts)",
       "id": "frontend_indexhtml"
-    },
-    {
-      "label": "FALLBACK_ALLOW (server key sharing option)",
-      "file_type": "concept",
-      "source_file": "render.yaml",
-      "source_location": "57-59",
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 10,
-      "norm_label": "fallback_allow (server key sharing option)",
-      "id": "concept_fallback_allow"
     }
   ],
   "links": [
@@ -8481,16 +8455,6 @@
       "weight": 1.0,
       "source": "frontend_indexhtml",
       "target": "src_main_app_entry"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "render.yaml",
-      "source_location": "57-59",
-      "weight": 1.0,
-      "source": "concept_fallback_allow",
-      "target": "render_yaml_deploy"
     }
   ],
   "hyperedges": [
@@ -8591,5 +8555,5 @@
       "weight": 1.0
     }
   ],
-  "built_at_commit": "213a10bf5b2860a5b90c5aea476c38e91cb8a447"
+  "built_at_commit": "8c4be19a2227a707e60e1b485b13962a0f6d7ee2"
 }
