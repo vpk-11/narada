@@ -37,10 +37,15 @@ jobs:
         id: guard
         if: github.event_name == 'push'
         run: |
-          # A PR merge produces a merge commit with 2 parents.
-          # Skip it here — the pull_request: closed event handles major bumps.
+          # A PR merge produces a merge commit with 2 parents. A squash merge
+          # produces a single-parent commit whose message GitHub defaults to
+          # "<PR title> (#<number>)" — check both, since parent count alone
+          # misses squash merges. Rebase merges land as multiple individual
+          # single-parent commits with no such marker and are NOT caught here —
+          # known gap, not solved by this guard.
           PARENT_COUNT=$(git log -1 --format="%P" HEAD | wc -w)
-          if [ "$PARENT_COUNT" -gt "1" ]; then
+          COMMIT_MSG=$(git log -1 --format="%s" HEAD)
+          if [ "$PARENT_COUNT" -gt "1" ] || echo "$COMMIT_MSG" | grep -qE "\(#[0-9]+\)\$"; then
             echo "skip=true" >> $GITHUB_OUTPUT
             echo "Merge commit detected — skipping push bump, PR event will handle major bump."
             exit 0
