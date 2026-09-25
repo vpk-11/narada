@@ -1,0 +1,19 @@
+name: Build Frontend
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/src/**'
+      - 'frontend/index.html'
+      - 'frontend/package.json'
+      - 'frontend/vite.config.js'
+
+permissions:
+  contents: write
+
+jobs:
+  dist:
+    uses: vpk-11/workflows/.github/workflows/frontend-dist.yml@v1
+    with:
+      dir: 'frontend'
