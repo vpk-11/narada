@@ -20,4 +20,4 @@ jobs:
       level: ${{ inputs.level || 'auto' }}
       generated: '^(graphify-out/|frontend/dist/)'
       nonsource: '(\.md$|^tests/|^bug_evidences/|^\.github/|^LICENSE$)'
-      stamp: 'pyproject.toml'
+      stamp: 'pyproject.toml frontend/package.json'
