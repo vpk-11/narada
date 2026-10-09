@@ -71,7 +71,7 @@ Recommended model names:
 
 | Provider | Model |
 |---|---|
-| Groq | `llama-3.3-70b-versatile` |
+| Groq | `openai/gpt-oss-20b` |
 | OpenAI | `gpt-4o-mini` |
 | Anthropic | `claude-haiku-4-5-20251001` |
 | Ollama | whatever model you have pulled (e.g. `qwen3:4b`) |
@@ -436,11 +436,11 @@ python -m eval.run_eval
 
 ## Environment Variables
 
-Model strings use LiteLLM format: `provider/model-name` (e.g. `groq/llama-3.3-70b-versatile`).
+Model strings use LiteLLM format: `provider/model-name` (e.g. `groq/openai/gpt-oss-20b`).
 
 ```bash
 # LLM - full LiteLLM model string
-LLM_MODEL=groq/llama-3.3-70b-versatile
+LLM_MODEL=groq/openai/gpt-oss-20b
 
 # Search provider
 SEARCH_PROVIDER=tavily        # tavily | brave | duckduckgo
@@ -488,7 +488,7 @@ LOG_LEVEL=INFO
 ```
 
 LiteLLM model string examples:
-- `groq/llama-3.3-70b-versatile`
+- `groq/openai/gpt-oss-20b`
 - `openai/gpt-4o-mini`
 - `anthropic/claude-haiku-4-5-20251001`
 - `ollama/qwen3:4b`
@@ -520,9 +520,9 @@ x-tavily-api-key: tvly-...
 x-brave-api-key: BSA_...
 x-ollama-base-url: http://localhost:11434
 x-search-provider: tavily
-x-query-analyzer-model: groq/llama-3.3-70b-versatile
-x-extractor-model: groq/llama-3.3-70b-versatile
-x-validator-model: groq/llama-3.3-70b-versatile
+x-query-analyzer-model: groq/openai/gpt-oss-20b
+x-extractor-model: groq/openai/gpt-oss-20b
+x-validator-model: groq/openai/gpt-oss-20b
 ```
 
 Model headers carry a full LiteLLM model string (`provider/model-name`). Omitting a header means the server uses its configured `.env` default for that setting.
@@ -556,7 +556,7 @@ Model headers carry a full LiteLLM model string (`provider/model-name`). Omittin
     "metadata": {
       "search_provider": "tavily",
       "llm_provider": "groq",
-      "llm_model": "llama-3.3-70b-versatile",
+      "llm_model": "openai/gpt-oss-20b",
       "pages_scraped": 5,
       "duration_seconds": 13.6,
       "search_iterations": 1,

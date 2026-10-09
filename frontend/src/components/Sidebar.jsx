@@ -5,7 +5,7 @@ const IS_LOCAL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
 // LLM_PROVIDERS is derived inside the component based on effectiveLocal
 
 export const DEFAULT_MODELS = {
-  groq:      'llama-3.3-70b-versatile',
+  groq:      'openai/gpt-oss-20b',
   openai:    'gpt-4o-mini',
   anthropic: 'claude-haiku-4-5-20251001',
   ollama:    'qwen3:4b',

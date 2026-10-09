@@ -5,7 +5,7 @@ Single source of truth for all Narada settings.
 Every value is read from environment variables / .env file.
 
 LLM model strings use LiteLLM format: provider/model-name
-  groq/llama-3.3-70b-versatile
+  groq/openai/gpt-oss-20b
   openai/gpt-4o-mini
   anthropic/claude-haiku-4-5-20251001
   ollama/qwen3:4b

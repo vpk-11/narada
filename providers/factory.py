@@ -25,7 +25,7 @@ def _build_llm(model: str, settings: Settings) -> BaseLLMProvider:
     if not model:
         raise ValueError(
             "LLM model is not configured. Set LLM_MODEL in .env "
-            "(e.g. LLM_MODEL=groq/llama-3.3-70b-versatile)."
+            "(e.g. LLM_MODEL=groq/openai/gpt-oss-20b)."
         )
 
     from providers.llm.litellm_provider import LiteLLMProvider
