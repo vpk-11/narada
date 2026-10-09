@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Sidebar, { DEFAULT_CONFIG, DEFAULT_MODELS } from './components/Sidebar.jsx'
+import Sidebar, { DEFAULT_CONFIG } from './components/Sidebar.jsx'
 import ResultsTable from './components/ResultsTable.jsx'
 import { useSession } from './hooks/useSession.js'
 
@@ -185,9 +185,10 @@ export default function App() {
     setKeyError(null)
     const fallbackConfig = {
       ...config,
-      search_provider: 'tavily',
+      // no provider/model headers either: the server's LLM_MODEL and SEARCH_PROVIDER decide
+      search_provider: '',
       llm_mode: 'unified',
-      llm: { provider: 'groq', model: DEFAULT_MODELS.groq },
+      llm: {},
       // empty keys so buildHeaders sends no key headers — server supplies them
       groq_api_key: '', openai_api_key: '', anthropic_api_key: '',
       tavily_api_key: '', brave_api_key: '',
