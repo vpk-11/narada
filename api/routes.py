@@ -23,6 +23,7 @@ from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
+from api.free_tier import FreeTierQuota, client_ip
 from api.limiter import limiter
 from config import Settings, get_settings
 from core.cache import clear_cache
@@ -52,6 +53,14 @@ _H_SEARCH_PROVIDER = "x-search-provider"
 _H_QA_MODEL        = "x-query-analyzer-model"
 _H_EX_MODEL        = "x-extractor-model"
 _H_VA_MODEL        = "x-validator-model"
+
+
+quota = FreeTierQuota()
+
+# Credential header required for each LLM prefix / search provider. A request
+# missing one of these is served with the server's own key.
+_LLM_KEY_HEADER = {"groq": _H_GROQ_KEY, "openai": _H_OPENAI_KEY, "anthropic": _H_ANTHROPIC_KEY}
+_SEARCH_KEY_HEADER = {"tavily": _H_TAVILY_KEY, "brave": _H_BRAVE_KEY}
 
 
 # --------------------------------------------------------------------------- #
@@ -136,6 +145,36 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
     return base.model_copy(update=overrides)
 
 
+def _uses_server_keys(request: Request, settings: Settings) -> bool:
+    """True if any LLM step or the search provider will use a key the client did not send."""
+    needed = [
+        _LLM_KEY_HEADER.get((m or settings.llm_model).split("/")[0].lower())
+        for m in (settings.query_analyzer_model, settings.extraction_model, settings.validator_model)
+    ]
+    needed.append(_SEARCH_KEY_HEADER.get(settings.search_provider))
+    return any(h and not request.headers.get(h) for h in needed)
+
+
+def _enforce_free_tier(request: Request, settings: Settings) -> None:
+    """
+    In production, a request that would spend server keys needs fallback_allow
+    and a free-tier slot. Counts the slot. No-op in development, where .env
+    keys are the intended default.
+    """
+    if settings.environment != "production" or not _uses_server_keys(request, settings):
+        return
+    if not settings.fallback_allow:
+        raise HTTPException(
+            status_code=403,
+            detail="This server does not provide API keys. Add your own keys in the sidebar.",
+        )
+    quota.consume(
+        client_ip(request, settings.trusted_proxy_hops),
+        settings.free_tier_per_ip_daily,
+        settings.free_tier_global_daily,
+    )
+
+
 # --------------------------------------------------------------------------- #
 # Routes
 # --------------------------------------------------------------------------- #
@@ -154,6 +193,9 @@ def _validated_query(body: SearchRequest) -> str:
 
 def _to_http_error(e: Exception, query: str) -> HTTPException:
     """Map a pipeline exception to a user-facing HTTPException. Logs the error type only."""
+    if isinstance(e, HTTPException):
+        return e
+
     if isinstance(e, ValueError):
         # Config/validation errors (missing key, unknown provider) - safe to expose
         logger.warning(f"[Routes] Config error for '{query[:80]}': {type(e).__name__}")
@@ -234,6 +276,7 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
     try:
         settings = _build_settings_from_headers(request, get_settings())
         search_provider = get_search_provider(settings)
+        _enforce_free_tier(request, settings)
         result = await run_pipeline(
             query=query,
             settings=settings,
@@ -265,6 +308,7 @@ async def search_stream(request: Request, body: SearchRequest) -> StreamingRespo
     try:
         settings = _build_settings_from_headers(request, get_settings())
         search_provider = get_search_provider(settings)
+        _enforce_free_tier(request, settings)
     except Exception as e:
         raise _to_http_error(e, query)
 
@@ -304,18 +348,27 @@ async def search_stream(request: Request, body: SearchRequest) -> StreamingRespo
 
 class ServerConfig(BaseModel):
     fallback_allow: bool
+    free_searches_remaining: int
 
 
 @router.get("/server-config", response_model=ServerConfig)
-async def get_server_config() -> ServerConfig:
+async def get_server_config(request: Request) -> ServerConfig:
     """
-    Returns public server configuration flags for the frontend.
-    Currently exposes only fallback_allow — whether the server permits
-    the frontend to use the server's own Groq + Tavily keys as a last-resort
-    fallback when the user has not supplied their own keys.
+    Public flags for the frontend: whether the server lets keyless requests use
+    its own Groq + Tavily keys, and how many free searches this client has left
+    today (0 when the free tier is off).
     """
     settings = get_settings()
-    return ServerConfig(fallback_allow=settings.fallback_allow)
+    remaining = (
+        quota.remaining(
+            client_ip(request, settings.trusted_proxy_hops),
+            settings.free_tier_per_ip_daily,
+            settings.free_tier_global_daily,
+        )
+        if settings.fallback_allow
+        else 0
+    )
+    return ServerConfig(fallback_allow=settings.fallback_allow, free_searches_remaining=remaining)
 
 
 @router.delete("/cache", response_model=CacheClearResponse)

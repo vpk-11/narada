@@ -50,6 +50,12 @@ services:
       # Only exposes that the option exists — keys are never sent to the client.
       - key: FALLBACK_ALLOW
         value: "false"   # change to "true" in dashboard to enable
+      - key: FREE_TIER_PER_IP_DAILY
+        value: "2"
+      - key: FREE_TIER_GLOBAL_DAILY
+        value: "10"
+      - key: TRUSTED_PROXY_HOPS
+        value: "1"
 
       # ── Pipeline tuning ────────────────────────────────────────────────────
       - key: SEARCH_RESULTS_PER_QUERY

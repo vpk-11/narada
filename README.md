@@ -477,6 +477,11 @@ MAX_CONCURRENT_PIPELINE_RUNS=5   # server-wide cap on simultaneous pipeline runs
 AGENT_GAP_THRESHOLD=0.5      # 0.0-1.0, fraction of empty cells that triggers a re-search round
 AGENT_MAX_ITERATIONS=2       # hard cap on gap-fill rounds, 1 = disabled
 
+# Free tier (production + FALLBACK_ALLOW=true): searches that spend the server's own keys
+FREE_TIER_PER_IP_DAILY=2     # per client IP, per UTC day
+FREE_TIER_GLOBAL_DAILY=10    # server-wide, per UTC day (Tavily: ~3-6 credits per run)
+TRUSTED_PROXY_HOPS=1         # reverse proxies in front; client IP = X-Forwarded-For entry this far from the right
+
 # Eval harness (python -m eval.run_eval)
 EVAL_RUNS=3                  # runs per query per mode
 EVAL_ITERATIONS_ON=2         # AGENT_MAX_ITERATIONS for the loop-on mode
@@ -593,11 +598,13 @@ Returns the active provider and model for each pipeline step based on current se
 
 ### GET /api/server-config
 
-Returns public server flags. Currently exposes only `fallback_allow`.
+Returns public server flags: whether keyless requests may use the server's keys, and how many free searches the calling IP has left today (0 when the free tier is off).
 
 ```json
-{ "fallback_allow": false }
+{ "fallback_allow": true, "free_searches_remaining": 2 }
 ```
+
+When the per-IP or server-wide daily cap is hit, `POST /api/search` and `/api/search/stream` return 429 with a message that names which cap. In production with `FALLBACK_ALLOW=false`, a request that would use server keys returns 403.
 
 ### GET /health
 
@@ -704,7 +711,7 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 **Gap-fill adds latency on sparse queries.** A query that triggers the full 2-iteration gap-fill loop roughly doubles the search/scrape/extract work, and therefore the wall-clock time, of a query that doesn't. This is a deliberate completeness-vs-speed tradeoff, tunable via `AGENT_GAP_THRESHOLD` and `AGENT_MAX_ITERATIONS`.
 
-**No anonymous free tier yet.** The live demo currently requires the visitor's own API keys (or `FALLBACK_ALLOW` for a single request). A rate-limited free tier using server keys is scoped in `TODO.md` but not implemented.
+**Free tier is small and in-memory.** With `FALLBACK_ALLOW=true` in production, a visitor with no keys can run a few searches on the server's Groq and Tavily keys: `FREE_TIER_PER_IP_DAILY` per IP and `FREE_TIER_GLOBAL_DAILY` server-wide, per UTC day. Counts live in memory and reset on restart or redeploy. A request that supplies its own keys is never counted. Identity is IP only, so shared IPs share a bucket.
 
 ---
 

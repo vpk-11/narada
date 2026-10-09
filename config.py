@@ -66,6 +66,18 @@ class Settings(BaseSettings):
     eval_iterations_on: int = 2
     eval_iterations_off: int = 1
 
+    # Free tier: requests that spend the server's own keys. Enforced only when
+    # environment == "production" and fallback_allow is true. Sized against
+    # Tavily's 1,000 credits/month: one run costs roughly 3-6 credits (initial
+    # queries plus gap-fill rounds), so ~10 runs/day keeps a month under cap.
+    free_tier_per_ip_daily: int = 2
+    free_tier_global_daily: int = 10
+    # Number of reverse proxies in front of the app; the client IP is the
+    # X-Forwarded-For entry this many places from the right.
+    trusted_proxy_hops: int = 1
+
+    environment: str = "development"
+
     # Allow the frontend to use server-side keys as a fallback when the user
     # has not provided their own keys (production only).
     fallback_allow: bool = False
