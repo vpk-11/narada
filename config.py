@@ -60,6 +60,12 @@ class Settings(BaseSettings):
     # plus a full search+scrape+extract round.
     agent_max_iterations: int = 2
 
+    # Eval harness (eval/run_eval.py): runs per query, and the iteration caps
+    # compared as "loop on" vs "loop off".
+    eval_runs: int = 3
+    eval_iterations_on: int = 2
+    eval_iterations_off: int = 1
+
     # Allow the frontend to use server-side keys as a fallback when the user
     # has not provided their own keys (production only).
     fallback_allow: bool = False

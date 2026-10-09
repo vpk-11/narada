@@ -40,12 +40,15 @@ class CellValue(BaseModel):
     sentence/phrase the value was pulled from — lets a user verify
     the claim without re-reading the whole page. confidence is the
     model's own certainty in [0, 1], used by the aggregator to break
-    ties when two sources disagree on the same attribute.
+    ties when two sources disagree on the same attribute. verified is True
+    when source_quote was found in the scraped page at source_url (see
+    core/verification.py) or the cell came from the page's own JSON-LD.
     """
     value: str
     source_url: str
     source_quote: str = ""
     confidence: float = 0.5
+    verified: bool = False
 
 
 class Entity(BaseModel):
@@ -85,6 +88,7 @@ class PipelineMetadata(BaseModel):
     duration_seconds: float
     search_iterations: int = 1  # 1 = no agentic re-search needed, >1 = gap-filling rounds ran
     gap_ratio: float = 0.0      # fraction of empty cells in the final table
+    verified_rate: float = 0.0  # fraction of filled cells whose source_quote was found in the page
 
 
 class PipelineResult(BaseModel):

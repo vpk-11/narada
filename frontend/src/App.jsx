@@ -69,6 +69,27 @@ const STEPS = [
   'Validating results',
 ]
 
+// Index of the tracker step that starts after each completed pipeline step
+const NEXT_STEP = { analyze: 1, search: 2, scrape: 3, extract: 4, validate: 5 }
+
+// Yields parsed `data:` payloads from a text/event-stream response body
+async function* readEvents(res) {
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buf = ''
+  for (;;) {
+    const { done, value } = await reader.read()
+    if (done) return
+    buf += decoder.decode(value, { stream: true })
+    const frames = buf.split('\n\n')
+    buf = frames.pop()
+    for (const f of frames) {
+      const line = f.split('\n').find(l => l.startsWith('data: '))
+      if (line) yield JSON.parse(line.slice(6))
+    }
+  }
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -79,6 +100,7 @@ export default function App() {
   const [result, setResult]   = useState(null)
   const [error, setError]     = useState(null)
   const [meta, setMeta]       = useState(null)
+  const [partial, setPartial] = useState(null)
   const [showHelp, setShowHelp] = useState(false)
   // keyError: null | { missing: string[], fallbackAllow: bool, pendingQ, pendingRefresh }
   const [keyError, setKeyError] = useState(null)
@@ -89,22 +111,29 @@ export default function App() {
     setError(null)
     setResult(null)
     setMeta(null)
+    setPartial(null)
     setStepIdx(0)
-    const iv = setInterval(() => setStepIdx(i => Math.min(i + 1, STEPS.length - 1)), 3500)
     try {
-      const res = await fetch(`${API_BASE}/api/search`, {
+      const res = await fetch(`${API_BASE}/api/search/stream`, {
         method: 'POST',
         headers: buildHeaders(runConfig),
         body: JSON.stringify({ query: q, refresh }),
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`)
-      setResult(data.result)
-      setMeta(data.result.metadata)
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.detail || `HTTP ${res.status}`)
+      }
+      for await (const ev of readEvents(res)) {
+        if (ev.type === 'step') setStepIdx(NEXT_STEP[ev.step] ?? STEPS.length)
+        else if (ev.type === 'rows') setPartial(ev)
+        else if (ev.type === 'result') {
+          setResult(ev.result)
+          setMeta(ev.result.metadata)
+        } else if (ev.type === 'error') throw new Error(ev.detail)
+      }
     } catch (e) {
       setError(e.message || 'Unknown error')
     } finally {
-      clearInterval(iv)
       setLoading(false)
     }
   }
@@ -333,6 +362,7 @@ export default function App() {
                   </div>
                 ))}
               </div>
+              {partial && partial.entities.length > 0 && <ResultsTable result={partial} />}
             </div>
           )}
 

@@ -21,7 +21,7 @@ Named after the Hindu divine sage Narada: the first journalist, who traveled all
 
 Narada needs two things to run: an **LLM** (reads pages and extracts structured data) and a **search provider** (finds the relevant URLs). You bring your own keys. They are stored only in your browser tab and never sent to or stored on the server.
 
-**LLM providers:**
+**LLM providers:** any provider LiteLLM supports works via its model string (see [Adding a New Provider](#adding-a-new-provider)). These are examples with built-in key fields in the sidebar:
 
 | Provider | Notes | Sign up |
 |---|---|---|
@@ -154,14 +154,14 @@ The server has its own API keys configured in `.env` (or Render dashboard secret
 
 ## How It Works
 
-The pipeline runs 7 steps, plus a conditional gap-filling loop:
+The pipeline runs six steps, a conditional gap-filling loop, and a cache write:
 
 ```
 Query
   1. Query Analyzer    LLM determines entity type, dynamic column schema, targeted search queries
   2. Search            Runs 2-3 search queries, deduplicates URLs (auto-fallback to DuckDuckGo on provider failure)
   3. Scraper           Fetches and cleans all pages concurrently (async)
-  4. Extractor         LLM reads each page in chunks, pulls structured entity data (sequential)
+  4. Extractor         LLM reads each page in chunks, pulls structured entity data (sequential), then checks each cell's quote against the page
   5. Aggregator        Deduplicates entities (fuzzy name match), merges attributes by confidence
   6. Validator         LLM filters out noise entities that do not match the query
   7. Gap-fill (0-2x)   If too many cells are empty, generates follow-up searches and re-runs 2-4
@@ -172,7 +172,8 @@ Query
 - Schema is dynamic per query. "AI startups" gets different columns than "pizza places"
 - The pipeline checks its own output and re-searches to fill gaps, capped at a couple of rounds
 - Entities found across multiple sources get merged into one row, fuzzy-matched on name
-- Every cell value carries a `source_url`, `source_quote`, and `confidence` score - full traceability, not just a link
+- Every cell value carries a `source_url`, `source_quote`, and `confidence` score. The quote is checked against the scraped page text (normalized substring, then fuzzy match); cells whose quote is not found are flagged `verified: false` and shown as unverified in the UI
+- Progress streams to the browser as it happens (Server-Sent Events): per-step status and the aggregated rows before validation finishes
 - Post-extraction validation filters noise (investors, legacy companies, off-topic entities)
 - Per-step LLM configuration - each pipeline step can use a different model
 
@@ -320,7 +321,8 @@ narada/
 ├── environment.yml                Conda env for local dev
 │
 ├── .github/workflows/
-│   └── build-frontend.yml         Auto-builds frontend on push
+│   ├── build-frontend.yml         Auto-builds frontend on push
+│   └── version_bump.yml           Bumps the README version marker on merge to main
 │
 ├── core/
 │   ├── models.py                  All Pydantic data shapes
@@ -329,6 +331,7 @@ narada/
 │   ├── chunking.py                Paragraph/sentence-boundary chunking with overlap
 │   ├── llm_json.py                Shared JSON parsing + repair for LLM output
 │   ├── json_ld.py                 schema.org JSON-LD pre-extraction before LLM
+│   ├── verification.py            Checks each source_quote appears in its source page
 │   └── cache.py                   Disk cache (.cache/)
 │
 ├── providers/
@@ -344,9 +347,13 @@ narada/
 │   ├── aggregator.py              Step 5 - fuzzy match, confidence-based merge
 │   └── validator.py               Step 6
 │
-├── api/routes.py                  REST API (search, cache, providers, server-config)
+├── api/
+│   ├── routes.py                  REST API (search, search/stream, cache, providers, server-config)
+│   └── limiter.py                 slowapi rate limiter
 │
-├── tests/                         pytest - aggregator, chunking, extractor, validator, gap-fill
+├── eval/                          run_eval.py + queries.txt: loop on vs off comparison
+│
+├── tests/                         pytest - aggregator, chunking, extractor, json_ld, validator, gap-fill, verification, stream
 │
 └── frontend/
     └── src/
@@ -419,6 +426,12 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
+To compare the gap-fill loop on vs off over the queries in `eval/queries.txt` (calls real providers, uses your `.env` keys, 3 runs per query per mode by default):
+
+```bash
+python -m eval.run_eval
+```
+
 ---
 
 ## Environment Variables
@@ -463,6 +476,11 @@ MAX_CONCURRENT_PIPELINE_RUNS=5   # server-wide cap on simultaneous pipeline runs
 # Agentic gap-filling - re-search when too many cells are empty after validation
 AGENT_GAP_THRESHOLD=0.5      # 0.0-1.0, fraction of empty cells that triggers a re-search round
 AGENT_MAX_ITERATIONS=2       # hard cap on gap-fill rounds, 1 = disabled
+
+# Eval harness (python -m eval.run_eval)
+EVAL_RUNS=3                  # runs per query per mode
+EVAL_ITERATIONS_ON=2         # AGENT_MAX_ITERATIONS for the loop-on mode
+EVAL_ITERATIONS_OFF=1        # AGENT_MAX_ITERATIONS for the loop-off mode
 
 # Logging
 LOG_LEVEL=INFO
@@ -549,6 +567,21 @@ Model headers carry a full LiteLLM model string (`provider/model-name`). Omittin
 ```
 
 `search_iterations` is 1 unless the gap-filling loop ran (see [Agentic Gap-Filling](#agentic-gap-filling)). `errors` lists non-fatal issues encountered during the run (e.g. a search-provider fallback) — a run with errors can still return usable results.
+
+`metadata.verified_rate` is the fraction of filled cells whose `source_quote` was found in the page at `source_url`. Each cell also carries `verified` (bool).
+
+### POST /api/search/stream
+
+Same request and same pipeline as `POST /api/search`, returned as Server-Sent Events. Use `fetch` with a streamed body (not `EventSource`, which cannot POST or send the `x-` key headers).
+
+| Event | Payload |
+|---|---|
+| `step` | `{"type": "step", "step": "analyze" \| "search" \| "scrape" \| "extract" \| "validate" \| "gap_fill"}`, one per completed step |
+| `rows` | `{"type": "rows", "entity_type", "attributes", "entities"}`, aggregated rows after step 5 |
+| `result` | `{"type": "result", "result": {...}}`, identical to the `POST /api/search` body |
+| `error` | `{"type": "error", "detail": "..."}`, message only |
+
+A cache hit emits only `result`. Config errors found before the run starts (missing key, unknown provider) return a normal HTTP 400 instead of a stream.
 
 ### DELETE /api/cache
 

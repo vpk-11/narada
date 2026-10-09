@@ -121,6 +121,7 @@ def _build_entity(item: dict, url: str, valid_attributes: list[str]) -> Entity |
                     source_url=url,
                     source_quote=f"JSON-LD {field}: {value}",
                     confidence=1.0,
+                    verified=True,
                 )
 
     if not attributes:

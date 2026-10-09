@@ -581,6 +581,17 @@ td:first-child { padding: 16px 16px; }
 .dc-confidence-mid  { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-border); }
 .dc-confidence-low  { background: var(--red-bg); color: var(--red); border-color: #e05c5c25; }
 
+.dc-unverified {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  border: 1px solid #e05c5c25;
+  background: var(--red-bg);
+  color: var(--red);
+}
+.cell-unverified { color: var(--red); font-family: var(--mono); }
+
 .source-chip {
   display: inline-flex;
   align-items: center;

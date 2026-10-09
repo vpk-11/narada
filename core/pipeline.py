@@ -19,11 +19,17 @@ Pipeline steps:
        targeted follow-up searches and runs another search+scrape+extract
        round, capped at agent_max_iterations. See core/agentic_loop.py.
   8. Cache write
+
+An optional on_progress callback receives a dict per completed step
+({"type": "step", "step": name}) and the aggregated rows after step 6
+({"type": "rows", "entities": [...]}). core/ stays transport-agnostic: the
+API layer decides how to ship these (see api/routes.py /search/stream).
 """
 
 import asyncio
 import logging
 import time
+from collections.abc import Awaitable, Callable
 
 from agents.aggregator import aggregate_entities
 from agents.extractor import extract_entities
@@ -34,6 +40,7 @@ from config import Settings
 from core.agentic_loop import compute_gap_ratio, run_gap_filling_round
 from core.cache import get_cached, set_cached
 from core.models import PipelineMetadata, PipelineResult, SearchResult
+from core.verification import verified_rate
 from providers.base import BaseSearchProvider
 from providers.factory import (
     get_extraction_llm,
@@ -42,6 +49,13 @@ from providers.factory import (
 )
 
 logger = logging.getLogger(__name__)
+
+ProgressCallback = Callable[[dict], Awaitable[None]]
+
+
+async def _emit(on_progress: ProgressCallback | None, event: dict) -> None:
+    if on_progress is not None:
+        await on_progress(event)
 
 
 async def _run_searches(
@@ -110,6 +124,7 @@ async def run_pipeline(
     settings: Settings,
     search: BaseSearchProvider,
     use_cache: bool = True,
+    on_progress: ProgressCallback | None = None,
 ) -> PipelineResult:
     """
     Run the full Narada pipeline for a given query.
@@ -126,6 +141,7 @@ async def run_pipeline(
         settings: app settings
         search: search provider instance
         use_cache: check cache before running, write result after
+        on_progress: optional async callback fed step and row events
     """
     start = time.monotonic()
 
@@ -154,6 +170,7 @@ async def run_pipeline(
             search=search,
             use_cache=use_cache,
             start=start,
+            on_progress=on_progress,
             query_analyzer_llm=query_analyzer_llm,
             extraction_llm=extraction_llm,
             validator_llm=validator_llm,
@@ -166,6 +183,7 @@ async def _run_pipeline_uncached(
     search: BaseSearchProvider,
     use_cache: bool,
     start: float,
+    on_progress: ProgressCallback | None,
     query_analyzer_llm,
     extraction_llm,
     validator_llm,
@@ -181,6 +199,7 @@ async def _run_pipeline_uncached(
 
     # ── Step 2: Query analysis ───────────────────────────────────────────── #
     analysis = await analyze_query(query=query, llm=query_analyzer_llm)
+    await _emit(on_progress, {"type": "step", "step": "analyze"})
 
     # ── Step 3: Search ───────────────────────────────────────────────────── #
     search_results, run_errors = await _run_searches(
@@ -188,6 +207,7 @@ async def _run_pipeline_uncached(
         search_provider=search,
         n_results=settings.search_results_per_query,
     )
+    await _emit(on_progress, {"type": "step", "step": "search"})
 
     if not search_results:
         logger.warning(f"[Pipeline] No search results for '{query}'")
@@ -212,6 +232,7 @@ async def _run_pipeline_uncached(
         timeout=settings.scrape_timeout_seconds,
         max_pages=settings.max_pages_to_scrape,
     )
+    await _emit(on_progress, {"type": "step", "step": "scrape"})
 
     # ── Step 5: Extract ──────────────────────────────────────────────────── #
     raw_entities = await extract_entities(
@@ -219,9 +240,16 @@ async def _run_pipeline_uncached(
         analysis=analysis,
         llm=extraction_llm,
     )
+    await _emit(on_progress, {"type": "step", "step": "extract"})
 
     # ── Step 6: Aggregate ────────────────────────────────────────────────── #
     aggregated_entities = aggregate_entities(raw_entities)
+    await _emit(on_progress, {
+        "type": "rows",
+        "entity_type": analysis.entity_type,
+        "attributes": analysis.attributes,
+        "entities": [e.model_dump() for e in aggregated_entities],
+    })
 
     # ── Step 7: Validate ─────────────────────────────────────────────────── #
     final_entities = await validate_entities(
@@ -229,6 +257,7 @@ async def _run_pipeline_uncached(
         analysis=analysis,
         llm=validator_llm,
     )
+    await _emit(on_progress, {"type": "step", "step": "validate"})
 
     # ── Step 7.5: Agentic gap-fill ────────────────────────────────────────── #
     total_pages_scraped = len(pages)
@@ -254,6 +283,7 @@ async def _run_pipeline_uncached(
         )
         iterations += 1
         total_pages_scraped += new_pages_count
+        await _emit(on_progress, {"type": "step", "step": "gap_fill"})
 
         if new_pages_count == 0:
             logger.info("[Pipeline] Gap-fill round found no new pages — stopping")
@@ -281,6 +311,7 @@ async def _run_pipeline_uncached(
             duration_seconds=duration,
             search_iterations=iterations,
             gap_ratio=round(gap_ratio, 3),
+            verified_rate=round(verified_rate(final_entities), 3),
         ),
         errors=run_errors,
     )
