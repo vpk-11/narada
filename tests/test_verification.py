@@ -59,3 +59,8 @@ def test_verified_rate():
     verify_entities([a, b], [PAGE])
     assert verified_rate([a, b]) == 0.5
     assert verified_rate([]) == 0.0
+
+
+def test_overlong_quote_is_capped():
+    # Only the first 500 normalized chars of a quote are compared.
+    assert quote_in_text("word " * 1000, "word " * 300)

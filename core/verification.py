@@ -21,6 +21,9 @@ from core.models import Entity, ScrapedPage
 
 # Share of the quote that must appear as one contiguous block in the page.
 _FUZZY_MIN_COVERAGE = 0.9
+# The quote is LLM output shaped by untrusted page text; cap its length so the
+# fuzzy match cost stays bounded (cost grows with quote length x page length).
+_MAX_QUOTE_CHARS = 500
 
 
 def _normalize(text: str) -> str:
@@ -30,7 +33,7 @@ def _normalize(text: str) -> str:
 
 def quote_in_text(quote: str, text: str) -> bool:
     """True if quote appears in text (normalized substring, then fuzzy fallback)."""
-    q, t = _normalize(quote), _normalize(text)
+    q, t = _normalize(quote)[:_MAX_QUOTE_CHARS], _normalize(text)
     if not q:
         return False
     if q in t:
