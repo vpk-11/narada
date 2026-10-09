@@ -166,12 +166,17 @@ export default function App() {
 
     // Production: keys are missing and we're not local — ask the user
     let fallbackAllow = false
+    let freeRemaining = 0
     try {
       const res = await fetch(`${API_BASE}/api/server-config`)
-      if (res.ok) fallbackAllow = (await res.json()).fallback_allow
-    } catch { /* treat as false */ }
+      if (res.ok) {
+        const cfg = await res.json()
+        fallbackAllow = cfg.fallback_allow
+        freeRemaining = cfg.free_searches_remaining
+      }
+    } catch { /* treat as off */ }
 
-    setKeyError({ missing, fallbackAllow, pendingQ: q, pendingRefresh: refresh })
+    setKeyError({ missing, fallbackAllow, freeRemaining, pendingQ: q, pendingRefresh: refresh })
   }
 
   // ── use fallback (Groq + Tavily, server keys) ─────────────────────────────
@@ -229,8 +234,13 @@ export default function App() {
                     This server has Groq and Tavily keys configured. You can run this query
                     using those instead. The pipeline will use <strong>Groq (LLM)</strong> and{' '}
                     <strong>Tavily (Search)</strong> for this request only.
+                    {' '}
+                    {keyError.freeRemaining > 0
+                      ? `${keyError.freeRemaining} free search${keyError.freeRemaining === 1 ? '' : 'es'} left today.`
+                      : 'No free searches left today. Come back tomorrow or add your own keys.'}
                   </div>
-                  <button className="btn btn-primary" style={{ marginTop: 14 }} onClick={runWithFallback}>
+                  <button className="btn btn-primary" style={{ marginTop: 14 }}
+                    disabled={keyError.freeRemaining < 1} onClick={runWithFallback}>
                     Use Groq + Tavily (server keys)
                   </button>
                 </div>
