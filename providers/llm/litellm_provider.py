@@ -6,6 +6,7 @@ Supports any provider LiteLLM supports via a model string like:
   groq/openai/gpt-oss-20b
   openai/gpt-4o-mini
   anthropic/claude-haiku-4-5-20251001
+  gemini/gemini-2.5-flash-lite
   ollama/qwen3:4b
 """
 
@@ -36,7 +37,8 @@ _RETRYABLE_ERRORS = (
 _MAX_RETRIES = 4
 # Providers (Groq) say how long to wait on a token-rate-limit; honor it instead
 # of retrying inside the same window and burning the attempt.
-_RETRY_AFTER_RE = re.compile(r"try again in ([\d.]+)s")
+# Groq: "try again in 8.22s"; Gemini: "Please retry in 34.5s".
+_RETRY_AFTER_RE = re.compile(r"(?:try again|retry) in ([\d.]+)s")
 _MAX_RETRY_AFTER_SECONDS = 20.0
 # gpt-oss models spend most of their tokens reasoning; low effort cuts both
 # latency and the tokens-per-minute they consume on free tiers.

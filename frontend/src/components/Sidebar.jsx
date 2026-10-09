@@ -5,6 +5,7 @@ const IS_LOCAL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
 // LLM_PROVIDERS is derived inside the component based on effectiveLocal
 
 export const DEFAULT_MODELS = {
+  gemini:    'gemini-2.5-flash-lite',
   groq:      'openai/gpt-oss-20b',
   openai:    'gpt-4o-mini',
   anthropic: 'claude-haiku-4-5-20251001',
@@ -32,6 +33,7 @@ const STEPS = [
 ]
 
 export const DEFAULT_CONFIG = {
+  gemini_api_key: '',
   groq_api_key: '',
   openai_api_key: '',
   anthropic_api_key: '',
@@ -40,10 +42,10 @@ export const DEFAULT_CONFIG = {
   ollama_base_url: 'http://localhost:11434',
   search_provider: 'tavily',
   llm_mode: 'unified',
-  llm: { provider: 'groq', model: DEFAULT_MODELS.groq },
-  query_analyzer: { provider: 'groq', model: DEFAULT_MODELS.groq },
-  extractor:      { provider: 'groq', model: DEFAULT_MODELS.groq },
-  validator:      { provider: 'groq', model: DEFAULT_MODELS.groq },
+  llm: { provider: 'gemini', model: DEFAULT_MODELS.gemini },
+  query_analyzer: { provider: 'gemini', model: DEFAULT_MODELS.gemini },
+  extractor:      { provider: 'gemini', model: DEFAULT_MODELS.gemini },
+  validator:      { provider: 'gemini', model: DEFAULT_MODELS.gemini },
   use_cache: true,
   sim_prod: false,   // dev-only: simulate production behaviour locally
 }
@@ -81,8 +83,8 @@ export default function Sidebar() {
   // When sim_prod is on, behave as if we are in production
   const effectiveLocal = IS_LOCAL && !config.sim_prod
   const LLM_PROVIDERS = effectiveLocal
-    ? ['groq', 'openai', 'anthropic', 'ollama']
-    : ['groq', 'openai', 'anthropic']
+    ? ['gemini', 'groq', 'openai', 'anthropic', 'ollama']
+    : ['gemini', 'groq', 'openai', 'anthropic']
 
   return (
     <aside className="sidebar">
@@ -160,9 +162,14 @@ export default function Sidebar() {
         <div className="s-section">
           <div className="s-label">LLM API Keys</div>
           <div className="s-section-note">
-            The AI model that reads pages and extracts structured data. Groq is recommended - it is fast, free, and handles all three pipeline steps well.
+            The AI model that reads pages and extracts structured data. Gemini is recommended - its free tier has a far larger token budget than Groq's, so runs finish faster.
           </div>
           <div className="s-fallback-note">Leave any field empty to fall back to the server's configured key for that provider.</div>
+          <div className="field">
+            <label>Gemini</label>
+            <input type="password" placeholder="AIza..." value={config.gemini_api_key}
+              onChange={e => set('gemini_api_key', e.target.value)} />
+          </div>
           <div className="field">
             <label>Groq</label>
             <input type="password" placeholder="gsk_..." value={config.groq_api_key}

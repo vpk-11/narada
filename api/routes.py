@@ -13,14 +13,12 @@ Security model:
 - CSP headers prevent XSS from stealing keys out of sessionStorage.
 """
 
-import asyncio
-import json
 import logging
 import os
 
 import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from api.free_tier import FreeTierQuota, client_ip
@@ -45,6 +43,7 @@ router = APIRouter()
 _H_GROQ_KEY        = "x-groq-api-key"
 _H_OPENAI_KEY      = "x-openai-api-key"
 _H_ANTHROPIC_KEY   = "x-anthropic-api-key"
+_H_GEMINI_KEY      = "x-gemini-api-key"
 _H_TAVILY_KEY      = "x-tavily-api-key"
 _H_BRAVE_KEY       = "x-brave-api-key"
 _H_OLLAMA_URL      = "x-ollama-base-url"
@@ -117,6 +116,8 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
         overrides["openai_api_key"] = h[_H_OPENAI_KEY]
     if h.get(_H_ANTHROPIC_KEY):
         overrides["anthropic_api_key"] = h[_H_ANTHROPIC_KEY]
+    if h.get(_H_GEMINI_KEY):
+        overrides["gemini_api_key"] = h[_H_GEMINI_KEY]
     if h.get(_H_TAVILY_KEY):
         overrides["tavily_api_key"] = h[_H_TAVILY_KEY]
     if h.get(_H_BRAVE_KEY):
@@ -288,59 +289,6 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
         raise _to_http_error(e, query)
 
 
-def _sse(event: dict) -> str:
-    return f"event: {event['type']}\ndata: {json.dumps(event)}\n\n"
-
-
-@router.post("/search/stream")
-@limiter.limit(lambda: get_settings().search_rate_limit)
-async def search_stream(request: Request, body: SearchRequest) -> StreamingResponse:
-    """
-    Same pipeline as POST /search, streamed as Server-Sent Events.
-
-    Events: "step" (one per completed step), "rows" (aggregated entities after
-    step 6), then exactly one of "result" (same payload as POST /search) or
-    "error" (message only). Config errors found before the run starts return a
-    normal HTTP error instead of a stream.
-    """
-    query, settings, search_provider = _prepare(request, body)
-    use_cache = not body.refresh
-
-    queue: asyncio.Queue[dict | None] = asyncio.Queue()
-
-    async def on_progress(event: dict) -> None:
-        await queue.put(event)
-
-    async def run() -> None:
-        try:
-            result = await run_pipeline(
-                query=query,
-                settings=settings,
-                search=search_provider,
-                use_cache=use_cache,
-                on_progress=on_progress,
-            )
-            await queue.put({"type": "result", **SearchResponse(result=result).model_dump(mode="json")})
-        except Exception as e:
-            await queue.put({"type": "error", "detail": _to_http_error(e, query).detail})
-        finally:
-            await queue.put(None)
-
-    async def events():
-        task = asyncio.create_task(run())
-        try:
-            while (event := await queue.get()) is not None:
-                yield _sse(event)
-        finally:
-            task.cancel()
-
-    return StreamingResponse(
-        events(),
-        media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
-    )
-
-
 class ServerConfig(BaseModel):
     fallback_allow: bool
     free_searches_remaining: int
@@ -390,6 +338,6 @@ async def get_providers() -> ProvidersResponse:
         extractor=ProviderInfo(provider=extractor.provider_name, model=extractor.model_name),
         validator=ProviderInfo(provider=validator.provider_name, model=validator.model_name),
         search=search.provider_name,
-        available_llm_providers=["groq", "openai", "anthropic", "ollama"],
+        available_llm_providers=["groq", "openai", "anthropic", "gemini", "ollama"],
         available_search_providers=["tavily", "brave", "duckduckgo"],
     )

@@ -9,12 +9,12 @@ const IS_LOCAL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
 function isEffectiveLocal(config) { return IS_LOCAL && !config.sim_prod }
 
 const NEEDS_KEY = {
-  groq: true, openai: true, anthropic: true, ollama: false,
+  gemini: true, groq: true, openai: true, anthropic: true, ollama: false,
   tavily: true, brave: true, duckduckgo: false,
 }
 
 function getSidebarKey(config, provider) {
-  return { groq: config.groq_api_key, openai: config.openai_api_key,
+  return { gemini: config.gemini_api_key, groq: config.groq_api_key, openai: config.openai_api_key,
            anthropic: config.anthropic_api_key, tavily: config.tavily_api_key,
            brave: config.brave_api_key }[provider] || ''
 }
@@ -27,12 +27,13 @@ function getSelectedLlmProvider(config) {
   // In unified mode, one provider. In per-step, we check if any step is missing a key.
   // For the guard we only need to know if the primary provider has a key.
   return (config.llm_mode || 'unified') === 'unified'
-    ? (config.llm?.provider || 'groq')
-    : (config.query_analyzer?.provider || 'groq')   // use first step as representative
+    ? (config.llm?.provider || 'gemini')
+    : (config.query_analyzer?.provider || 'gemini')   // use first step as representative
 }
 
 function buildHeaders(config) {
   const h = { 'Content-Type': 'application/json' }
+  if (config.gemini_api_key)    h['x-gemini-api-key']    = config.gemini_api_key
   if (config.groq_api_key)      h['x-groq-api-key']      = config.groq_api_key
   if (config.openai_api_key)    h['x-openai-api-key']    = config.openai_api_key
   if (config.anthropic_api_key) h['x-anthropic-api-key'] = config.anthropic_api_key
@@ -69,27 +70,6 @@ const STEPS = [
   'Validating results',
 ]
 
-// Index of the tracker step that starts after each completed pipeline step
-const NEXT_STEP = { analyze: 1, search: 2, scrape: 3, extract: 4, validate: 5 }
-
-// Yields parsed `data:` payloads from a text/event-stream response body
-async function* readEvents(res) {
-  const reader = res.body.getReader()
-  const decoder = new TextDecoder()
-  let buf = ''
-  for (;;) {
-    const { done, value } = await reader.read()
-    if (done) return
-    buf += decoder.decode(value, { stream: true })
-    const frames = buf.split('\n\n')
-    buf = frames.pop()
-    for (const f of frames) {
-      const line = f.split('\n').find(l => l.startsWith('data: '))
-      if (line) yield JSON.parse(line.slice(6))
-    }
-  }
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -111,29 +91,23 @@ export default function App() {
     setResult(null)
     setMeta(null)
     setStepIdx(0)
+    // The pipeline is one request with no intermediate output, so the tracker is an
+    // estimate that advances on a timer, not a report of the real step.
+    const iv = setInterval(() => setStepIdx(i => Math.min(i + 1, STEPS.length - 1)), 3500)
     try {
-      const res = await fetch(`${API_BASE}/api/search/stream`, {
+      const res = await fetch(`${API_BASE}/api/search`, {
         method: 'POST',
         headers: buildHeaders(runConfig),
         body: JSON.stringify({ query: q, refresh }),
       })
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.detail || `HTTP ${res.status}`)
-      }
-      let finished = false
-      for await (const ev of readEvents(res)) {
-        if (ev.type === 'step') setStepIdx(NEXT_STEP[ev.step] ?? STEPS.length)
-        else if (ev.type === 'result') {
-          setResult(ev.result)
-          setMeta(ev.result.metadata)
-          finished = true
-        } else if (ev.type === 'error') throw new Error(ev.detail)
-      }
-      if (!finished) throw new Error('The connection to the server dropped before the search finished. Try again.')
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.detail || `HTTP ${res.status}`)
+      setResult(data.result)
+      setMeta(data.result.metadata)
     } catch (e) {
       setError(e.message || 'Unknown error')
     } finally {
+      clearInterval(iv)
       setLoading(false)
     }
   }
@@ -179,7 +153,7 @@ export default function App() {
     setKeyError({ missing, fallbackAllow, freeRemaining, pendingQ: q, pendingRefresh: refresh })
   }
 
-  // ── use fallback (Groq + Tavily, server keys) ─────────────────────────────
+  // ── use fallback (server keys) ─────────────────────────────
   function runWithFallback() {
     const { pendingQ, pendingRefresh } = keyError
     setKeyError(null)
@@ -190,7 +164,7 @@ export default function App() {
       llm_mode: 'unified',
       llm: {},
       // empty keys so buildHeaders sends no key headers — server supplies them
-      groq_api_key: '', openai_api_key: '', anthropic_api_key: '',
+      gemini_api_key: '', groq_api_key: '', openai_api_key: '', anthropic_api_key: '',
       tavily_api_key: '', brave_api_key: '',
     }
     execute(pendingQ, pendingRefresh, fallbackConfig)
@@ -232,9 +206,8 @@ export default function App() {
                 <div className="fallback-server-offer">
                   <div className="fallback-server-offer-title">Server fallback available</div>
                   <div className="fallback-server-offer-desc">
-                    This server has Groq and Tavily keys configured. You can run this query
-                    using those instead. The pipeline will use <strong>Groq (LLM)</strong> and{' '}
-                    <strong>Tavily (Search)</strong> for this request only.
+                    This server has its own LLM and search keys configured. You can run this query
+                    using those instead, for this request only.
                     {' '}
                     {keyError.freeRemaining >= 1000
                       ? ''
@@ -244,7 +217,7 @@ export default function App() {
                   </div>
                   <button className="btn btn-primary" style={{ marginTop: 14 }}
                     disabled={keyError.freeRemaining < 1} onClick={runWithFallback}>
-                    Use Groq + Tavily (server keys)
+                    Use the server's keys
                   </button>
                 </div>
               )}

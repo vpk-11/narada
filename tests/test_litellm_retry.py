@@ -10,3 +10,8 @@ def test_retry_after_parsed_from_groq_message():
 
 def test_no_hint_no_match():
     assert _RETRY_AFTER_RE.search("connection reset") is None
+
+
+def test_retry_after_parsed_from_gemini_message():
+    msg = "RESOURCE_EXHAUSTED: quota exceeded. Please retry in 34.5s."
+    assert float(_RETRY_AFTER_RE.search(msg).group(1)) == 34.5

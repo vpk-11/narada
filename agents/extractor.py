@@ -37,11 +37,11 @@ _MIN_ATTRIBUTES_TO_KEEP = 1
 
 # A page is split into chunks rather than truncated, so content past the old
 # 2500-char cutoff still reaches the model. Capped at 3 chunks per page to
-# bound LLM calls on long pages — most useful content is in the first ~9000
+# bound LLM calls on long pages — most useful content is in the first ~6000
 # chars of a cleaned article anyway.
 _CHUNK_MAX_CHARS = 3000
 _CHUNK_OVERLAP_CHARS = 300
-_MAX_CHUNKS_PER_PAGE = 3
+_MAX_CHUNKS_PER_PAGE = 2
 
 _INVALID_VALUES = {
     "none", "n/a", "na", "not available", "not found", "unknown",

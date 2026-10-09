@@ -40,6 +40,8 @@ def _build_llm(model: str, settings: Settings) -> BaseLLMProvider:
         api_key = settings.openai_api_key
     elif prefix == "anthropic":
         api_key = settings.anthropic_api_key
+    elif prefix == "gemini":
+        api_key = settings.gemini_api_key
     elif prefix in _OLLAMA_PREFIXES:
         api_base = settings.ollama_base_url
 

@@ -25,7 +25,8 @@ Narada needs two things to run: an **LLM** (reads pages and extracts structured 
 
 | Provider | Notes | Sign up |
 |---|---|---|
-| **Groq** | Recommended. Fast, free tier: 14,400 requests/day | [console.groq.com](https://console.groq.com) |
+| **Gemini** | Recommended. Free tier allows about 250,000 tokens/minute, enough for a full run in well under a minute of model time. | [aistudio.google.com](https://aistudio.google.com) |
+| **Groq** | Fast, but the free tier caps `gpt-oss-20b` at 8,000 tokens/minute, so a run is throttled and slow. | [console.groq.com](https://console.groq.com) |
 | **OpenAI** | GPT models. Paid. | [platform.openai.com](https://platform.openai.com) |
 | **Anthropic** | Claude models. Paid. | [console.anthropic.com](https://console.anthropic.com) |
 | **Ollama** | Run models locally. No API key needed. Local dev only. | [ollama.com](https://ollama.com) |
@@ -71,6 +72,7 @@ Recommended model names:
 
 | Provider | Model |
 |---|---|
+| Gemini | `gemini-2.5-flash-lite` |
 | Groq | `openai/gpt-oss-20b` |
 | OpenAI | `gpt-4o-mini` |
 | Anthropic | `claude-haiku-4-5-20251001` |
@@ -173,7 +175,6 @@ Query
 - The pipeline checks its own output and re-searches to fill gaps, capped at a couple of rounds
 - Entities found across multiple sources get merged into one row, fuzzy-matched on name
 - Every cell value carries a `source_url`, `source_quote`, and `confidence` score. The quote is checked against the scraped page text (normalized substring, then fuzzy match); cells whose quote is not found are flagged `verified: false` and shown as unverified in the UI
-- Progress streams to the browser as it happens (Server-Sent Events): per-step status and the aggregated rows before validation finishes
 - Post-extraction validation filters noise (investors, legacy companies, off-topic entities)
 - Per-step LLM configuration - each pipeline step can use a different model
 
@@ -348,12 +349,12 @@ narada/
 │   └── validator.py               Step 6
 │
 ├── api/
-│   ├── routes.py                  REST API (search, search/stream, cache, providers, server-config)
+│   ├── routes.py                  REST API (search, cache, providers, server-config)
 │   └── limiter.py                 slowapi rate limiter
 │
 ├── eval/                          run_eval.py + queries.txt: loop on vs off comparison
 │
-├── tests/                         pytest - aggregator, chunking, extractor, json_ld, validator, gap-fill, verification, stream
+├── tests/                         pytest - aggregator, chunking, extractor, json_ld, validator, gap-fill, verification, free tier, factory, retry
 │
 └── frontend/
     └── src/
@@ -440,7 +441,7 @@ Model strings use LiteLLM format: `provider/model-name` (e.g. `groq/openai/gpt-o
 
 ```bash
 # LLM - full LiteLLM model string
-LLM_MODEL=groq/openai/gpt-oss-20b
+LLM_MODEL=gemini/gemini-2.5-flash-lite
 
 # Search provider
 SEARCH_PROVIDER=tavily        # tavily | brave | duckduckgo
@@ -454,6 +455,7 @@ VALIDATOR_MODEL=
 OLLAMA_BASE_URL=http://localhost:11434
 
 # API Keys
+GEMINI_API_KEY=AIza...
 GROQ_API_KEY=gsk_...
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
@@ -469,7 +471,7 @@ CACHE_ADMIN_KEY=
 
 # Pipeline tuning
 SEARCH_RESULTS_PER_QUERY=8
-MAX_PAGES_TO_SCRAPE=6
+MAX_PAGES_TO_SCRAPE=4
 SCRAPE_TIMEOUT_SECONDS=10
 MAX_CONCURRENT_PIPELINE_RUNS=5   # server-wide cap on simultaneous pipeline runs
 
@@ -572,19 +574,6 @@ Model headers carry a full LiteLLM model string (`provider/model-name`). Omittin
 
 `metadata.verified_rate` is the fraction of filled cells whose `source_quote` was found in the page at `source_url`. Each cell also carries `verified` (bool).
 
-### POST /api/search/stream
-
-Same request and same pipeline as `POST /api/search`, returned as Server-Sent Events. Use `fetch` with a streamed body (not `EventSource`, which cannot POST or send the `x-` key headers).
-
-| Event | Payload |
-|---|---|
-| `step` | `{"type": "step", "step": "analyze" \| "search" \| "scrape" \| "extract" \| "validate" \| "gap_fill"}`, one per completed step |
-| `rows` | `{"type": "rows", "entity_type", "attributes", "entities"}`, aggregated rows after step 5 |
-| `result` | `{"type": "result", "result": {...}}`, identical to the `POST /api/search` body |
-| `error` | `{"type": "error", "detail": "..."}`, message only |
-
-A cache hit emits only `result`. Config errors found before the run starts (missing key, unknown provider) return a normal HTTP 400 instead of a stream.
-
 ### DELETE /api/cache
 
 Clear all cached pipeline results from disk.
@@ -601,7 +590,7 @@ Returns public server flags: whether keyless requests may use the server's keys,
 { "fallback_allow": true, "free_searches_remaining": 2 }
 ```
 
-When the per-IP or server-wide daily cap is hit, `POST /api/search` and `/api/search/stream` return 429 with a message that names which cap. In production with `FALLBACK_ALLOW=false`, a request that would use server keys returns 403.
+When the per-IP or server-wide daily cap is hit, `POST /api/search` returns 429 with a message that names which cap. In production with `FALLBACK_ALLOW=false`, a request that would use server keys returns 403.
 
 ### GET /health
 
@@ -637,7 +626,7 @@ Go to your service -> Environment tab:
 
 | Key | Required | Notes |
 |---|---|---|
-| `GROQ_API_KEY` | Yes | Server-side LLM key (default provider) |
+| `GEMINI_API_KEY` | Yes | Server-side LLM key for the default `gemini/...` model (use `GROQ_API_KEY` instead if `LLM_MODEL` is a `groq/...` model) |
 | `TAVILY_API_KEY` | Yes | Server-side search key (default provider) |
 | `OPENAI_API_KEY` | No | Optional fallback for users selecting OpenAI |
 | `ANTHROPIC_API_KEY` | No | Optional fallback for users selecting Anthropic |
@@ -719,7 +708,6 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 LiteLLM supports hundreds of providers out of the box. Most require no code changes - just use the correct model string in `LLM_MODEL`:
 
 ```bash
-LLM_MODEL=gemini/gemini-1.5-flash
 LLM_MODEL=mistral/mistral-large-latest
 LLM_MODEL=cohere/command-r
 ```

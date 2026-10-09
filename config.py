@@ -8,6 +8,7 @@ LLM model strings use LiteLLM format: provider/model-name
   groq/openai/gpt-oss-20b
   openai/gpt-4o-mini
   anthropic/claude-haiku-4-5-20251001
+  gemini/gemini-2.5-flash-lite
   ollama/qwen3:4b
 
 Per-step overrides follow the same format. Leave empty to use llm_model for all steps.
@@ -38,12 +39,13 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
     openai_api_key: str = ""
     anthropic_api_key: str = ""
+    gemini_api_key: str = ""
     brave_api_key: str = ""
     tavily_api_key: str = ""
 
     # ── Pipeline tuning ───────────────────────────────────────────────────── #
     search_results_per_query: int = 8
-    max_pages_to_scrape: int = 6
+    max_pages_to_scrape: int = 4
     scrape_timeout_seconds: int = 10
     # Hard cap on pipeline runs executing at once, server-wide. Protects the
     # server's own configured keys from an unthrottled pile of concurrent

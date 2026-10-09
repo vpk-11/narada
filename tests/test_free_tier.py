@@ -76,11 +76,6 @@ def test_keyless_request_uses_then_exhausts_free_tier(client):
     assert r.status_code == 429 and "free searches" in r.json()["detail"]
 
 
-def test_stream_route_shares_the_same_quota(client):
-    assert client.post("/api/search/stream", json=BODY).status_code == 200
-    assert client.post("/api/search/stream", json=BODY).status_code == 429
-
-
 def test_own_keys_bypass_quota(client):
     headers = {"x-groq-api-key": "g", "x-tavily-api-key": "t"}
     for _ in range(3):
