@@ -48,7 +48,7 @@ function Detail({ entity, attributes, cols }) {
                         {cell.source_quote && <div className="dc-quote">"{cell.source_quote}"</div>}
                         <div className="dc-footer">
                           <SourceChip url={cell.source_url} />
-                          {cell.verified === false && (
+                          {!cell.verified && (
                             <span className="dc-unverified" title="Quote not found in the source page">unverified</span>
                           )}
                           <Confidence value={cell.confidence} />
@@ -114,7 +114,7 @@ export default function ResultsTable({ result }) {
                         {cell
                           ? <span className="cell-val" title={cell.value}>
                               {cell.value}
-                              {cell.verified === false && <span className="cell-unverified" title="Quote not found in the source page"> ?</span>}
+                              {!cell.verified && <span className="cell-unverified" title="Quote not found in the source page"> ?</span>}
                             </span>
                           : <span className="cell-nil">—</span>
                         }

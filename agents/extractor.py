@@ -20,6 +20,7 @@ Key design decisions:
 - Accepts optional extraction_llm for multi-model setups.
 """
 
+import asyncio
 import logging
 
 from core.chunking import chunk_text
@@ -292,7 +293,8 @@ async def _extract_from_page(
     for chunk in chunks:
         entities.extend(await _extract_from_chunk(chunk, page.url, analysis, llm))
 
-    verify_entities(entities, [page])
+    # CPU-bound fuzzy matching: keep it off the event loop so streams and other requests stay live.
+    await asyncio.to_thread(verify_entities, entities, [page])
 
     logger.info(
         f"[Extractor] {page.url[:70]} -> {len(entities)} entities "

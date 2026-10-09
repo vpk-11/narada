@@ -1,8 +1,8 @@
 """
 eval/run_eval.py
 
-Runs every query in eval/queries.txt EVAL_RUNS times with the gap-fill loop on
-(AGENT_MAX_ITERATIONS=EVAL_ITERATIONS_ON) and off (=EVAL_ITERATIONS_OFF), cache
+Runs every query in eval/queries.txt RUNS times with the gap-fill loop on
+(AGENT_MAX_ITERATIONS=2) and off (=1, no re-search), cache
 off, and prints per-mode means of verified-cell rate, completeness (1 - gap_ratio)
 and latency. Model, search provider and keys come from .env, held constant.
 
@@ -18,6 +18,8 @@ from core.pipeline import run_pipeline
 from providers.factory import get_search_provider
 
 QUERIES_FILE = Path(__file__).parent / "queries.txt"
+RUNS = 3
+ITERATIONS = {"loop on": 2, "loop off": 1}
 
 
 async def run_mode(queries: list[str], max_iterations: int, runs: int) -> dict[str, float]:
@@ -46,12 +48,9 @@ async def run_mode(queries: list[str], max_iterations: int, runs: int) -> dict[s
 async def main() -> None:
     settings = get_settings()
     queries = [l.strip() for l in QUERIES_FILE.read_text().splitlines() if l.strip()]
-    results = {
-        "loop on": await run_mode(queries, settings.eval_iterations_on, settings.eval_runs),
-        "loop off": await run_mode(queries, settings.eval_iterations_off, settings.eval_runs),
-    }
+    results = {mode: await run_mode(queries, n, RUNS) for mode, n in ITERATIONS.items()}
     print(f"\nmodel={settings.llm_model} search={settings.search_provider} "
-          f"queries={len(queries)} runs={settings.eval_runs}")
+          f"queries={len(queries)} runs={RUNS}")
     print(f"{'mode':<10}{'verified':>10}{'complete':>10}{'latency_s':>11}{'failed':>8}")
     for mode, r in results.items():
         print(f"{mode:<10}{r['verified_rate']:>10.3f}{r['completeness']:>10.3f}"

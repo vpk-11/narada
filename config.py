@@ -60,12 +60,6 @@ class Settings(BaseSettings):
     # plus a full search+scrape+extract round.
     agent_max_iterations: int = 2
 
-    # Eval harness (eval/run_eval.py): runs per query, and the iteration caps
-    # compared as "loop on" vs "loop off".
-    eval_runs: int = 3
-    eval_iterations_on: int = 2
-    eval_iterations_off: int = 1
-
     # Free tier: requests that spend the server's own keys. Enforced only when
     # environment == "production" and fallback_allow is true. Sized against
     # Tavily's 1,000 credits/month: one run costs roughly 3-6 credits (initial
