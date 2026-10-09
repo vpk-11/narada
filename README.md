@@ -1,7 +1,7 @@
 # Narada
 
-<!-- version: v2.10.0 -->
-![Version](https://img.shields.io/badge/version-v2.10.0-blue)
+<!-- version: v2.11.0 -->
+![Version](https://img.shields.io/badge/version-v2.11.0-blue)
 
 You type a research question. Narada searches the web, reads the relevant pages, and hands you back a structured table with every cell linked to the exact URL it came from.
 
@@ -736,6 +736,7 @@ If the new provider needs its own API key field in `config.py`, add it there and
 ---
 
 ## Changelog
+- **v2.11.0** (2026-10-09): minor bump
 - **v2.10.0** (2026-10-09): minor bump
 - **v2.9.0** (2026-10-09): minor bump
 - **v2.8.0** (2026-10-09): minor bump
