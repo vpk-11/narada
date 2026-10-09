@@ -26,6 +26,10 @@ from slowapi.errors import RateLimitExceeded
 
 from api.limiter import limiter
 from api.routes import router
+# Import LiteLLM at startup, not on the first request: the import takes ~45 s on
+# Render's free CPU and would block the event loop, failing health checks and
+# getting the instance killed mid-request.
+import providers.llm.litellm_provider  # noqa: F401, E402
 from config import configure_logging, get_settings
 
 settings = get_settings()

@@ -51,9 +51,9 @@ services:
       - key: FALLBACK_ALLOW
         value: "false"   # change to "true" in dashboard to enable
       - key: FREE_TIER_PER_IP_DAILY
-        value: "2"
+        value: "0"   # 0 = unlimited
       - key: FREE_TIER_GLOBAL_DAILY
-        value: "10"
+        value: "0"   # 0 = unlimited
       - key: TRUSTED_PROXY_HOPS
         value: "1"
 

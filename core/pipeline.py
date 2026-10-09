@@ -192,9 +192,9 @@ async def _run_pipeline_uncached(
     logger.info(f"[Pipeline] Starting fresh run for '{query}'")
     logger.info(
         f"[Pipeline] Providers — "
-        f"analyzer: {query_analyzer_llm.provider_name}/{query_analyzer_llm.model_name} | "
-        f"extractor: {extraction_llm.provider_name}/{extraction_llm.model_name} | "
-        f"validator: {validator_llm.provider_name}/{validator_llm.model_name}"
+        f"analyzer: {query_analyzer_llm.model_name} | "
+        f"extractor: {extraction_llm.model_name} | "
+        f"validator: {validator_llm.model_name}"
     )
 
     # ── Step 2: Query analysis ───────────────────────────────────────────── #

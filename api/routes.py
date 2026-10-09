@@ -265,7 +265,7 @@ def _to_http_error(e: Exception, query: str) -> HTTPException:
 
 
 @router.post("/search", response_model=SearchResponse)
-@limiter.limit("10/minute")
+@limiter.limit(lambda: get_settings().search_rate_limit)
 async def search(request: Request, body: SearchRequest) -> SearchResponse:
     """
     Run the Narada pipeline for a query.
@@ -293,7 +293,7 @@ def _sse(event: dict) -> str:
 
 
 @router.post("/search/stream")
-@limiter.limit("10/minute")
+@limiter.limit(lambda: get_settings().search_rate_limit)
 async def search_stream(request: Request, body: SearchRequest) -> StreamingResponse:
     """
     Same pipeline as POST /search, streamed as Server-Sent Events.

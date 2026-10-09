@@ -59,7 +59,7 @@ function LogoMark() {
 }
 
 export default function Sidebar() {
-  const [config, setConfig] = useSession('narada_config', DEFAULT_CONFIG)
+  const [config, setConfig] = useSession('narada_config_v2', DEFAULT_CONFIG)
 
   function set(field, value) {
     setConfig(c => ({ ...c, [field]: value }))

@@ -30,6 +30,9 @@ def client_ip(request: Request) -> str:
     return get_remote_address(request)
 
 
+_UNLIMITED = 10**9  # a cap of 0 in Settings means no cap
+
+
 def _today() -> str:
     return datetime.now(timezone.utc).date().isoformat()
 
@@ -50,16 +53,16 @@ class FreeTierQuota:
         return max(
             0,
             min(
-                settings.free_tier_per_ip_daily - self._per_ip.get(ip, 0),
-                settings.free_tier_global_daily - self._total,
+                (settings.free_tier_per_ip_daily or _UNLIMITED) - self._per_ip.get(ip, 0),
+                (settings.free_tier_global_daily or _UNLIMITED) - self._total,
             ),
         )
 
     def consume(self, ip: str, settings: Settings) -> None:
         """Count one free search or raise 429 with a message naming which cap was hit."""
         self._roll()
-        per_ip = settings.free_tier_per_ip_daily
-        if self._total >= settings.free_tier_global_daily:
+        per_ip = settings.free_tier_per_ip_daily or _UNLIMITED
+        if self._total >= (settings.free_tier_global_daily or _UNLIMITED):
             raise HTTPException(
                 status_code=429,
                 detail=(

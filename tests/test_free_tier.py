@@ -116,3 +116,10 @@ def test_client_ip_uses_trusted_hop_not_spoofable_left_entry(client):
     h2 = {"x-forwarded-for": "2.2.2.2, 9.9.9.9"}
     assert client.post("/api/search", json=BODY, headers=h1).status_code == 200
     assert client.post("/api/search", json=BODY, headers=h2).status_code == 429
+
+
+def test_zero_caps_mean_unlimited():
+    q, s = FreeTierQuota(), _caps(0, 0)
+    for _ in range(50):
+        q.consume("a", s)
+    assert q.remaining("a", s) > 1000

@@ -64,8 +64,11 @@ class Settings(BaseSettings):
     # environment == "production" and fallback_allow is true. Sized against
     # Tavily's 1,000 credits/month: one run costs roughly 3-6 credits (initial
     # queries plus gap-fill rounds), so ~10 runs/day keeps a month under cap.
-    free_tier_per_ip_daily: int = 2
-    free_tier_global_daily: int = 10
+    # 0 = unlimited (currently off while the public demo is open).
+    free_tier_per_ip_daily: int = 0
+    free_tier_global_daily: int = 0
+    # slowapi limit on the search routes, per client IP.
+    search_rate_limit: str = "1000/minute"
     # Number of reverse proxies in front of the app; the client IP is the
     # X-Forwarded-For entry this many places from the right.
     trusted_proxy_hops: int = 1

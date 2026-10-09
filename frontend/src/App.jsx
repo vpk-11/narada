@@ -93,7 +93,7 @@ async function* readEvents(res) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [config] = useSession('narada_config', DEFAULT_CONFIG)
+  const [config] = useSession('narada_config_v2', DEFAULT_CONFIG)
   const [query, setQuery]     = useState('')
   const [loading, setLoading] = useState(false)
   const [stepIdx, setStepIdx] = useState(0)
@@ -123,14 +123,17 @@ export default function App() {
         const data = await res.json()
         throw new Error(data.detail || `HTTP ${res.status}`)
       }
+      let finished = false
       for await (const ev of readEvents(res)) {
         if (ev.type === 'step') setStepIdx(NEXT_STEP[ev.step] ?? STEPS.length)
         else if (ev.type === 'rows') setPartial(ev)
         else if (ev.type === 'result') {
           setResult(ev.result)
           setMeta(ev.result.metadata)
+          finished = true
         } else if (ev.type === 'error') throw new Error(ev.detail)
       }
+      if (!finished) throw new Error('The connection to the server dropped before the search finished. Try again.')
     } catch (e) {
       setError(e.message || 'Unknown error')
     } finally {
@@ -236,9 +239,11 @@ export default function App() {
                     using those instead. The pipeline will use <strong>Groq (LLM)</strong> and{' '}
                     <strong>Tavily (Search)</strong> for this request only.
                     {' '}
-                    {keyError.freeRemaining > 0
-                      ? `${keyError.freeRemaining} free search${keyError.freeRemaining === 1 ? '' : 'es'} left today.`
-                      : 'No free searches left today. Come back tomorrow or add your own keys.'}
+                    {keyError.freeRemaining >= 1000
+                      ? ''
+                      : keyError.freeRemaining > 0
+                        ? `${keyError.freeRemaining} free search${keyError.freeRemaining === 1 ? '' : 'es'} left today.`
+                        : 'No free searches left today. Come back tomorrow or add your own keys.'}
                   </div>
                   <button className="btn btn-primary" style={{ marginTop: 14 }}
                     disabled={keyError.freeRemaining < 1} onClick={runWithFallback}>
@@ -408,7 +413,7 @@ export default function App() {
                   </span>
                 )}
                 <span className="meta-push" />
-                <span className="meta-model">{meta.llm_provider} / {meta.llm_model}</span>
+                <span className="meta-model">{meta.llm_model}</span>
               </div>
               {result.errors && result.errors.length > 0 && (
                 <div className="soft-warning">
