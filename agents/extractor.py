@@ -26,6 +26,7 @@ from core.chunking import chunk_text
 from core.json_ld import build_entities as build_entities_from_json_ld
 from core.llm_json import parse_llm_json
 from core.models import CellValue, Entity, QueryAnalysis, ScrapedPage
+from core.verification import verify_entities
 from providers.base import BaseLLMProvider
 NUM_CTX_LARGE = 8192  # context window for extraction prompts that include page content
 
@@ -290,6 +291,8 @@ async def _extract_from_page(
 
     for chunk in chunks:
         entities.extend(await _extract_from_chunk(chunk, page.url, analysis, llm))
+
+    verify_entities(entities, [page])
 
     logger.info(
         f"[Extractor] {page.url[:70]} -> {len(entities)} entities "
