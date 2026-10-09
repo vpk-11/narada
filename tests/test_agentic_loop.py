@@ -56,3 +56,9 @@ def test_identify_gaps_caps_at_five():
     entities = [Entity(name=f"E{i}", attributes={}) for i in range(10)]
     gaps = _identify_gaps(entities, ["founded"])
     assert len(gaps) == 5
+
+
+def test_query_analysis_keeps_original_query():
+    from core.models import QueryAnalysis
+    qa = QueryAnalysis(original_query="Apple 2026 releases", entity_type="product", attributes=["a"], search_queries=["q"])
+    assert qa.original_query == "Apple 2026 releases"

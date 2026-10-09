@@ -100,7 +100,6 @@ export default function App() {
   const [result, setResult]   = useState(null)
   const [error, setError]     = useState(null)
   const [meta, setMeta]       = useState(null)
-  const [partial, setPartial] = useState(null)
   const [showHelp, setShowHelp] = useState(false)
   // keyError: null | { missing: string[], fallbackAllow: bool, pendingQ, pendingRefresh }
   const [keyError, setKeyError] = useState(null)
@@ -111,7 +110,6 @@ export default function App() {
     setError(null)
     setResult(null)
     setMeta(null)
-    setPartial(null)
     setStepIdx(0)
     try {
       const res = await fetch(`${API_BASE}/api/search/stream`, {
@@ -126,7 +124,6 @@ export default function App() {
       let finished = false
       for await (const ev of readEvents(res)) {
         if (ev.type === 'step') setStepIdx(NEXT_STEP[ev.step] ?? STEPS.length)
-        else if (ev.type === 'rows') setPartial(ev)
         else if (ev.type === 'result') {
           setResult(ev.result)
           setMeta(ev.result.metadata)
@@ -378,7 +375,6 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              {partial && partial.entities.length > 0 && <ResultsTable result={partial} />}
             </div>
           )}
 

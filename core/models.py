@@ -69,7 +69,10 @@ class QueryAnalysis(BaseModel):
     Output from the query analyzer agent.
     Produced before any search or scraping happens.
     Determines the schema and search strategy for the entire run.
+    original_query is the user's raw text; the extractor, validator and
+    gap-fill prompts all depend on it.
     """
+    original_query: str = ""
     entity_type: str          # e.g. "company", "restaurant", "open-source tool"
     attributes: list[str]     # columns to extract, e.g. ["funding", "founded", "hq"]
     search_queries: list[str] # 2-3 targeted queries to run against the search provider

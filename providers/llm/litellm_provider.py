@@ -11,6 +11,7 @@ Supports any provider LiteLLM supports via a model string like:
 
 import asyncio
 import logging
+import re
 
 import litellm
 from litellm import acompletion
@@ -32,7 +33,14 @@ _RETRYABLE_ERRORS = (
     litellm.ServiceUnavailableError,
     litellm.InternalServerError,
 )
-_MAX_RETRIES = 3
+_MAX_RETRIES = 4
+# Providers (Groq) say how long to wait on a token-rate-limit; honor it instead
+# of retrying inside the same window and burning the attempt.
+_RETRY_AFTER_RE = re.compile(r"try again in ([\d.]+)s")
+_MAX_RETRY_AFTER_SECONDS = 20.0
+# gpt-oss models spend most of their tokens reasoning; low effort cuts both
+# latency and the tokens-per-minute they consume on free tiers.
+_LOW_REASONING_MODELS = ("gpt-oss",)
 _BACKOFF_BASE_SECONDS = 1.0
 _BACKOFF_CAP_SECONDS = 10.0
 
@@ -72,6 +80,8 @@ class LiteLLMProvider(BaseLLMProvider):
             extra["api_key"] = self._api_key
         if self._api_base:
             extra["api_base"] = self._api_base
+        if any(m in self._model for m in _LOW_REASONING_MODELS):
+            extra["reasoning_effort"] = "low"
         # num_ctx is Ollama-specific; pass it through when provided
         if "num_ctx" in kwargs and prefix in _OLLAMA_PREFIXES:
             extra["num_ctx"] = kwargs["num_ctx"]
@@ -93,6 +103,9 @@ class LiteLLMProvider(BaseLLMProvider):
                     )
                     raise
                 wait = min(_BACKOFF_BASE_SECONDS * (2 ** (attempt - 1)), _BACKOFF_CAP_SECONDS)
+                hinted = _RETRY_AFTER_RE.search(str(e))
+                if hinted:
+                    wait = min(float(hinted.group(1)) + 0.5, _MAX_RETRY_AFTER_SECONDS)
                 logger.warning(
                     f"[LiteLLM] {type(e).__name__} on attempt {attempt}/{_MAX_RETRIES} "
                     f"for '{self._model}' — retrying in {wait:.1f}s"

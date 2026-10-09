@@ -38,9 +38,14 @@ Respond with a JSON object containing exactly these fields:
 
 Rules for entity_type:
 - Single lowercase noun
+- It is the thing the user wants a LIST OF: each row of the final table is one of these.
+  "Apple 2026 releases" wants products (entity_type "product"), not the company Apple.
+  A company or brand named in the query is a filter on the rows, not the rows themselves,
+  unless the user asks about companies.
 
 Rules for attributes:
 - Specific and relevant to this entity type and query
+- Attributes describe each row (one product, one restaurant), not the brand or publisher behind it
 - Never include generic attributes like "name" or "id"
 
 Rules for search_queries — THIS IS CRITICAL:
@@ -72,6 +77,17 @@ Query: "top pizza places in Brooklyn"
     "best pizza restaurants Brooklyn NYC ranked list",
     "top rated Brooklyn pizza places review guide",
     "Brooklyn pizza spots directory neighborhood guide"
+  ]
+}}
+
+Query: "Apple device releases in 2026"
+{{
+  "entity_type": "product",
+  "attributes": ["release_date", "product_category", "starting_price", "key_features", "chip"],
+  "search_queries": [
+    "Apple 2026 product launches list new iPhone Mac iPad",
+    "Apple newsroom 2026 announces new products release dates",
+    "everything Apple released in 2026 roundup"
   ]
 }}
 
