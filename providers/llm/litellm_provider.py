@@ -3,7 +3,7 @@ providers/llm/litellm_provider.py
 
 Single LLM provider backed by LiteLLM.
 Supports any provider LiteLLM supports via a model string like:
-  groq/llama-3.3-70b-versatile
+  groq/openai/gpt-oss-20b
   openai/gpt-4o-mini
   anthropic/claude-haiku-4-5-20251001
   ollama/qwen3:4b
