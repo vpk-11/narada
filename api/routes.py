@@ -13,12 +13,14 @@ Security model:
 - CSP headers prevent XSS from stealing keys out of sessionStorage.
 """
 
+import asyncio
+import json
 import logging
 import os
 
 import httpx
 from fastapi import APIRouter, Header, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 
 from api.limiter import limiter
@@ -138,16 +140,7 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
 # Routes
 # --------------------------------------------------------------------------- #
 
-@router.post("/search", response_model=SearchResponse)
-@limiter.limit("10/minute")
-async def search(request: Request, body: SearchRequest) -> SearchResponse:
-    """
-    Run the Narada pipeline for a query.
-
-    API keys are read from request headers (x-groq-api-key etc).
-    Keys override .env for this call only and are never stored.
-    Set refresh=true to bypass cache and force a fresh run.
-    """
+def _validated_query(body: SearchRequest) -> str:
     query = body.query.strip()
     if not query:
         raise HTTPException(status_code=400, detail="query cannot be empty")
@@ -156,26 +149,17 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
             status_code=400,
             detail=f"Query must be {_MAX_QUERY_LENGTH} characters or fewer.",
         )
+    return query
 
-    base_settings = get_settings()
 
-    try:
-        settings = _build_settings_from_headers(request, base_settings)
-        search_provider = get_search_provider(settings)
-        result = await run_pipeline(
-            query=query,
-            settings=settings,
-            search=search_provider,
-            use_cache=not body.refresh,
-        )
-        return SearchResponse(result=result)
-
-    except ValueError as e:
+def _to_http_error(e: Exception, query: str) -> HTTPException:
+    """Map a pipeline exception to a user-facing HTTPException. Logs the error type only."""
+    if isinstance(e, ValueError):
         # Config/validation errors (missing key, unknown provider) - safe to expose
         logger.warning(f"[Routes] Config error for '{query[:80]}': {type(e).__name__}")
-        raise HTTPException(status_code=400, detail=str(e))
+        return HTTPException(status_code=400, detail=str(e))
 
-    except httpx.HTTPStatusError as e:
+    if isinstance(e, httpx.HTTPStatusError):
         status = e.response.status_code
         logger.error(f"[Routes] HTTP {status} from external API for '{query[:80]}'")
         if status == 401:
@@ -201,11 +185,11 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
             )
         else:
             detail = f"External API returned HTTP {status}. Try again or switch providers."
-        raise HTTPException(status_code=502, detail=detail)
+        return HTTPException(status_code=502, detail=detail)
 
-    except httpx.ConnectError:
+    if isinstance(e, httpx.ConnectError):
         logger.error(f"[Routes] Connection error for '{query[:80]}'")
-        raise HTTPException(
+        return HTTPException(
             status_code=502,
             detail=(
                 "Could not connect to the provider. "
@@ -214,9 +198,9 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
             ),
         )
 
-    except httpx.TimeoutException:
+    if isinstance(e, httpx.TimeoutException):
         logger.error(f"[Routes] Timeout for '{query[:80]}'")
-        raise HTTPException(
+        return HTTPException(
             status_code=504,
             detail=(
                 "Request timed out while contacting the provider. "
@@ -224,16 +208,98 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
             ),
         )
 
-    except Exception as e:
-        # Log the error type only - never log the full message (may contain key material)
-        logger.error(f"[Routes] Pipeline failed for '{query[:80]}': {type(e).__name__}")
-        raise HTTPException(
-            status_code=500,
-            detail=(
-                f"An unexpected error occurred ({type(e).__name__}). "
-                "Try again. If this keeps happening, check your provider settings."
-            ),
+    # Log the error type only - never log the full message (may contain key material)
+    logger.error(f"[Routes] Pipeline failed for '{query[:80]}': {type(e).__name__}")
+    return HTTPException(
+        status_code=500,
+        detail=(
+            f"An unexpected error occurred ({type(e).__name__}). "
+            "Try again. If this keeps happening, check your provider settings."
+        ),
+    )
+
+
+@router.post("/search", response_model=SearchResponse)
+@limiter.limit("10/minute")
+async def search(request: Request, body: SearchRequest) -> SearchResponse:
+    """
+    Run the Narada pipeline for a query.
+
+    API keys are read from request headers (x-groq-api-key etc).
+    Keys override .env for this call only and are never stored.
+    Set refresh=true to bypass cache and force a fresh run.
+    """
+    query = _validated_query(body)
+
+    try:
+        settings = _build_settings_from_headers(request, get_settings())
+        search_provider = get_search_provider(settings)
+        result = await run_pipeline(
+            query=query,
+            settings=settings,
+            search=search_provider,
+            use_cache=not body.refresh,
         )
+        return SearchResponse(result=result)
+    except Exception as e:
+        raise _to_http_error(e, query)
+
+
+def _sse(event: dict) -> str:
+    return f"event: {event['type']}\ndata: {json.dumps(event)}\n\n"
+
+
+@router.post("/search/stream")
+@limiter.limit("10/minute")
+async def search_stream(request: Request, body: SearchRequest) -> StreamingResponse:
+    """
+    Same pipeline as POST /search, streamed as Server-Sent Events.
+
+    Events: "step" (one per completed step), "rows" (aggregated entities after
+    step 6), then exactly one of "result" (same payload as POST /search) or
+    "error" (message only). Config errors found before the run starts return a
+    normal HTTP error instead of a stream.
+    """
+    query = _validated_query(body)
+
+    try:
+        settings = _build_settings_from_headers(request, get_settings())
+        search_provider = get_search_provider(settings)
+    except Exception as e:
+        raise _to_http_error(e, query)
+
+    queue: asyncio.Queue[dict | None] = asyncio.Queue()
+
+    async def on_progress(event: dict) -> None:
+        await queue.put(event)
+
+    async def run() -> None:
+        try:
+            result = await run_pipeline(
+                query=query,
+                settings=settings,
+                search=search_provider,
+                use_cache=not body.refresh,
+                on_progress=on_progress,
+            )
+            await queue.put({"type": "result", **SearchResponse(result=result).model_dump(mode="json")})
+        except Exception as e:
+            await queue.put({"type": "error", "detail": _to_http_error(e, query).detail})
+        await queue.put(None)
+
+    async def events():
+        task = asyncio.create_task(run())
+        try:
+            while (event := await queue.get()) is not None:
+                yield _sse(event)
+        finally:
+            task.cancel()
+
+    return StreamingResponse(
+        events(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )
 
 
 class ServerConfig(BaseModel):
