@@ -33,7 +33,11 @@ def _normalize(text: str) -> str:
 
 def quote_in_text(quote: str, text: str) -> bool:
     """True if quote appears in text (normalized substring, then fuzzy fallback)."""
-    q, t = _normalize(quote)[:_MAX_QUOTE_CHARS], _normalize(text)
+    return _quote_in_normalized(quote, _normalize(text))
+
+
+def _quote_in_normalized(quote: str, t: str) -> bool:
+    q = _normalize(quote)[:_MAX_QUOTE_CHARS]
     if not q:
         return False
     if q in t:
@@ -48,13 +52,13 @@ def verify_entities(entities: list[Entity], pages: list[ScrapedPage]) -> None:
     from structured page data) are left alone. A cell whose source_url is not
     among pages stays unverified.
     """
-    text_by_url = {p.url: p.content for p in pages}
+    text_by_url = {p.url: _normalize(p.content) for p in pages}
     for entity in entities:
         for cell in entity.attributes.values():
             if cell.verified:
                 continue
             text = text_by_url.get(cell.source_url)
-            cell.verified = text is not None and quote_in_text(cell.source_quote, text)
+            cell.verified = text is not None and _quote_in_normalized(cell.source_quote, text)
 
 
 def verified_rate(entities: list[Entity]) -> float:

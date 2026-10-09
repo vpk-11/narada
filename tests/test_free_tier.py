@@ -14,29 +14,33 @@ from main import app
 BODY = {"query": "ai startups", "refresh": True}
 
 
+def _caps(per_ip: int, global_cap: int) -> Settings:
+    return Settings(free_tier_per_ip_daily=per_ip, free_tier_global_daily=global_cap)
+
+
 def test_per_ip_cap_then_other_ip_still_served():
-    q = FreeTierQuota()
-    q.consume("a", 1, 10)
+    q, s = FreeTierQuota(), _caps(1, 10)
+    q.consume("a", s)
     with pytest.raises(HTTPException) as e:
-        q.consume("a", 1, 10)
+        q.consume("a", s)
     assert e.value.status_code == 429 and "free searches" in e.value.detail
-    q.consume("b", 1, 10)
+    q.consume("b", s)
 
 
 def test_global_cap_blocks_all_ips_with_distinct_message():
-    q = FreeTierQuota()
-    q.consume("a", 5, 1)
+    q, s = FreeTierQuota(), _caps(5, 1)
+    q.consume("a", s)
     with pytest.raises(HTTPException) as e:
-        q.consume("b", 5, 1)
+        q.consume("b", s)
     assert e.value.status_code == 429 and "capacity" in e.value.detail
 
 
 def test_day_rollover_resets(monkeypatch):
-    q = FreeTierQuota()
-    q.consume("a", 1, 1)
+    q, s = FreeTierQuota(), _caps(1, 1)
+    q.consume("a", s)
     monkeypatch.setattr(free_tier, "_today", lambda: "2999-01-01")
-    assert q.remaining("a", 1, 1) == 1
-    q.consume("a", 1, 1)
+    assert q.remaining("a", s) == 1
+    q.consume("a", s)
 
 
 def _prod_settings(**kw) -> Settings:

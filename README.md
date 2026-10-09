@@ -426,7 +426,7 @@ pip install -r requirements-dev.txt
 pytest
 ```
 
-To compare the gap-fill loop on vs off over the queries in `eval/queries.txt` (calls real providers, uses your `.env` keys, 3 runs per query per mode by default):
+To compare the gap-fill loop on vs off over the queries in `eval/queries.txt` (calls real providers, uses your `.env` keys, 3 runs per query per mode; edit `RUNS` and `ITERATIONS` at the top of `eval/run_eval.py`):
 
 ```bash
 python -m eval.run_eval
@@ -482,10 +482,6 @@ FREE_TIER_PER_IP_DAILY=2     # per client IP, per UTC day
 FREE_TIER_GLOBAL_DAILY=10    # server-wide, per UTC day (Tavily: ~3-6 credits per run)
 TRUSTED_PROXY_HOPS=1         # reverse proxies in front; client IP = X-Forwarded-For entry this far from the right
 
-# Eval harness (python -m eval.run_eval)
-EVAL_RUNS=3                  # runs per query per mode
-EVAL_ITERATIONS_ON=2         # AGENT_MAX_ITERATIONS for the loop-on mode
-EVAL_ITERATIONS_OFF=1        # AGENT_MAX_ITERATIONS for the loop-off mode
 
 # Logging
 LOG_LEVEL=INFO

@@ -57,11 +57,6 @@ _H_VA_MODEL        = "x-validator-model"
 
 quota = FreeTierQuota()
 
-# Credential header required for each LLM prefix / search provider. A request
-# missing one of these is served with the server's own key.
-_LLM_KEY_HEADER = {"groq": _H_GROQ_KEY, "openai": _H_OPENAI_KEY, "anthropic": _H_ANTHROPIC_KEY}
-_SEARCH_KEY_HEADER = {"tavily": _H_TAVILY_KEY, "brave": _H_BRAVE_KEY}
-
 
 # --------------------------------------------------------------------------- #
 # Request / Response shapes
@@ -145,34 +140,45 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
     return base.model_copy(update=overrides)
 
 
-def _uses_server_keys(request: Request, settings: Settings) -> bool:
-    """True if any LLM step or the search provider will use a key the client did not send."""
-    needed = [
-        _LLM_KEY_HEADER.get((m or settings.llm_model).split("/")[0].lower())
-        for m in (settings.query_analyzer_model, settings.extraction_model, settings.validator_model)
-    ]
-    needed.append(_SEARCH_KEY_HEADER.get(settings.search_provider))
-    return any(h and not request.headers.get(h) for h in needed)
+def _uses_server_keys(settings: Settings, base: Settings) -> bool:
+    """
+    True if any LLM step or the search provider resolves to a key the client
+    did not override. Provider names map to `<name>_api_key` Settings fields;
+    providers without one (ollama, duckduckgo) need no key.
+    """
+    models = (settings.query_analyzer_model, settings.extraction_model, settings.validator_model)
+    names = [(m or settings.llm_model).split("/")[0] for m in models] + [settings.search_provider]
+    fields = {f"{n.lower()}_api_key" for n in names} & set(Settings.model_fields)
+    return any(getattr(settings, f) == getattr(base, f) for f in fields)
 
 
-def _enforce_free_tier(request: Request, settings: Settings) -> None:
+def _enforce_free_tier(request: Request, settings: Settings, base: Settings) -> None:
     """
     In production, a request that would spend server keys needs fallback_allow
     and a free-tier slot. Counts the slot. No-op in development, where .env
     keys are the intended default.
     """
-    if settings.environment != "production" or not _uses_server_keys(request, settings):
+    if settings.environment != "production" or not _uses_server_keys(settings, base):
         return
     if not settings.fallback_allow:
         raise HTTPException(
             status_code=403,
             detail="This server does not provide API keys. Add your own keys in the sidebar.",
         )
-    quota.consume(
-        client_ip(request, settings.trusted_proxy_hops),
-        settings.free_tier_per_ip_daily,
-        settings.free_tier_global_daily,
-    )
+    quota.consume(client_ip(request), settings)
+
+
+def _prepare(request: Request, body: SearchRequest) -> tuple[str, Settings, BaseSearchProvider]:
+    """Shared prelude for both search routes: validate, build settings, check the free tier."""
+    query = _validated_query(body)
+    base = get_settings()
+    try:
+        settings = _build_settings_from_headers(request, base)
+        search_provider = get_search_provider(settings)
+    except Exception as e:
+        raise _to_http_error(e, query)
+    _enforce_free_tier(request, settings, base)
+    return query, settings, search_provider
 
 
 # --------------------------------------------------------------------------- #
@@ -193,9 +199,6 @@ def _validated_query(body: SearchRequest) -> str:
 
 def _to_http_error(e: Exception, query: str) -> HTTPException:
     """Map a pipeline exception to a user-facing HTTPException. Logs the error type only."""
-    if isinstance(e, HTTPException):
-        return e
-
     if isinstance(e, ValueError):
         # Config/validation errors (missing key, unknown provider) - safe to expose
         logger.warning(f"[Routes] Config error for '{query[:80]}': {type(e).__name__}")
@@ -271,12 +274,9 @@ async def search(request: Request, body: SearchRequest) -> SearchResponse:
     Keys override .env for this call only and are never stored.
     Set refresh=true to bypass cache and force a fresh run.
     """
-    query = _validated_query(body)
+    query, settings, search_provider = _prepare(request, body)
 
     try:
-        settings = _build_settings_from_headers(request, get_settings())
-        search_provider = get_search_provider(settings)
-        _enforce_free_tier(request, settings)
         result = await run_pipeline(
             query=query,
             settings=settings,
@@ -303,14 +303,8 @@ async def search_stream(request: Request, body: SearchRequest) -> StreamingRespo
     "error" (message only). Config errors found before the run starts return a
     normal HTTP error instead of a stream.
     """
-    query = _validated_query(body)
-
-    try:
-        settings = _build_settings_from_headers(request, get_settings())
-        search_provider = get_search_provider(settings)
-        _enforce_free_tier(request, settings)
-    except Exception as e:
-        raise _to_http_error(e, query)
+    query, settings, search_provider = _prepare(request, body)
+    use_cache = not body.refresh
 
     queue: asyncio.Queue[dict | None] = asyncio.Queue()
 
@@ -323,13 +317,14 @@ async def search_stream(request: Request, body: SearchRequest) -> StreamingRespo
                 query=query,
                 settings=settings,
                 search=search_provider,
-                use_cache=not body.refresh,
+                use_cache=use_cache,
                 on_progress=on_progress,
             )
             await queue.put({"type": "result", **SearchResponse(result=result).model_dump(mode="json")})
         except Exception as e:
             await queue.put({"type": "error", "detail": _to_http_error(e, query).detail})
-        await queue.put(None)
+        finally:
+            await queue.put(None)
 
     async def events():
         task = asyncio.create_task(run())
@@ -359,15 +354,7 @@ async def get_server_config(request: Request) -> ServerConfig:
     today (0 when the free tier is off).
     """
     settings = get_settings()
-    remaining = (
-        quota.remaining(
-            client_ip(request, settings.trusted_proxy_hops),
-            settings.free_tier_per_ip_daily,
-            settings.free_tier_global_daily,
-        )
-        if settings.fallback_allow
-        else 0
-    )
+    remaining = quota.remaining(client_ip(request), settings) if settings.fallback_allow else 0
     return ServerConfig(fallback_allow=settings.fallback_allow, free_searches_remaining=remaining)
 
 
