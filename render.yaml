@@ -53,11 +53,15 @@ services:
       # when they have not configured their own keys in the sidebar.
       # Only exposes that the option exists — keys are never sent to the client.
       - key: FALLBACK_ALLOW
-        value: "false"   # change to "true" in dashboard to enable
+        value: "true"    # matches the live dashboard; "false" blocks keyless requests
+      # Caps are OFF (0 = unlimited) while the demo is open: every keyless run spends
+      # the server's keys. To cap, set 2 / 10 / "10/minute" (see README, "Free-tier caps").
       - key: FREE_TIER_PER_IP_DAILY
-        value: "0"   # 0 = unlimited
+        value: "0"
       - key: FREE_TIER_GLOBAL_DAILY
-        value: "0"   # 0 = unlimited
+        value: "0"
+      - key: SEARCH_RATE_LIMIT
+        value: "1000/minute"
       - key: TRUSTED_PROXY_HOPS
         value: "1"
 
