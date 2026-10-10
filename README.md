@@ -645,6 +645,25 @@ Click Create Web Service. First deploy takes 3-5 minutes.
 - URL: `https://your-app.onrender.com/health`
 - Interval: 5 minutes
 
+### Free-tier caps (currently off)
+
+The server can let visitors with no API keys run searches on its own keys, with daily caps. Caps are **off** by default in the code (`0` = unlimited) while the demo is open. To turn them on, set these in the Render dashboard under Environment (Render redeploys on save):
+
+| Variable | Suggested value | Effect |
+|---|---|---|
+| `FREE_TIER_PER_IP_DAILY` | `2` | Free searches per client IP per UTC day |
+| `FREE_TIER_GLOBAL_DAILY` | `10` | Free searches server-wide per UTC day |
+| `SEARCH_RATE_LIMIT` | `10/minute` | Burst limit per IP (default `1000/minute` is effectively none) |
+
+Enforcement also needs `ENVIRONMENT=production` and `FALLBACK_ALLOW=true`. To confirm it took effect, `GET /api/server-config` should return `free_searches_remaining: 2` instead of `1000000000`.
+
+Things to know:
+- Only requests that spend the server's keys are counted. A visitor who enters their own keys is never counted.
+- Counters are in memory: a redeploy, restart or cold start resets them.
+- A slot is used when a run starts and is not refunded if the run fails.
+- The client IP is the `X-Forwarded-For` entry `TRUSTED_PROXY_HOPS` places from the right (default `1`). This has not been verified against Render's proxy. If everyone shares one bucket, or the per-IP cap can be dodged by rotating the header, adjust it. The global cap still bounds total spend.
+- The suggested numbers are estimates: one run costs roughly 3 to 6 Tavily credits against a 1,000/month free quota. Check your Tavily dashboard and adjust.
+
 ### Auto-deploy
 
 Every `git push origin main` triggers a Render redeploy. If you changed frontend files (`src/`, `index.html`, `package.json`, `vite.config.js`), the GitHub Action rebuilds `frontend/dist/` first, commits it with `[skip ci]`, then Render picks up the commit.
