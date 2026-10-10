@@ -12,3 +12,13 @@ def test_gemini_prefix_uses_gemini_key():
 def test_groq_prefix_uses_groq_key():
     s = Settings(llm_model="groq/openai/gpt-oss-20b", gemini_api_key="g", groq_api_key="x")
     assert get_llm_provider(s)._api_key == "x"
+
+
+def test_unlisted_provider_does_not_require_a_settings_key():
+    s = Settings(llm_model="mistral/mistral-large-latest")
+    assert get_llm_provider(s)._requires_key is False
+
+
+def test_listed_provider_requires_its_key():
+    s = Settings(llm_model="groq/openai/gpt-oss-20b")
+    assert get_llm_provider(s)._requires_key is True

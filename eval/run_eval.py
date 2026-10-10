@@ -10,6 +10,7 @@ Usage: python -m eval.run_eval
 """
 
 import asyncio
+import json
 import statistics
 from pathlib import Path
 
@@ -41,6 +42,8 @@ async def run_mode(queries: list[str], max_iterations: int, runs: int) -> dict[s
         if samples:
             per_query.append(tuple(statistics.mean(col) for col in zip(*samples)))
         print(f"  iterations={max_iterations} {q!r}: {len(samples)}/{runs} ok")
+    if not per_query:
+        raise RuntimeError(f"every run failed with AGENT_MAX_ITERATIONS={max_iterations}; fix the setup first")
     verified, completeness, latency = (statistics.mean(col) for col in zip(*per_query))
     return {"verified_rate": verified, "completeness": completeness, "latency_s": latency, "failed_runs": failed}
 
@@ -55,6 +58,9 @@ async def main() -> None:
     for mode, r in results.items():
         print(f"{mode:<10}{r['verified_rate']:>10.3f}{r['completeness']:>10.3f}"
               f"{r['latency_s']:>11.1f}{r['failed_runs']:>8}")
+    (Path(__file__).parent / "results.json").write_text(json.dumps(
+        {"model": settings.llm_model, "search": settings.search_provider,
+         "queries": len(queries), "runs": RUNS, "results": results}, indent=2))
 
 
 if __name__ == "__main__":

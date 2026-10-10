@@ -118,3 +118,17 @@ def test_zero_caps_mean_unlimited():
     for _ in range(50):
         q.consume("a", s)
     assert q.remaining("a", s) > 1000
+
+
+def test_ollama_url_header_ignored_in_production(client, monkeypatch):
+    from starlette.requests import Request
+    req = Request({"type": "http", "headers": [(b"x-ollama-base-url", b"http://evil.example")]})
+    assert routes._build_settings_from_headers(req, _prod_settings()).ollama_base_url != "http://evil.example"
+    dev = routes._build_settings_from_headers(req, _prod_settings(environment="development"))
+    assert dev.ollama_base_url == "http://evil.example"
+
+
+def test_unlisted_provider_counts_as_server_key(client):
+    base = _prod_settings()
+    s = base.model_copy(update={"extraction_model": "mistral/mistral-large-latest"})
+    assert routes._uses_server_keys(s, base)

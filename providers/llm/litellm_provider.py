@@ -38,7 +38,17 @@ _MAX_RETRIES = 4
 # Providers (Groq) say how long to wait on a token-rate-limit; honor it instead
 # of retrying inside the same window and burning the attempt.
 # Groq: "try again in 8.22s"; Gemini: "Please retry in 34.5s".
-_RETRY_AFTER_RE = re.compile(r"(?:try again|retry) in ([\d.]+)s")
+# Durations appear as "8.22s", "1m5.5s" or "850ms".
+_RETRY_AFTER_RE = re.compile(r"(?:try again|retry) in (?:(\d+)m)?([\d.]+)(ms|s)\b")
+
+
+def _retry_after_seconds(message: str) -> float | None:
+    m = _RETRY_AFTER_RE.search(message)
+    if not m:
+        return None
+    minutes, number, unit = m.groups()
+    seconds = float(number) / 1000 if unit == "ms" else float(number)
+    return seconds + 60 * int(minutes or 0)
 _MAX_RETRY_AFTER_SECONDS = 20.0
 # gpt-oss models spend most of their tokens reasoning; low effort cuts both
 # latency and the tokens-per-minute they consume on free tiers.
@@ -49,8 +59,11 @@ _BACKOFF_CAP_SECONDS = 10.0
 
 class LiteLLMProvider(BaseLLMProvider):
 
-    def __init__(self, model: str, api_key: str = "", api_base: str = "") -> None:
+    def __init__(
+        self, model: str, api_key: str = "", api_base: str = "", requires_key: bool = True,
+    ) -> None:
         self._model = model
+        self._requires_key = requires_key
         self._api_key = api_key
         self._api_base = api_base
 
@@ -65,7 +78,7 @@ class LiteLLMProvider(BaseLLMProvider):
     async def complete(self, prompt: str, system: str = "", **kwargs) -> str:
         prefix = self._model.split("/")[0].lower() if "/" in self._model else ""
 
-        if prefix not in _OLLAMA_PREFIXES and not self._api_key:
+        if self._requires_key and prefix not in _OLLAMA_PREFIXES and not self._api_key:
             display = prefix.capitalize() if prefix else "LLM"
             raise ValueError(
                 f"{display} API key is missing. "
@@ -105,9 +118,9 @@ class LiteLLMProvider(BaseLLMProvider):
                     )
                     raise
                 wait = min(_BACKOFF_BASE_SECONDS * (2 ** (attempt - 1)), _BACKOFF_CAP_SECONDS)
-                hinted = _RETRY_AFTER_RE.search(str(e))
-                if hinted:
-                    wait = min(float(hinted.group(1)) + 0.5, _MAX_RETRY_AFTER_SECONDS)
+                hinted = _retry_after_seconds(str(e))
+                if hinted is not None:
+                    wait = min(hinted + 0.5, _MAX_RETRY_AFTER_SECONDS)
                 logger.warning(
                     f"[LiteLLM] {type(e).__name__} on attempt {attempt}/{_MAX_RETRIES} "
                     f"for '{self._model}' — retrying in {wait:.1f}s"

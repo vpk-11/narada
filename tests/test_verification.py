@@ -64,3 +64,25 @@ def test_verified_rate():
 def test_overlong_quote_is_capped():
     # Only the first 500 normalized chars of a quote are compared.
     assert quote_in_text("word " * 1000, "word " * 300)
+
+
+def test_wrong_year_in_quote_rejected():
+    assert not quote_in_text("Abridge was founded in 2019 by Shiv Rao", PAGE.content)
+
+
+def test_wrong_amount_rejected():
+    page = "Acme raised $500M in its Series B."
+    assert not quote_in_text("Acme raised $50M in its Series B", page)
+    assert quote_in_text("Acme raised $500M in its Series B", page)
+
+
+def test_number_must_match_whole_word():
+    page = "The company has 15 employees."
+    assert not quote_in_text("has 5 employees", page)
+
+
+def test_value_number_must_come_from_quote():
+    cell = CellValue(value="2019", source_url=PAGE.url, source_quote="founded in 2018 by Shiv Rao")
+    e = Entity(name="Abridge", attributes={"founded": cell})
+    verify_entities([e], [PAGE])
+    assert not cell.verified

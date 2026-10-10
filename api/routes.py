@@ -55,6 +55,7 @@ _H_VA_MODEL        = "x-validator-model"
 
 
 quota = FreeTierQuota()
+_KEYLESS_PROVIDERS = {"ollama", "ollama_chat", "duckduckgo"}
 
 
 # --------------------------------------------------------------------------- #
@@ -122,7 +123,9 @@ def _build_settings_from_headers(request: Request, base: Settings) -> Settings:
         overrides["tavily_api_key"] = h[_H_TAVILY_KEY]
     if h.get(_H_BRAVE_KEY):
         overrides["brave_api_key"] = h[_H_BRAVE_KEY]
-    if h.get(_H_OLLAMA_URL):
+    # A client-chosen Ollama URL would let a visitor aim the server's LLM calls
+    # anywhere (SSRF), so it is honored only in local development.
+    if h.get(_H_OLLAMA_URL) and base.environment != "production":
         overrides["ollama_base_url"] = h[_H_OLLAMA_URL]
 
     # Provider + model selection (full LiteLLM model strings)
@@ -145,12 +148,19 @@ def _uses_server_keys(settings: Settings, base: Settings) -> bool:
     """
     True if any LLM step or the search provider resolves to a key the client
     did not override. Provider names map to `<name>_api_key` Settings fields;
-    providers without one (ollama, duckduckgo) need no key.
+    keyless providers (ollama, duckduckgo) never count; any other provider uses
+    a server env key and always counts.
     """
     models = (settings.query_analyzer_model, settings.extraction_model, settings.validator_model)
     names = [(m or settings.llm_model).split("/")[0] for m in models] + [settings.search_provider]
-    fields = {f"{n.lower()}_api_key" for n in names} & set(Settings.model_fields)
-    return any(getattr(settings, f) == getattr(base, f) for f in fields)
+    for name in (n.lower() for n in names):
+        field = f"{name}_api_key"
+        if field in Settings.model_fields:
+            if getattr(settings, field) == getattr(base, field):
+                return True
+        elif name not in _KEYLESS_PROVIDERS:
+            return True  # a LiteLLM provider keyed by the server's own env var
+    return False
 
 
 def _enforce_free_tier(request: Request, settings: Settings, base: Settings) -> None:
@@ -298,7 +308,7 @@ class ServerConfig(BaseModel):
 async def get_server_config(request: Request) -> ServerConfig:
     """
     Public flags for the frontend: whether the server lets keyless requests use
-    its own Groq + Tavily keys, and how many free searches this client has left
+    its own LLM and search keys, and how many free searches this client has left
     today (0 when the free tier is off).
     """
     settings = get_settings()

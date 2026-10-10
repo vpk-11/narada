@@ -37,7 +37,7 @@ _MIN_ATTRIBUTES_TO_KEEP = 1
 
 # A page is split into chunks rather than truncated, so content past the old
 # 2500-char cutoff still reaches the model. Capped at 3 chunks per page to
-# bound LLM calls on long pages — most useful content is in the first ~6000
+# bound LLM calls on long pages: most useful content is in the first ~6000
 # chars of a cleaned article anyway.
 _CHUNK_MAX_CHARS = 3000
 _CHUNK_OVERLAP_CHARS = 300
@@ -293,7 +293,7 @@ async def _extract_from_page(
     for chunk in chunks:
         entities.extend(await _extract_from_chunk(chunk, page.url, analysis, llm))
 
-    # CPU-bound fuzzy matching: keep it off the event loop so streams and other requests stay live.
+    # CPU-bound fuzzy matching: keep it off the event loop so other requests stay live.
     await asyncio.to_thread(verify_entities, entities, [page])
 
     logger.info(

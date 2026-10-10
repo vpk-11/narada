@@ -31,26 +31,43 @@ def _normalize(text: str) -> str:
     return re.sub(r"[\W_]+", " ", text).strip()
 
 
-def quote_in_text(quote: str, text: str) -> bool:
-    """True if quote appears in text (normalized substring, then fuzzy fallback)."""
-    return _quote_in_normalized(quote, _normalize(text))
+def _numbers(normalized: str) -> set[str]:
+    """Tokens containing a digit ("2018", "500m"). A wrong year or amount must never pass."""
+    return {t for t in normalized.split() if any(c.isdigit() for c in t)}
 
 
 def _quote_in_normalized(quote: str, t: str) -> bool:
     q = _normalize(quote)[:_MAX_QUOTE_CHARS]
     if not q:
         return False
-    if q in t:
+    # Padding with spaces makes the substring match respect word boundaries
+    # ("5" must not match inside "15").
+    if f" {q} " in f" {t} ":
         return True
+    # Fuzzy fallback tolerates small wording drift, but every number in the
+    # quote must still appear as a whole token on the page.
+    if not _numbers(q) <= set(t.split()):
+        return False
     match = SequenceMatcher(None, q, t, autojunk=False).find_longest_match(0, len(q), 0, len(t))
     return match.size / len(q) >= _FUZZY_MIN_COVERAGE
 
 
+def quote_in_text(quote: str, text: str) -> bool:
+    """True if quote appears in text (normalized, word-bounded substring, then fuzzy fallback)."""
+    return _quote_in_normalized(quote, _normalize(text))
+
+
+def _value_backed_by_quote(value: str, quote: str) -> bool:
+    """Every number in the cell value must also appear in its quote."""
+    return _numbers(_normalize(value)) <= _numbers(_normalize(quote))
+
+
 def verify_entities(entities: list[Entity], pages: list[ScrapedPage]) -> None:
     """
-    Set CellValue.verified in place. Cells already verified (JSON-LD, built
-    from structured page data) are left alone. A cell whose source_url is not
-    among pages stays unverified.
+    Set CellValue.verified in place: the quote must be found in the page at the
+    cell's own source_url, and the cell's numbers must come from that quote.
+    Cells already verified (JSON-LD, built from structured page data) are left
+    alone. A cell whose source_url is not among pages stays unverified.
     """
     text_by_url = {p.url: _normalize(p.content) for p in pages}
     for entity in entities:
@@ -58,7 +75,11 @@ def verify_entities(entities: list[Entity], pages: list[ScrapedPage]) -> None:
             if cell.verified:
                 continue
             text = text_by_url.get(cell.source_url)
-            cell.verified = text is not None and _quote_in_normalized(cell.source_quote, text)
+            cell.verified = (
+                text is not None
+                and _quote_in_normalized(cell.source_quote, text)
+                and _value_backed_by_quote(cell.value, cell.source_quote)
+            )
 
 
 def verified_rate(entities: list[Entity]) -> float:

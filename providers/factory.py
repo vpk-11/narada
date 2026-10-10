@@ -31,22 +31,19 @@ def _build_llm(model: str, settings: Settings) -> BaseLLMProvider:
     from providers.llm.litellm_provider import LiteLLMProvider
 
     prefix = model.split("/")[0].lower() if "/" in model else ""
-    api_key = ""
-    api_base = ""
+    api_base = settings.ollama_base_url if prefix in _OLLAMA_PREFIXES else ""
 
-    if prefix == "groq":
-        api_key = settings.groq_api_key
-    elif prefix == "openai":
-        api_key = settings.openai_api_key
-    elif prefix == "anthropic":
-        api_key = settings.anthropic_api_key
-    elif prefix == "gemini":
-        api_key = settings.gemini_api_key
-    elif prefix in _OLLAMA_PREFIXES:
-        api_base = settings.ollama_base_url
+    # Providers with a `<prefix>_api_key` Settings field get that key and a
+    # clear error when it is empty. Any other LiteLLM provider (mistral, cohere,
+    # ...) is left to LiteLLM, which reads its own env var (e.g. MISTRAL_API_KEY).
+    key_field = f"{prefix}_api_key"
+    has_key_field = key_field in Settings.model_fields
+    api_key = getattr(settings, key_field) if has_key_field else ""
 
     logger.debug(f"[Factory] Building LiteLLM provider: {model}")
-    return LiteLLMProvider(model=model, api_key=api_key, api_base=api_base)
+    return LiteLLMProvider(
+        model=model, api_key=api_key, api_base=api_base, requires_key=has_key_field,
+    )
 
 
 def get_llm_provider(settings: Settings) -> BaseLLMProvider:

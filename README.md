@@ -128,7 +128,7 @@ The app detects whether it is running on `localhost` and adjusts automatically.
 - If a key field is empty, a popup appears before the request is made:
   - It tells you which provider's key is missing
   - It offers a **Dismiss** option to go add the key in the sidebar
-  - If the server has `FALLBACK_ALLOW=true` configured, a second option appears: **Use Groq + Tavily (server keys)**. This runs the pipeline using the server's own Groq and Tavily keys for that one request only. Your stored sidebar config is not changed.
+  - If the server has `FALLBACK_ALLOW=true` configured, a second option appears: **Use the server's keys**. This runs the pipeline using the server's own LLM and search keys for that one request only. Your stored sidebar config is not changed.
 
 ### Dev sim-prod toggle (local only)
 
@@ -150,7 +150,7 @@ The server has its own API keys configured in `.env` (or Render dashboard secret
 | Local | No | Runs silently with server key; error if server also has none |
 | Production | Yes | Uses your key |
 | Production | No | Shows key-error popup before running |
-| Production (FALLBACK_ALLOW=true) | No | Popup offers to run with server Groq + Tavily keys |
+| Production (FALLBACK_ALLOW=true) | No | Popup offers to run with the server's keys |
 
 ---
 
@@ -691,13 +691,13 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 **Attribute completeness varies.** If a page does not mention a founding year, that cell will be empty. The aggregator merges across sources, so entities found on multiple pages tend to have more complete data.
 
-**Free tier cold starts.** The Render free tier sleeps after 15 minutes of inactivity. First request after sleep takes about 30 seconds. UptimeRobot keeps it warm.
+**Free tier cold starts.** The Render free tier sleeps after 15 minutes of inactivity. First request after sleep takes about 30 to 60 seconds, since the server also loads LiteLLM at startup. UptimeRobot keeps it warm.
 
 **Per-step model isolation.** When using Per Step mode with different providers across steps, the model name for each step is tracked independently. When using the same provider across multiple steps, each step still receives its own model override and they do not interfere.
 
 **Gap-fill adds latency on sparse queries.** A query that triggers the full 2-iteration gap-fill loop roughly doubles the search/scrape/extract work, and therefore the wall-clock time, of a query that doesn't. This is a deliberate completeness-vs-speed tradeoff, tunable via `AGENT_GAP_THRESHOLD` and `AGENT_MAX_ITERATIONS`.
 
-**Free tier caps are currently off (0 = unlimited).** With `FALLBACK_ALLOW=true` in production, a visitor with no keys can run a few searches on the server's Groq and Tavily keys: `FREE_TIER_PER_IP_DAILY` per IP and `FREE_TIER_GLOBAL_DAILY` server-wide, per UTC day. Counts live in memory and reset on restart or redeploy. A request that supplies its own keys is never counted. Identity is IP only, so shared IPs share a bucket.
+**Free tier caps are currently off (0 = unlimited).** With `FALLBACK_ALLOW=true` in production, a visitor with no keys can run searches on the server's own LLM and search keys: `FREE_TIER_PER_IP_DAILY` per IP and `FREE_TIER_GLOBAL_DAILY` server-wide, per UTC day. Counts live in memory and reset on restart or redeploy. A request that supplies its own keys is never counted. Identity is IP only, so shared IPs share a bucket.
 
 ---
 
