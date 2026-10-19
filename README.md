@@ -692,7 +692,7 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 **No server-side key storage.** The deployed app has no secrets of its own by default. Users supply their own keys. Optionally, server operators can configure fallback keys for users who do not have their own.
 
-**Agentic gap-fill over a fixed pipeline.** A linear 7-step pipeline that never checks its own output quality isn't meaningfully different from asking an LLM once. Computing a gap ratio and re-searching for specific missing attributes is what makes the system reason about its output rather than just produce it - at the cost of up to 2x the search/scrape/extract work on sparse queries, which is why it's capped and only triggers above a threshold.
+**Agentic gap-fill over a fixed pipeline.** A fixed linear pipeline that never checks its own output quality isn't meaningfully different from asking an LLM once. Computing a gap ratio and re-searching for specific missing attributes is what makes the system reason about its output rather than just produce it - at the cost of up to 2x the search/scrape/extract work on sparse queries, which is why it's capped and only triggers above a threshold.
 
 **Chunking over truncation.** A flat character cutoff silently drops whatever's past it - a founding date at character 4000 of a long article never reached the model. Paragraph/sentence-boundary chunking with overlap costs more LLM calls per long page, but recovers content that was previously just gone.
 
@@ -706,7 +706,7 @@ Every `git push origin main` triggers a Render redeploy. If you changed frontend
 
 **Extraction quality depends on source pages.** Generic listicles that mention many unrelated entities may let some noise through the validator.
 
-**Local model speed.** Full pipeline on Ollama with a 3-4B model takes 3-6 minutes. Groq reduces this to under 15 seconds.
+**Local model speed.** Full pipeline on Ollama with a 3-4B model takes 3-6 minutes. A hosted model is much faster, but time varies with the provider's rate limit (one recorded run on a Groq free-tier model took about 2 minutes).
 
 **Attribute completeness varies.** If a page does not mention a founding year, that cell will be empty. The aggregator merges across sources, so entities found on multiple pages tend to have more complete data.
 
